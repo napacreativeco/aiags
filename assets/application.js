@@ -49,7 +49,7 @@ if (gallerries) {
 				type: 'bullets',
 				clickable: true
 			},
-			loop: false,
+			loop: true,
 			keyboard: {
 				enabled: true
 			},

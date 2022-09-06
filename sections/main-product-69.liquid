@@ -1,3 +1,10 @@
+{%comment%}
+*
+* Template: Single Product
+* url: /collections/SINGLE_PRODUCT
+*
+{%endcomment%}
+
 {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -5,17 +12,23 @@
   <div class="row">
 
     <div class="hide-less-than-lg col-lg-2 display-flex-justify-space-between">
-      <div class="list-unstyled">
+
+      {%comment%}
+      *
+      * Sidebar: Top
+      *
+      {%endcomment%}
+      <div class="list-unstyled sidebar sidebar-top">
         <ul>
           {% for link in linklists.main-menu.links %}
             {% if link.links != blank %}
-              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+              <li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
                 <a href="{{ link.url }}">
                   {{ link.title }} 
                 </a>
                 <ul>
                   {% for childlink in link.links %}
-                    <li class="{% if link.active %}current{% endif %}">
+                    <li class="sidebar-link sidebar-link--sub {% if link.active %}current{% endif %}">
                       <a href="{{ childlink.url }}">
                         {{ childlink.title }}
                       </a>
@@ -24,7 +37,7 @@
                 </ul>
               </li>
             {% else %}
-              <li class="{% if link.active %}current{% endif %}">
+              <li class="sidebar-link {% if link.active %}current{% endif %}">
                 <a href="{{ link.url }}">
                   {{ link.title }}
                 </a>
@@ -34,17 +47,22 @@
         </ul> 
       </div>
 
-      <div class="list-unstyled">
+      {%comment%}
+      *
+      * Sidebar: Bottom
+      *
+      {%endcomment%}
+      <div class="list-unstyled sidebar sidebar-bottom">
         <ul>
           {% for link in linklists['footer'].links -%}
             {% if link.links != blank %}
-              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+              <li class="slidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
                 <a href="{{ link.url }}">
                   {{ link.title }} 
                 </a>
                 <ul>
                   {% for childlink in link.links %}
-                    <li class="{% if link.active %}current{% endif %}">
+                    <li class="sidebar-link--sub {% if link.active %}current{% endif %}">
                       <a href="{{ childlink.url }}">
                         {{ childlink.title }}
                       </a>
@@ -53,7 +71,7 @@
                 </ul>
               </li>
             {% else %}
-              <li class="{% if link.active %}current{% endif %}">
+              <li class="sidebar-link {% if link.active %}current{% endif %}">
                 <a href="{{ link.url }}">
                   {{ link.title }}
                 </a>
@@ -61,53 +79,76 @@
             {% endif %}
           {% endfor %}
         </ul> 
-        <div>
-          {%- form 'currency' -%}
-            {{ form | currency_selector }}
-          {%- endform -%}
-        </div>
       </div>
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 product-images">
+    {%comment%}
+    *
+    * Slideshow
+    *
+    {%endcomment%}
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5 product-images">
       <div class="gallery swiper">
         <div class="swiper-wrapper">
         {%- for media in product.media -%}
           {%- if media.media_type == 'image' -%}
           {%- assign image = media.preview_image -%}
 
+            {%comment%}
+            * Slide
+            {%endcomment%}
             <div class="swiper-slide" data-media-id="{{ media.id }}">
-              <div class="image-container">
-                <svg xmlns="http://www.w3.org/2000/svg" width="{{ image.width }}" height="{{ image.height }}" viewBox="0 0 {{ image.width }} {{ image.height }}">
-                  <rect width="{{ image.width }}" height="{{ image.height }}"/>
-                </svg>
+              <div id="img-container" class="image-container">
                 <img src="{{ image | img_url: '2048x' }}" alt="{{ image.alt | escape }}">
               </div>
-              <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="product-modal">
-                <button data-media-id="{{ section.id }}-{{ media.id }}" class="product-popup-modal__button link" type="button" aria-haspopup="dialog">
-                  {%- render 'icon-zoom' -%}
-                </button>
-              </modal-opener>
             </div>
+
           {%- endif-%}
         {%- endfor -%}
         </div>
+
+        {%comment%}
+        * Pagination
+        {%endcomment%}       
         <div class="swiper-pagination"></div>
 
+        {%comment%}
+        * Hover Controls
+        {%endcomment%} 
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       </div>
     </div>
 
-    <div id="ProductInfo-{{ section.id }}" class="col-xs-12 col-sm-6 col-md-4 product-info">
+    {%comment%}
+    *
+    * Product Info
+    *
+    {%endcomment%}   
+    <div id="ProductInfo-{{ section.id }}" class="col-xs-12 col-sm-4 col-md-3 product-info">
 
-        <p class="hide">{{ product.vendor | escape }}</p>
-        <h1 class="product__title">
-          {{ product.title | escape }}
-        </h1>
+      {%comment%}
+      * Vendor
+      {%endcomment%} 
+      <p class="hide">{{ product.vendor | escape }}</p>
+
+      {%comment%}
+      * Title
+      {%endcomment%}       
+      <h1 class="product__title">
+        {{ product.title | escape }}
+      </h1>
   
+      {%comment%}
+      * Price
+      {%endcomment%} 
       {% render 'price', product: product %}
 
+      {%comment%}
+      *
+      * Quantity
+      *
+      {%endcomment%}  
       <div class="info-container-inner-inner">
         <div class="product-form__input product-form__input-quantity">
           <label class="form__label" for="Quantity-{{ section.id }}">
@@ -134,6 +175,9 @@
           </quantity-input>
         </div>
 
+        {%comment%}
+        * Variant Radio Buttons
+        {%endcomment%} 
         <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}">
           {%- for option in product.options_with_values -%}
               <fieldset class="js product-form__input{% if option.values.size <= 1 %} hide{% endif %}">
@@ -156,6 +200,9 @@
           </script>
         </variant-radios>
 
+        {%comment%}
+        * Scriptless Quantity Input
+        {%endcomment%} 
         <noscript class="product-form__noscript-wrapper-{{ section.id }}">
           <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
             <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
@@ -178,6 +225,11 @@
           </div>
         </noscript>
 
+        {%comment%}
+        *
+        * Add To Cart
+        *
+        {%endcomment%}  
         <product-form class="product-form">
 
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
@@ -210,6 +262,9 @@
             </div>
           {%- endform -%}
 
+          {%comment%}
+          * Errors
+          {%endcomment%} 
           <div class="product-form__error-message-wrapper" role="alert" hidden>
             <span class="product-form__error-message"></span>
           </div>
@@ -217,22 +272,30 @@
 
       </div>
 
+      {%comment%}
+      *
+      * Accordion
+      *
+      {%endcomment%}
       {%- if product.description != blank -%}
-      <div class="accordion">
-        <details>
-          <summary class="summary">
-            <div class="title">
-              <h2>About</h2>
+        <div class="accordion">
+          <details>
+            <summary class="summary">
+              <div class="title">
+                <h2>About</h2>
+              </div>
+              {% render 'icon-plus' %}
+            </summary>
+            <div class="content">
+              <p>{{ product.description }}</p>
             </div>
-            {% render 'icon-plus' %}
-          </summary>
-          <div class="content">
-            {{ product.description }}
-          </div>
-        </details>
-      </div>
+          </details>
+        </div>
       {%- endif -%}
 
+      {%comment%}
+      * Section Blocks
+      {%endcomment%} 
       {%- for block in section.blocks -%}
         {%- case block.type -%}
         {%- when 'text' -%}
@@ -259,7 +322,12 @@
         </div>
         {%- endcase -%}
       {%- endfor -%}
+
+      {%comment%}
+      * Serving Suggestion within Accordion
+      {%endcomment%} 
       {% assign serving_suggestions = product.metafields.custom.serving_suggestions.value %}
+
       {% if serving_suggestions %}
         <div class="accordion hide-more-than-md">
           <details>
@@ -280,6 +348,10 @@
           </details>
         </div>
       {% endif %}
+
+      {%comment%}
+      * Settings
+      {%endcomment%} 
       {%- for block in section.blocks -%}
         {%- case block.type -%}
         {%- when 'custom_liquid' -%}
@@ -290,24 +362,23 @@
       {%- endfor -%}
     </div>
 
+    {%comment%}
+    *
+    * Related Products
+    * TO DO: currently listed as Serving Suggestions, needs to be Related Products
+    *
+    {%endcomment%}
     <div class="hide-less-than-md product-serving col-md-2">
         <div class="accordion">
           <details>
             <summary class="summary">
               <div class="title">
-                <h2>Serving Suggestions</h2>
+                <h2>Related Products</h2>
               </div>
               {% render 'icon-plus' %}
             </summary>
-            <div class="content list-unstyled">
-              <ul class="">
-                {% assign serving_suggestions = product.metafields.custom.serving_suggestions.value %}
-                {% if serving_suggestions %}
-                  {% for serving_suggestion in serving_suggestions %}
-                    <li><img src="{{ serving_suggestion | image_url }}"></li>
-                  {% endfor %}
-                {% endif %}
-              </ul>
+            <div class="product-recommendations content list-unstyled">
+              {% include 'product-recommendations' %}
             </div>
           </details>
         </div>
@@ -315,12 +386,17 @@
   </div>
 </div>
 
+{%comment%}
+*
+* Product Image Modal
+* TO DO: change to Image Hover Zoom effect
+*
+
 <product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
   <div class="product-media-modal__dialog" role="dialog" aria-label="{{ 'products.modal.label' | t }}" aria-modal="true" tabindex="-1">
     <button id="ModalClose-{{ section.id }}" type="button" class="product-media-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
 
     <div class="product-media-modal__content" role="document" aria-label="{{ 'products.modal.label' | t }}" tabindex="0">
-
           {%- for media in product.media -%}
             {%- if media.media_type == 'image' -%}
             {%- assign image = media.preview_image -%}
@@ -337,7 +413,30 @@
     </div>
   </div>
 </product-modal>
+{%endcomment%}
 
+{%comment%}
+*
+* Scripts
+*
+{%endcomment%}
+<script>
+  const container = document.getElementById("img-container");
+  const img = document.querySelector("img");
+  container.addEventListener("mousemove", onZoom);
+  container.addEventListener("mouseover", onZoom);
+  container.addEventListener("mouseleave", offZoom);
+  function onZoom(e) {
+      const x = e.clientX - e.target.offsetLeft;
+      const y = e.clientY - e.target.offsetTop;
+      img.style.transformOrigin = `${x}px ${y}px`;
+      img.style.transform = "scale(1.5)";
+  }
+  function offZoom(e) {
+      img.style.transformOrigin = `center center`;
+      img.style.transform = "scale(1)";
+  }
+</script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     function isIE() {
@@ -361,6 +460,11 @@
   });
 </script>
 
+{%comment%}
+*
+* Block Settings
+*
+{%endcomment%}
 {% schema %}
 {
   "name": "Main Product",

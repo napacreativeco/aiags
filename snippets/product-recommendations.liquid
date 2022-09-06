@@ -1,0 +1,71 @@
+{% if product.metafields.custom.related_products.value != '' %}
+  {% for product in product.metafields.custom.related_products.value %}
+    
+    {%comment%}
+    * Title
+    {%endcomment%} 
+    <h3 class="title">
+      <a href={{ product.url }} title={{ product.title }}>
+        {{ product.title }}
+      </a>
+    </h3>
+
+    {%comment%}
+    * Image
+    {%endcomment%} 
+    {%- for media in product.media limit:1 -%}
+      {%- if media.media_type == 'image' -%}
+      {%- assign image = media.preview_image -%}
+      
+        <a href={{ product.url }} title={{ product.title }}>
+          <img src="{{ image | product_img_url: 'medium' }}" alt="{{ image.alt | escape }}">
+        </a>
+      
+      {%- endif-%}
+    {%- endfor -%}
+
+    {%comment%}
+    * Variants
+    {%endcomment%} 
+    <div class="variants">
+
+      <div class="price">
+        <a href={{ product.url }} title={{ product.title }}>
+          {% render 'price', product: product | money_without_trailing_zeros %}
+        </a>
+      </div>
+
+      {% unless product.has_only_default_variant %}
+      {% for option in product.options_with_values %}
+        {% assign downcased_option = option.name | downcase %}
+          {% if downcased_option contains 'size' %}
+            <div class="size">
+              <ul>
+              {% for value in option.values %}
+                {% assign variant_available = false %}
+                {% if product.variants[forloop.index0].available %}
+                  {% assign variant_available = true %}
+                {% endif %}
+                <li>
+                  {%- if variant_available -%}
+                    <a href="{{ product.variants[forloop.index0].url }}">{{- value | escape -}}</a>
+                  {%- else -%}
+                    <strike>&nbsp;{{ value | escape }}&nbsp;</strike>
+                  {%- endif -%}
+                </li>
+              {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endunless %}
+    </div>
+    
+    
+  {% endfor %}
+{% endif %}
+
+{% if product.metafields.custom.related_products.value == blank %}
+  <div>No related products.</div> 
+
+{% endif %}

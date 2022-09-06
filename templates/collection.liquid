@@ -1,17 +1,30 @@
+{%comment%}
+*
+* Template: Shop All
+* url: /collections/frontpage
+*
+{%endcomment%}
+
 <div class="collection container-fluid">
   <div class="row">
     <div class="hide-less-than-lg col-lg-2 display-flex-justify-space-between padding-bottom-2rem">
-      <div class="list-unstyled">
+
+      {%comment%}
+      *
+      * Sidebar: Top
+      *
+      {%endcomment%}
+      <div class="list-unstyled sidebar sidebar-top">
         <ul>
           {% for link in linklists.main-menu.links %}
             {% if link.links != blank %}
-              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+              <li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
                 <a href="{{ link.url }}">
                   {{ link.title }} 
                 </a>
                 <ul>
                   {% for childlink in link.links %}
-                    <li class="{% if link.active %}current{% endif %}">
+                    <li class="sidebar-link--sub {% if link.active %}current{% endif %}">
                       <a href="{{ childlink.url }}">
                         {{ childlink.title }}
                       </a>
@@ -20,7 +33,7 @@
                 </ul>
               </li>
             {% else %}
-              <li class="{% if link.active %}current{% endif %}">
+              <li class="sidebar-link {% if link.active %}current{% endif %}">
                 <a href="{{ link.url }}">
                   {{ link.title }}
                 </a>
@@ -30,17 +43,22 @@
         </ul> 
       </div>
 
-      <div class="list-unstyled">
+      {%comment%}
+      *
+      * Sidebar: Bottom
+      *
+      {%endcomment%}
+      <div class="list-unstyled sidebar sidebar-bottom">
         <ul>
           {% for link in linklists['footer'].links -%}
             {% if link.links != blank %}
-              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+              <li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
                 <a href="{{ link.url }}">
                   {{ link.title }} 
                 </a>
                 <ul>
                   {% for childlink in link.links %}
-                    <li class="{% if link.active %}current{% endif %}">
+                    <li class="sidebar-link--sub {% if link.active %}current{% endif %}">
                       <a href="{{ childlink.url }}">
                         {{ childlink.title }}
                       </a>
@@ -49,7 +67,7 @@
                 </ul>
               </li>
             {% else %}
-              <li class="{% if link.active %}current{% endif %}">
+              <li class="sidebar-link {% if link.active %}current{% endif %}">
                 <a href="{{ link.url }}">
                   {{ link.title }}
                 </a>
@@ -57,30 +75,45 @@
             {% endif %}
           {% endfor %}
         </ul> 
-        <div>
-          {%- form 'currency' -%}
-            {{ form | currency_selector }}
-          {%- endform -%}
-        </div>
       </div>
     </div>
+
+    {%comment%}
+    *
+    * Product Archive
+    *
+    {%endcomment%}
     <div class="contents-less-than-lg col-lg-10">
       <div class="row">
       {% for product in collection.products %}
 
+
         <div class="card col-xs-12 col-sm-6 col-md-4">
-          <div class="media">
+          {%comment%} 
+          * Image
+          {%endcomment%}
+          <div class="media image-container">
             <a href="{{ product.url | within: collection }}">
-            {% assign img_url = product.featured_image %}
-              <svg xmlns="http://www.w3.org/2000/svg" width="{{ img_url.width }}" height="{{ img_url.height }}" viewBox="0 0 {{ img_url.width }} {{ img_url.height }}">
-                <rect width="{{ img_url.width }}" height="{{ img_url.height }}"/>
-              </svg>
-              <img class="{{ aspect }}" src="{{ img_url | img_url: '1920x' }}" alt="{{ variant.image.alt | escape }}">
+              {% assign img_url = product.featured_image %}
+              
+              <div class="reveal">
+                <img class="image-one archive-image {{ aspect }}" src="{{ img_url | product_img_url: 'large' }}" alt="{{ variant.image.alt | escape }}">
+                <img class="hidden image-two archive-image" src="{{ product.images.last | product_img_url: 'large' }}" alt="{{ product.images.last.alt | escape }}" />
+              </div>
+            
             </a>
           </div>
+
+          {%comment%} 
+          * Info
+          {%endcomment%}
           <div class="content">
 
             <div class="info">
+
+              {%comment%} 
+              * Title
+              {%endcomment%}
               <div class="title">
                 <h2 class="hide">{{ product.vendor }}</h2>
                 <h3>
@@ -90,6 +123,9 @@
                 </h3>
               </div>
 
+              {%comment%} 
+              * Variants
+              {%endcomment%}
               {% unless product.has_only_default_variant %}
                 {% for option in product.options_with_values %}
 
@@ -119,6 +155,9 @@
 
             </div>
 
+            {%comment%} 
+            * Price
+            {%endcomment%}
             {% render 'price', product: product %}
           </div>
         </div>
@@ -128,4 +167,6 @@
     </div>
   </div>
 </div>
+
+
 

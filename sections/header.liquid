@@ -1,4 +1,9 @@
 <header>
+  {%comment%}
+  *
+  * Navbar: Left
+  *
+  {%endcomment%}
   <div >
     <a id="nav-toggle" href="{{ shop.url }}">{{ shop.name }}</a>
   </div>
@@ -22,6 +27,12 @@
         {% endif %}
       </ul>
     {% endif %}
+
+    {%comment%}
+    *
+    * Navbar: Right
+    *
+    {%endcomment%}
     <ul class="list-unstyled">
       <li>
         <a href="{{ routes.cart_url }}" id="cart-link">{{ 'layout.cart.title' | t }}
@@ -30,7 +41,11 @@
           {%- endif -%}
         </a>
       </li>
-
+      <li>
+        {%- form 'currency' -%}
+          {{ form | currency_selector }}
+        {%- endform -%}
+      </li>
     </ul>
   </div>
 </header>

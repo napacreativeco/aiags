@@ -1,0 +1,19 @@
+{
+    "sections": {
+      "main": {
+        "type": "landing-page",
+        "settings": {
+          "heading": "Welcome to our store",
+          "content": "we're away writing our next chapter. all is a gentle spring will return soon. a curated selection of our pieces can be purchased via our friends at apoc and café forgot all existing orders shall be dispatched by our team. for queries about orders placed before june seventh, simply contact info@gentlespring.co"
+        }
+      },
+      {
+        "type": "image_picker",
+        "id": "main_image",
+        "label": "Main Image"
+      }
+    },
+    "order": [
+      "main"
+    ]
+  }
