@@ -1,6 +1,0 @@
-development:
-  password: shptka_3db595befc4c646ea402adf1270761f2
-  theme_id: "123723350089"
-  store: gentle-spring.myshopify.com
-  ignore_files:
-    - config/settings_data.json
