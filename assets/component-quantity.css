@@ -1,0 +1,73 @@
+/* component-quantity */
+.quantity {
+  color: var(--color-foreground);
+  position: relative;
+  display: flex;
+  border: 1px solid var(--color-foreground);
+  height: 2rem;
+}
+
+.quantity__input {
+  font-family: var(--font-body-family);
+  font-size: var(--font-body-scale);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  color: var(--color-foreground);
+  text-align: center;
+  background-color: transparent;
+  border: 0;
+  padding: 0 0.2rem;
+  width: 100%;
+  width: 2rem;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.quantity__button {
+  flex-shrink: 0;
+  font-size: 0.5rem;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-foreground));
+  padding: 0 0.5rem;
+}
+
+.quantity__button:first-child {
+  padding: 0 0 0 0.5rem;
+}
+
+.quantity__button:last-child {
+  padding: 0 0.5rem 0 0;
+}
+
+.quantity__button svg {
+  width: 0.5rem;
+  height: 0.5rem;
+  pointer-events: none;
+}
+
+.quantity__button:focus-visible,
+.quantity__input:focus-visible {
+  background-color: var(--color-background);
+  z-index: 2;
+}
+
+.quantity__button:focus,
+.quantity__input:focus {
+  background-color: var(--color-background);
+  z-index: 2;
+}
+
+.quantity__input::-webkit-outer-spin-button,
+.quantity__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity__input[type='number'] {
+  -moz-appearance: textfield;
+}

@@ -1,0 +1,131 @@
+<div class="collection container-fluid">
+  <div class="row">
+    <div class="hide-less-than-lg col-lg-2 display-flex-justify-space-between padding-bottom-2rem">
+      <div class="list-unstyled">
+        <ul>
+          {% for link in linklists.main-menu.links %}
+            {% if link.links != blank %}
+              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+                <a href="{{ link.url }}">
+                  {{ link.title }} 
+                </a>
+                <ul>
+                  {% for childlink in link.links %}
+                    <li class="{% if link.active %}current{% endif %}">
+                      <a href="{{ childlink.url }}">
+                        {{ childlink.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li class="{% if link.active %}current{% endif %}">
+                <a href="{{ link.url }}">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul> 
+      </div>
+
+      <div class="list-unstyled">
+        <ul>
+          {% for link in linklists['footer'].links -%}
+            {% if link.links != blank %}
+              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+                <a href="{{ link.url }}">
+                  {{ link.title }} 
+                </a>
+                <ul>
+                  {% for childlink in link.links %}
+                    <li class="{% if link.active %}current{% endif %}">
+                      <a href="{{ childlink.url }}">
+                        {{ childlink.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li class="{% if link.active %}current{% endif %}">
+                <a href="{{ link.url }}">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul> 
+        <div>
+          {%- form 'currency' -%}
+            {{ form | currency_selector }}
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+    <div class="contents-less-than-lg col-lg-10">
+      <div class="row">
+      {% for product in collection.products %}
+
+        <div class="card col-xs-12 col-sm-6 col-md-4">
+          <div class="media">
+            <a href="{{ product.url | within: collection }}">
+            {% assign img_url = product.featured_image %}
+              <svg xmlns="http://www.w3.org/2000/svg" width="{{ img_url.width }}" height="{{ img_url.height }}" viewBox="0 0 {{ img_url.width }} {{ img_url.height }}">
+                <rect width="{{ img_url.width }}" height="{{ img_url.height }}"/>
+              </svg>
+              <img class="{{ aspect }}" src="{{ img_url | img_url: '1920x' }}" alt="{{ variant.image.alt | escape }}">
+            </a>
+          </div>
+          <div class="content">
+
+            <div class="info">
+              <div class="title">
+                <h2 class="hide">{{ product.vendor }}</h2>
+                <h3>
+                  <a href="{{ product.url }}">
+                    {{ product.title | escape }}
+                  </a>
+                </h3>
+              </div>
+
+              {% unless product.has_only_default_variant %}
+                {% for option in product.options_with_values %}
+
+                  {% assign downcased_option = option.name | downcase %}
+                    {% if downcased_option contains 'size' %}
+                      <div class="size">
+                        <p>Sizes:</p>
+                        <ul>
+                        {% for value in option.values %}
+                          {% assign variant_available = false %}
+                          {% if product.variants[forloop.index0].available %}
+                            {% assign variant_available = true %}
+                          {% endif %}
+                          <li>
+                            {%- if variant_available -%}
+                              <a href="{{ product.variants[forloop.index0].url }}">{{- value | escape -}}</a>
+                            {%- else -%}
+                              <strike>&nbsp;{{ value | escape }}&nbsp;</strike>
+                            {%- endif -%}
+                          </li>
+                        {% endfor %}
+                        </ul>
+                      </div>
+                  {% endif %}
+                {% endfor %}
+              {% endunless %}
+
+            </div>
+
+            {% render 'price', product: product %}
+          </div>
+        </div>
+
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+

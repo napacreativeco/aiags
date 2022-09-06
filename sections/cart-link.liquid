@@ -1,0 +1,5 @@
+<a href="{{ routes.cart_url }}" id="cart-link">{{ 'layout.cart.title' | t }}
+  {%- if cart != empty -%}
+    (<span id="cart-count">{{ cart.item_count }}</span>)
+  {%- endif -%}
+</a>

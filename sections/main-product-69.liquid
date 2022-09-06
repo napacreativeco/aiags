@@ -1,0 +1,426 @@
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<div class="product container-fluid">
+  <div class="row">
+
+    <div class="hide-less-than-lg col-lg-2 display-flex-justify-space-between">
+      <div class="list-unstyled">
+        <ul>
+          {% for link in linklists.main-menu.links %}
+            {% if link.links != blank %}
+              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+                <a href="{{ link.url }}">
+                  {{ link.title }} 
+                </a>
+                <ul>
+                  {% for childlink in link.links %}
+                    <li class="{% if link.active %}current{% endif %}">
+                      <a href="{{ childlink.url }}">
+                        {{ childlink.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li class="{% if link.active %}current{% endif %}">
+                <a href="{{ link.url }}">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul> 
+      </div>
+
+      <div class="list-unstyled">
+        <ul>
+          {% for link in linklists['footer'].links -%}
+            {% if link.links != blank %}
+              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+                <a href="{{ link.url }}">
+                  {{ link.title }} 
+                </a>
+                <ul>
+                  {% for childlink in link.links %}
+                    <li class="{% if link.active %}current{% endif %}">
+                      <a href="{{ childlink.url }}">
+                        {{ childlink.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li class="{% if link.active %}current{% endif %}">
+                <a href="{{ link.url }}">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul> 
+        <div>
+          {%- form 'currency' -%}
+            {{ form | currency_selector }}
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 product-images">
+      <div class="gallery swiper">
+        <div class="swiper-wrapper">
+        {%- for media in product.media -%}
+          {%- if media.media_type == 'image' -%}
+          {%- assign image = media.preview_image -%}
+
+            <div class="swiper-slide" data-media-id="{{ media.id }}">
+              <div class="image-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="{{ image.width }}" height="{{ image.height }}" viewBox="0 0 {{ image.width }} {{ image.height }}">
+                  <rect width="{{ image.width }}" height="{{ image.height }}"/>
+                </svg>
+                <img src="{{ image | img_url: '2048x' }}" alt="{{ image.alt | escape }}">
+              </div>
+              <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="product-modal">
+                <button data-media-id="{{ section.id }}-{{ media.id }}" class="product-popup-modal__button link" type="button" aria-haspopup="dialog">
+                  {%- render 'icon-zoom' -%}
+                </button>
+              </modal-opener>
+            </div>
+          {%- endif-%}
+        {%- endfor -%}
+        </div>
+        <div class="swiper-pagination"></div>
+
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+
+    <div id="ProductInfo-{{ section.id }}" class="col-xs-12 col-sm-6 col-md-4 product-info">
+
+        <p class="hide">{{ product.vendor | escape }}</p>
+        <h1 class="product__title">
+          {{ product.title | escape }}
+        </h1>
+  
+      {% render 'price', product: product %}
+
+      <div class="info-container-inner-inner">
+        <div class="product-form__input product-form__input-quantity">
+          <label class="form__label" for="Quantity-{{ section.id }}">
+            {{ 'products.product.quantity.label' | t }}
+          </label>
+
+          <quantity-input class="quantity">
+            <button class="quantity__button no-js-hidden" name="minus" type="button">
+              <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+              {% render 'icon-minus' %}
+            </button>
+            <input class="quantity__input"
+                type="number"
+                name="quantity"
+                id="Quantity-{{ section.id }}"
+                min="1"
+                value="1"
+                form="{{ product_form_id }}"
+              >
+            <button class="quantity__button no-js-hidden" name="plus" type="button">
+              <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+              {% render 'icon-plus' %}
+            </button>
+          </quantity-input>
+        </div>
+
+        <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}">
+          {%- for option in product.options_with_values -%}
+              <fieldset class="js product-form__input{% if option.values.size <= 1 %} hide{% endif %}">
+                <legend class="form__label">{{ option.name }}</legend>
+                {%- for value in option.values -%}
+                  <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                        name="{{ option.name }}"
+                        value="{{ value | escape }}"
+                        form="{{ product_form_id }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                  >
+                  <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                    {{ value }}
+                  </label>
+                {%- endfor -%}
+              </fieldset>
+          {%- endfor -%}
+          <script type="application/json">
+            {{ product.variants | json }}
+          </script>
+        </variant-radios>
+
+        <noscript class="product-form__noscript-wrapper-{{ section.id }}">
+          <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+            <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+            <div class="select">
+              <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
+                {%- for variant in product.variants -%}
+                  <option
+                    {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                    {% if variant.available == false %}disabled{% endif %}
+                    value="{{ variant.id }}"
+                  >
+                    {{ variant.title }}
+                    {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                    - {{ variant.price | money | strip_html }}
+                  </option>
+                {%- endfor -%}
+              </select>
+              {% render 'icon-plus' %}
+            </div>
+          </div>
+        </noscript>
+
+        <product-form class="product-form">
+
+          {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+          {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+            <div class="product-form__buttons">
+              <button
+                type="submit"
+                name="add"
+                class="product-form__submit button"
+              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+              >
+                  <span>
+                    {%- if product.selected_or_first_available_variant.available -%}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </span>
+                  <div class="loading-overlay__spinner hidden">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                  </div>
+              </button>
+              {%- comment-%}
+                {{ form | payment_button }}
+              {%- endcomment -%}
+            </div>
+          {%- endform -%}
+
+          <div class="product-form__error-message-wrapper" role="alert" hidden>
+            <span class="product-form__error-message"></span>
+          </div>
+        </product-form>
+
+      </div>
+
+      {%- if product.description != blank -%}
+      <div class="accordion">
+        <details>
+          <summary class="summary">
+            <div class="title">
+              <h2>About</h2>
+            </div>
+            {% render 'icon-plus' %}
+          </summary>
+          <div class="content">
+            {{ product.description }}
+          </div>
+        </details>
+      </div>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+        {%- when 'text' -%}
+          <p class="product__text" {{ block.shopify_attributes }}>
+            {{- block.settings.text -}}
+          </p>
+        {%- when 'collapsible_tab' -%}
+
+        <div class="accordion collapsible-tab" {{ block.shopify_attributes }}>
+          <details>
+              <summary class="summary">
+                <div class="title">
+                  <h2>
+                    {{ block.settings.heading | default: block.settings.page.title }}
+                  </h2>
+                </div>
+                {% render 'icon-plus' %}
+              </summary>
+              <div class="content" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                {{ block.settings.content }}
+                {{ block.settings.page.content }}
+              </div>
+          </details>
+        </div>
+        {%- endcase -%}
+      {%- endfor -%}
+      {% assign serving_suggestions = product.metafields.custom.serving_suggestions.value %}
+      {% if serving_suggestions %}
+        <div class="accordion hide-more-than-md">
+          <details>
+            <summary class="summary">
+              <div class="title">
+                <h2>Serving Suggestions</h2>
+              </div>
+              {% render 'icon-plus' %}
+            </summary>
+            <div class="content list-unstyled">
+              <ul class="">
+                  {% for serving_suggestion in serving_suggestions %}
+                    <li><img src="{{ serving_suggestion | image_url }}"></li>
+                  {% endfor %}
+
+              </ul>
+            </div>
+          </details>
+        </div>
+      {% endif %}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+        {%- when 'custom_liquid' -%}
+          {{ block.settings.custom_liquid }}
+        {%- when '@app' -%}
+          {% render block %}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="hide-less-than-md product-serving col-md-2">
+        <div class="accordion">
+          <details>
+            <summary class="summary">
+              <div class="title">
+                <h2>Serving Suggestions</h2>
+              </div>
+              {% render 'icon-plus' %}
+            </summary>
+            <div class="content list-unstyled">
+              <ul class="">
+                {% assign serving_suggestions = product.metafields.custom.serving_suggestions.value %}
+                {% if serving_suggestions %}
+                  {% for serving_suggestion in serving_suggestions %}
+                    <li><img src="{{ serving_suggestion | image_url }}"></li>
+                  {% endfor %}
+                {% endif %}
+              </ul>
+            </div>
+          </details>
+        </div>
+    </div>
+  </div>
+</div>
+
+<product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
+  <div class="product-media-modal__dialog" role="dialog" aria-label="{{ 'products.modal.label' | t }}" aria-modal="true" tabindex="-1">
+    <button id="ModalClose-{{ section.id }}" type="button" class="product-media-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+
+    <div class="product-media-modal__content" role="document" aria-label="{{ 'products.modal.label' | t }}" tabindex="0">
+
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+            {%- assign image = media.preview_image -%}
+
+                <div class="image-container" data-media-id="{{ section.id }}-{{ media.id }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="{{ image.width }}" height="{{ image.height }}" viewBox="0 0 {{ image.width }} {{ image.height }}">
+                    <rect width="{{ image.width }}" height="{{ image.height }}"/>
+                  </svg>
+                  <img src="{{ image | img_url: '2048x' }}" alt="{{ image.alt | escape }}">
+                </div>
+
+            {%- endif-%}
+          {%- endfor -%}
+    </div>
+  </div>
+</product-modal>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function isIE() {
+      const ua = window.navigator.userAgent;
+      const msie = ua.indexOf('MSIE ');
+      const trident = ua.indexOf('Trident/');
+
+      return (msie > 0 || trident > 0);
+    }
+
+    if (!isIE()) return;
+    const hiddenInput = document.querySelector('#{{ product_form_id }} input[name="id"]');
+    const noScriptInputWrapper = document.createElement('div');
+    const variantSwitcher = document.querySelector('variant-radios[data-section="{{ section.id }}"]') || document.querySelector('variant-selects[data-section="{{ section.id }}"]');
+    noScriptInputWrapper.innerHTML = document.querySelector('.product-form__noscript-wrapper-{{ section.id }}').textContent;
+    variantSwitcher.outerHTML = noScriptInputWrapper.outerHTML;
+
+    document.querySelector('#Variants-{{ section.id }}').addEventListener('change', function(event) {
+      hiddenInput.value = event.currentTarget.value;
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Content"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "collapsible_tab",
+      "name": "Collapsible Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Collapsible Row",
+          "info": "Include a heading that explains the content.",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Row content"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Row content from page"
+        }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Custom Liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom Liquid",
+          "info": "Add app snippets or other Liquid code to create advanced customizations."
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

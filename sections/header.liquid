@@ -1,0 +1,84 @@
+<header>
+  <div >
+    <a id="nav-toggle" href="{{ shop.url }}">{{ shop.name }}</a>
+  </div>
+  <div class="tools">
+    {% if shop.customer_accounts_enabled %}
+      <ul class="hide">
+        {% if customer %}
+        <li>
+          <a href="/account">account</a>
+        </li>
+        <li>
+          {{ 'log out'  | customer_logout_link }}
+        </li>
+        {% else %}
+        <li>
+          {{ 'log in ' | customer_login_link }}
+        </li>
+        <li>
+          {{ 'register' | customer_register_link }}
+        <li>
+        {% endif %}
+      </ul>
+    {% endif %}
+    <ul class="list-unstyled">
+      <li>
+        <a href="{{ routes.cart_url }}" id="cart-link">{{ 'layout.cart.title' | t }}
+          {%- if cart != empty -%}
+            (<span id="cart-count">{{ cart.item_count }}</span>)
+          {%- endif -%}
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+{% render 'cart-notification' %}
+
+<div id="nav-container" class="nav-container">
+  <div class="nav-inner">
+    <div class="nav-inner-inner">
+      <div class="close">
+      {% render 'icon-close' %}
+      </div>
+      <div class="list-unstyled">
+        <ul>
+          {% for link in linklists.main-menu.links %}
+            {% if link.links != blank %}
+              <li class="{% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+                <a href="{{ link.url }}">
+                  {{ link.title }} 
+                </a>
+                <ul>
+                  {% for childlink in link.links %}
+                    <li class="{% if link.active %}current{% endif %}">
+                      <a href="{{ childlink.url }}">
+                        {{ childlink.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li class="{% if link.active %}current{% endif %}">
+                <a href="{{ link.url }}">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul> 
+        <ul>
+          <li>
+            {%- form 'currency' -%}
+              {{ form | currency_selector }}
+            {%- endform -%}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
