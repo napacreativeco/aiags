@@ -1,16 +1,39 @@
 {
-    "sections": {
-      "landing": {
-        "type": "landing-page",
-        "settings": {}
-      },
-      "slideshow": {
-        "type": "spotlight-slider",
-        "settings": {}
+  "sections": {
+    "landing": {
+      "type": "landing-page",
+      "settings": {
+        "headline": "practicality and ambition are here layered and sewn together"
       }
     },
-    "order": [
-      "landing",
-      "slideshow"
-    ]
-  }
+    "slideshow": {
+      "type": "spotlight-slider",
+      "blocks": {
+        "418a00d4-59fa-4564-9e55-99ed605aac5f": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/20220501_JH_GENTLESPRING_11_0013.jpg",
+            "alt": ""
+          }
+        },
+        "2ced1ad6-fd6e-4376-bb1e-c922a4ce20ce": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/20220501_JH_GENTLESPRING_11_0074.jpg",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "418a00d4-59fa-4564-9e55-99ed605aac5f",
+        "2ced1ad6-fd6e-4376-bb1e-c922a4ce20ce"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "landing",
+    "slideshow"
+  ]
+}
