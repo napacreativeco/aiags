@@ -1,15 +1,10 @@
 {
-  "current": "Default",
+  "current": {
+    "header_on_landing_page": false
+  },
   "presets": {
-    "Default": {
-      "sections": {
-        "header": {
-          "type": "header",
-          "settings": {
-            "header_on_landing_page": false
-          }
-        }
-      }
+    "JR Preset": {
+      "header_on_landing_page": false
     }
   }
 }
