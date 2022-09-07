@@ -1,18 +1,16 @@
 {
-    "name": "Landing Page",
     "sections": {
-      "landing-page": {
+      "landing": {
         "type": "landing-page",
-        "settings": {
-            "headline": "Default headline"
-          }
+        "settings": {}
       },
       "slideshow": {
-        "type": "spotlight-slider"
+        "type": "spotlight-slider",
+        "settings": {}
       }
     },
     "order": [
-      "landing-page",
+      "landing",
       "slideshow"
     ]
   }
