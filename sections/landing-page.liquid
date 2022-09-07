@@ -1,13 +1,43 @@
 landing page
 
+{% for block in section.blocks %}
+  {% render block %}
+{% endfor %}
+
 {% schema %}
 {
     "name": "Landing Page",
+    "tag": "section",
+    "limit": 1,
     "settings": [
         {
-        "type": "text",
-        "id": "headline",
-        "label": "Headline"
+            "type": "text",
+            "id": "page-title",
+            "label": "Page Title"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Slide",
+            "type": "slide",
+            "settings": [
+                {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+                }
+            ]
+        },
+        {
+            "name": "Headline",
+            "type": "text",
+            "settings": [
+                {
+                "type": "text",
+                "id": "Headline",
+                "label": "Headline"
+                }
+            ]
         }
     ],
 }
