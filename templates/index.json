@@ -1,29 +1,11 @@
-
-// {
-//     "sections": {
-//       "landing": {
-//         "type": "landing-page",
-//         "settings": {}
-//       },
-//       "slideshow": {
-//         "type": "spotlight-slider",
-//         "settings": {}
-//       }
-//     },
-//     "order": [
-//       "landing",
-//       "slideshow"
-//     ]
-// }
-
 {
     "sections": {
-      "comingsoon": {
+      "cs": {
         "type": "coming-soon",
         "settings": {}
       }
     },
     "order": [
-      "main-password"
+      "cs"
     ]
-}
+  }
