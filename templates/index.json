@@ -18,8 +18,8 @@
 
 {
     "sections": {
-      "landing": {
-        "type": "main-password",
+      "comingsoon": {
+        "type": "coming-soon",
         "settings": {}
       }
     },

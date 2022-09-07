@@ -1,0 +1,25 @@
+{{ section.settings.headline }}
+
+{%comment%}
+*
+* Settings
+*
+{%endcomment%}
+{% schema %}
+{
+    "name": "Coming Soon",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "headline",
+            "label": "Headline"
+        },
+        {
+            "type": "text",
+            "id": "body-text",
+            "label": "Body Text"
+        }
+    ]
+}
+{% endschema %}
