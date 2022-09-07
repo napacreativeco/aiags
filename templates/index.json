@@ -1,11 +1,14 @@
 {
-    "sections": {
-      "cs": {
-        "type": "coming-soon",
-        "settings": {}
+  "sections": {
+    "cs": {
+      "type": "coming-soon",
+      "settings": {
+        "headline": "Good things come to those who wait",
+        "bodytext": "Not long now. We're away writing our next chapter and will return soon. A curated selection of our pieces can be purchased via our friends at APOC Store. All existing orders continue to be dispatched by our team. For order queries contact info@gentlespring.co."
       }
-    },
-    "order": [
-      "cs"
-    ]
-  }
+    }
+  },
+  "order": [
+    "cs"
+  ]
+}
