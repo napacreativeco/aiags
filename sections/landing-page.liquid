@@ -1,11 +1,10 @@
 {%- if section.settings.heading -%}
-    <h1>{{ section.settings.heading }}</h1>
+    <h1>{{ section.settings.headline }}</h1>
 {%- endif -%} 
-    
-{%- if section.settings.content -%}
-    <p>{{ section.settings.content }}</p>
-{%- endif -%}   
+     
 
-{%- if section.settings.main_image -%}
-    <img src={{ section.settings.main_image }} alt={{ section.settings.heading }} />
-{%- endif -%}   
+{% schema %}
+{
+  "name": "Landing Page"
+}
+{% endschema %}

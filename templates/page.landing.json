@@ -2,10 +2,17 @@
     "name": "Landing Page",
     "sections": {
       "main": {
-        "type": "landing-page"
+        "type": "landing-page",
+        "settings": {
+            "headline": "Default headline"
+          }
+      },
+      "slideshow": {
+        "type": "spotlight-slider"
       }
     },
     "order": [
-      "main"
+      "main",
+      "slideshow"
     ]
   }
