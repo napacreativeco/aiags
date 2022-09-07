@@ -98,7 +98,7 @@
                 {%endcomment%}
                 <div class="swiper-slide">
                     <div id="img-container" class="image-container">
-                        <img src="{{block.settings.image | img_url: 'master' }}" alt={{block.settings.alt}} >
+                        <img src="{{block.slide.settings.image | img_url: 'master' }}" alt={{block.slide.settings.alt}} >
                     </div>
                 </div>
 
@@ -139,17 +139,13 @@
                     "label": "Alt Text"
                 }
             ]
-        },
+        }
+    ],
+    "settings": [
         {
-            "name": "Headline",
             "type": "text",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "headline",
-                    "label": "Headline"
-                }
-            ]
+            "id": "headline",
+            "label": "Headline"
         }
     ]
 }
