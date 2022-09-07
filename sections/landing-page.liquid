@@ -1,17 +1,155 @@
+<style>
+    header {
+        display: none;
+    }
+    .gallery {
+	margin-bottom: 2rem;
+    max-width: 70vw;
+    margin: 0 auto;
+    border: 1px solid #000;
+}
+
+@media screen and (min-width: 48em) {
+	.gallery {
+		margin-bottom: 0;
+	}
+}
+
+.gallery .image-container {
+	aspect-ratio: 16 / 9;
+}
+
+.gallery .image-container svg {
+	display: none;
+}
+
+.gallery .image-container img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+	position: absolute;
+	top: 0;
+	width: 4rem;
+	height: 100%;
+	margin-top: 0;
+	z-index: 10;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: transparent;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+	display: none;
+}
+
+.swiper-button-prev {
+	cursor: e-resize;
+	left: unset;
+	right: 0 !important;
+}
+
+.swiper-button-next {
+	cursor: w-resize;
+	right: unset;
+	left: 0 !important;
+}
+
+.swiper-pagination {
+	bottom: 1rem !important;
+}
+
+.swiper-pagination-bullet {
+	border: 1px solid var(--color-foreground);
+	background: var(--color-background);
+	opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+	opacity: 1;
+	background: var(--color-foreground);
+}
+</style>
+
 <h1>
     {{ section.settings.headline }}
 </h1>
+
+{%comment%}
+*
+* Slideshow
+*
+{%endcomment%}
+<div class="col-lg-12 product-images">
+    <div class="gallery swiper">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+
+                {%comment%}
+                * Slide
+                {%endcomment%}
+                <div class="swiper-slide">
+                    <div id="img-container" class="image-container">
+                        <img src="{{block.settings.image | img_url: 'master' }}" alt={{block.settings.alt}} >
+                    </div>
+                </div>
+
+            {%- endfor -%}
+        </div>
+
+        {%comment%}
+        * Pagination
+        {%endcomment%}       
+        <div class="swiper-pagination"></div>
+
+        {%comment%}
+        * Hover Controls
+        {%endcomment%} 
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</div>
 
 {% schema %}
 {
     "name": "Landing Page",
     "tag": "section",
-    "settings": [
-    
+    "max_blocks": 5,
+    "blocks": [
         {
+            "name": "Slide",
+            "type": "slide",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "alt",
+                    "label": "Alt Text"
+                }
+            ]
+        },
+        {
+            "name": "Headline",
             "type": "text",
-            "id": "headline",
-            "label": "Headline"   
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "headline",
+                    "label": "Headline"
+                }
+            ]
         }
     ]
 }
