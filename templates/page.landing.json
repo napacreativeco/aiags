@@ -1,7 +1,7 @@
 {
     "name": "Landing Page",
     "sections": {
-      "main": {
+      "landing": {
         "type": "landing-page",
         "settings": {
             "headline": "Default headline"
@@ -12,7 +12,7 @@
       }
     },
     "order": [
-      "main",
+      "landing",
       "slideshow"
     ]
   }

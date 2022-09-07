@@ -1,16 +1,11 @@
+
+
 {% schema %}
 {
   "name": "Spotlight",
   "tag": "section",
   "class": "spotlight",
   "limit": 1,
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Slideshow"
-    }
-  ],
   "max_blocks": 5,
   "blocks": [
      {
@@ -28,9 +23,7 @@
   "presets": [
     {
       "name": "Slideshow",
-      "settings": {
-        "title": "Slideshow"
-      },
+      "settings": {},
       "blocks": [
         {
           "type": "slide"
@@ -49,6 +42,6 @@
       "title": "Diaporama"
     }
   },
-  "templates": ["article", "index", "page", "product"]
+  "templates": ["article", "index", "page"]
 }
 {% endschema %}
