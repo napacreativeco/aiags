@@ -1,6 +1,8 @@
 {
-  "current": {},
+  "current": "Default",
   "presets": {
-    "Default": {}
+    "Default": {
+      "header_on_landing_page": false
+    }
   }
 }

@@ -1,7 +1,12 @@
+{%- if settings.header_on_landing_page == true -%}
+    <style>
+        header {
+            display: none;
+        }
+    </style>
+{%- endif -%}
+
 <style>
-    header {
-        display: none;
-    }
     .gallery {
 	margin-bottom: 2rem;
     max-width: 70vw;
