@@ -1,5 +1,5 @@
 <style>
-    .gallery {
+.gallery {
 	margin-bottom: 2rem;
 }
 
@@ -135,7 +135,7 @@
                 {%comment%}
                 * Slide
                 {%endcomment%}
-                <div class="swiper-slide" data-media-id="{{ media.id }}">
+                <div class="swiper-slide">
                     <div id="img-container" class="image-container">
                         <img src="{{block.settings.image | img_url: 'master' }}" alt="">
                     </div>
@@ -155,24 +155,9 @@
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </div>
-    </div>
-
-
-
-{%comment%}
-*
-* Slideshow
-*
-{%endcomment%}
-<div class="slideshow-container landing-gallery">
-    {% for block in section.blocks %}
-
-        <div class="slide">
-            <img src="{{block.settings.image | img_url: 'master' }}" alt={{ block.settings.alt }} />
-        </div>
-        
-    {% endfor %}
 </div>
+
+
 
 
 
