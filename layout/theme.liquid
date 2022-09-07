@@ -82,9 +82,11 @@
   {{ content_for_layout }}
 </main>
 
+{%comment%}
 {% if template.name != 'password' %}
   {% section 'footer' %}
 {% endif %}
+{%endcomment%}
 
 <script>
   window.shopUrl = '{{ request.origin }}';

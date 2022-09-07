@@ -1,3 +1,13 @@
+{%- if section.settings.hide_header_on_landing == true -%}
+  {%- if page.template_suffix == "landing" -%}
+    <style>
+        header {
+            display: none;
+        }
+    </style>
+  {%- endif -%}
+{%- endif -%}
+
 <header>
   {%comment%}
   *
@@ -106,7 +116,8 @@
         {
             "type": "checkbox",
             "id": "hide_header_on_landing",
-            "label": "Hide Header on Landing Page"
+            "label": "Hide Header on Landing Page",
+            "default": true
         }
     ]
 }
