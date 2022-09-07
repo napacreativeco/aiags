@@ -2,7 +2,14 @@
   "current": "Default",
   "presets": {
     "Default": {
-      "header_on_landing_page": false
+      "sections": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "header_on_landing_page": false
+          }
+        }
+      }
     }
   }
 }
