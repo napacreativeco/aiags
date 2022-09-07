@@ -63,7 +63,44 @@ if (gallerries) {
 	}
 }
 
+/*
+ * Landing Page Slideshow
+ */
+const landinggallery = document.querySelectorAll('.landing-gallery');
 
+const swipersNew = [];
+
+if (landinggallery) {
+	for (var i = 0; i < landinggallery.length; i++) {
+
+		let gallery = landinggallery[i];
+
+		let pagination = gallery.querySelectorAll('.swiper-pagination')[0];
+		let prev = gallery.querySelectorAll('.swiper-button-prev')[0];
+		let next = gallery.querySelectorAll('.swiper-button-next')[0];
+
+		let swiperz = new Swiper(gallery, {
+			speed: 400,
+			spaceBetween: 0,
+			navigation: {
+				nextEl: prev,
+				prevEl: next
+			},
+			pagination: {
+				el: pagination,
+				type: 'bullets',
+				clickable: true
+			},
+			loop: true,
+			keyboard: {
+				enabled: true
+			},
+		});
+
+    swipersNew.push(swiperz);
+
+	}
+}
 
 const details = Array.from(document.querySelectorAll('details'))
 
