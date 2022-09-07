@@ -1,6 +1,5 @@
 {
     "name": "Landing Page",
-    "id": "landing-template",
     "sections": {
       "landing-page": {
         "type": "landing-page",
@@ -13,7 +12,7 @@
       }
     },
     "order": [
-      "landing",
+      "landing-page",
       "slideshow"
     ]
   }
