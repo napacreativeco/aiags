@@ -1,6 +1,17 @@
 {
   "current": {
-    "header_on_landing_page": false
+    "header_on_landing_page": false,
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "hide_header_on_landing": true
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
   },
   "presets": {
     "JR Preset": {
