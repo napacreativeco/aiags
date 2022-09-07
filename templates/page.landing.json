@@ -2,7 +2,7 @@
     "name": "Landing Page",
     "id": "landing-template",
     "sections": {
-      "landing": {
+      "landing-page": {
         "type": "landing-page",
         "settings": {
             "headline": "Default headline"
