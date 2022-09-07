@@ -1,0 +1,10 @@
+{
+  "current": {
+    "header_on_landing_page": false
+  },
+  "presets": {
+    "JR Preset": {
+      "header_on_landing_page": false
+    }
+  }
+}

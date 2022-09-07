@@ -1,16 +1,19 @@
 {
-    "sections": {
-      "landing": {
-        "type": "landing-page",
-        "settings": {}
-      },
-      "slideshow": {
-        "type": "spotlight-slider",
-        "settings": {}
+  "sections": {
+    "landing": {
+      "type": "landing-page",
+      "settings": {
+        "headline": "practicality and ambition are here layered and sewn together"
       }
     },
-    "order": [
-      "landing",
-      "slideshow"
-    ]
-  }
+    "slideshow": {
+      "type": "spotlight-slider",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "landing",
+    "slideshow"
+  ]
+}
