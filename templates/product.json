@@ -12,7 +12,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Materials",
-            "content": "<p>{{ product.metafields.custom.product_sizing | metafield_tag }}{{ product.metafields.custom.product_sizing_table.value }}<\/p>",
+            "content": "<p>{{ product.metafields.custom.product_sizing | metafield_tag }}{{ product.metafields.custom.product_sizing_table.value }} <\/p>",
             "page": ""
           }
         },
@@ -20,7 +20,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Shipping & Returns",
-            "content": "",
+            "content": "<p>{{ product.metafields.custom.shipping_and_returns | metafield_tag }}<\/p>",
             "page": ""
           }
         },
