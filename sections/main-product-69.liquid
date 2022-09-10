@@ -6,6 +6,8 @@
 {%endcomment%}
 
 {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+{{ 'sizing-chart.css' | asset_url | stylesheet_tag }}
+
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 <div class="product container-fluid">
@@ -299,29 +301,37 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
         {%- when 'text' -%}
+
           <p class="product__text" {{ block.shopify_attributes }}>
             {{- block.settings.text -}}
           </p>
+
         {%- when 'collapsible_tab' -%}
 
-        <div class="accordion collapsible-tab" {{ block.shopify_attributes }}>
-          <details>
-              <summary class="summary">
-                <div class="title">
-                  <h2>
-                    {{ block.settings.heading | default: block.settings.page.title }}
-                  </h2>
+          <div class="accordion collapsible-tab" {{ block.shopify_attributes }}>
+            <details>
+                <summary class="summary">
+                  <div class="title">
+                    <h2>
+                      {{ block.settings.heading | default: block.settings.page.title }}
+                    </h2>
+                  </div>
+                  {% render 'icon-plus' %}
+                </summary>
+                <div class="content" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                  {{ block.settings.content }}
+                  {{ block.settings.page.content }}
                 </div>
-                {% render 'icon-plus' %}
-              </summary>
-              <div class="content" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                {{ block.settings.content }}
-                {{ block.settings.page.content }}
-              </div>
-          </details>
-        </div>
+            </details>
+          </div>
+
         {%- endcase -%}
       {%- endfor -%}
+
+      
+      {% include 'product-sizing-chart' %}
+   
+      
 
       {%comment%}
       * Serving Suggestion within Accordion
@@ -420,6 +430,7 @@
 * Scripts
 *
 {%endcomment%}
+
 <script>
   const container = document.getElementById("img-container");
   const img = document.querySelector("img");

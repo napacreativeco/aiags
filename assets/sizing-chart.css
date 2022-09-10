@@ -1,0 +1,145 @@
+.sizing-chart__modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    width: auto;
+    border: 2px solid #000;
+    z-index: 999999999999999;
+    font-family: 'Basic Commercial';
+  }
+  .sizing-chart__row {
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 30px 50px;
+  }
+  .sizing-chart__information p {
+    padding: 0 0 10px 0;
+  }
+  .sizing-chart__table-container {
+    width: 100%;
+    margin: 10px auto 20px auto;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: scroll;
+  }
+  .sizing-chart__modal table {
+    border-collapse: collapse;
+  }
+  .tr {
+    display: flex;
+  }
+  .tr > * {
+    flex: 1;
+  }
+  .sizing-chart__modal tbody {
+
+  }
+  .sizing-chart__modal tbody > * {
+
+  }
+  /* Header */
+  .sizing-chart__modal table tr:first-of-type td {
+    border-bottom: 2px solid #000;
+    padding: 10px 10px 6px 10px;
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+  }
+
+  .sizing-chart__modal table td p {
+    padding-right: 10px;
+  }
+  .sizing-chart__modal table td {
+    padding: 10px;
+    text-align: center;
+  }
+  .sizing-chart__modal tr > td:first-of-type {
+    text-align: left !important;
+    padding: 10px 40px 10px 10px;
+  }
+  .sizing-chart__row h2 {
+    font-size: 2.2rem;
+  }
+
+/* SWITCH */
+.switch-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+.switch-container input[type=checkbox] {
+    position: absolute;
+}
+.switch-container p {
+    margin: 0;
+    padding: 0;
+}
+
+.switch-container input[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.switch-container label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 40px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #000;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+}
+
+.switch-container label:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 90px;
+    transition: 0.3s;
+}
+
+.switch-container input:checked + label {
+    background: #000;
+}
+
+.switch-container input:checked + label:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+    background: #fff;
+}
+
+.switch-container label:active:after {
+    width: 40px;
+}
+
+.inches,
+.centimeters {
+    display: none;
+}
+.inches.active-switch,
+.centimeters.active-switch {
+    display: flex;
+}
+
+@media screen and (max-width: 767px) {
+    .sizing-chart__modal {
+        width: 98vw;
+    }
+    .sizing-chart__row {
+        padding: 10px 30px;
+      }
+}

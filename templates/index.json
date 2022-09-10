@@ -1,11 +1,16 @@
 {
-    "sections": {
-      "cs": {
-        "type": "coming-soon",
-        "settings": {}
-      }
+  "sections": {
+    "landing": {
+      "type": "landing-page",
+      "settings": {}
     },
-    "order": [
-      "cs"
-    ]
-  }
+    "slideshow": {
+      "type": "spotlight-slider",
+      "settings": {}
+    }
+  },
+  "order": [
+    "landing",
+    "slideshow"
+  ]
+}

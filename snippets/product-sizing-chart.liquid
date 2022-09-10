@@ -1,0 +1,24 @@
+<div class="sizing-chart__modal">
+    <div class="sizing-chart__row">
+        <div class="sizing-chart__information">
+            <h2>
+                {{ product.title | escape }}
+            </h2>
+            <p>{{ product.metafields.custom.product_sizing }}</p>
+            <div class="switch-container">
+                <div>
+                    <input class="inch-switch" type="checkbox" id="switch" />
+                    <label for="switch">Toggle</label>
+                </div>
+                <p>IN / CM</p>
+            </div>
+            
+        </div>
+        <div class="sizing-chart__table-container">
+                <div class="inches active-switch">{{ product.metafields.custom.product_sizing_table }}</div>
+                <div class="centimeters">{{ product.metafields.custom.product_sizing_table_cm_ }}</div>
+        </div>
+    </div>
+</div> 
+
+
