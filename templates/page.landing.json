@@ -1,16 +1,30 @@
 {
-    "sections": {
-      "landing": {
-        "type": "landing-page",
-        "settings": {}
-      },
-      "slideshow": {
-        "type": "spotlight-slider",
-        "settings": {}
+  "sections": {
+    "landing": {
+      "type": "landing-page",
+      "settings": {
+        "headline": "Hi Guys"
       }
     },
-    "order": [
-      "landing",
-      "slideshow"
-    ]
-  }
+    "slideshow": {
+      "type": "spotlight-slider",
+      "blocks": {
+        "a97c07ba-9536-4362-82a2-5b91c28e86f9": {
+          "type": "slide",
+          "settings": {
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "a97c07ba-9536-4362-82a2-5b91c28e86f9"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "landing",
+    "slideshow"
+  ]
+}

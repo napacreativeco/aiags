@@ -5,13 +5,14 @@
       "blocks": {
         "description": {
           "type": "description",
-          "settings": {}
+          "settings": {
+          }
         },
         "collapsible-row-0": {
           "type": "collapsible_tab",
           "settings": {
             "heading": "Materials",
-            "content": "",
+            "content": "<p>{{ product.metafields.custom.product_materials | metafield_tag }}<\/p>",
             "page": ""
           }
         },
@@ -19,7 +20,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Shipping & Returns",
-            "content": "",
+            "content": "<p>{{ product.metafields.custom.shipping_and_returns | metafield_tag }}<\/p>",
             "page": ""
           }
         },
@@ -27,7 +28,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Dimensions",
-            "content": "",
+            "content": "<p>{{ product.metafields.custom.product_sizing | metafield_tag }}{{ product.metafields.custom.product_sizing_table.value }}<\/p>",
             "page": ""
           }
         },
@@ -35,7 +36,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Care Instructions",
-            "content": "",
+            "content": "<p>{{ product.metafields.descriptors.care_guide | metafield_tag }}<\/p>",
             "page": ""
           }
         }
@@ -47,7 +48,8 @@
         "collapsible-row-2",
         "collapsible-row-3"
       ],
-      "settings": {}
+      "settings": {
+      }
     }
   },
   "order": [
