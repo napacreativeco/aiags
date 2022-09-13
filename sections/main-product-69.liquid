@@ -249,7 +249,7 @@
                     {%- if product.selected_or_first_available_variant.available -%}
                       {{ 'products.product.add_to_cart' | t }}
                     {%- else -%}
-                      {{ 'products.product.sold_out' | t }}
+                      <span>Coming soon</span>
                     {%- endif -%}
                   </span>
                   <div class="loading-overlay__spinner hidden">
@@ -319,8 +319,12 @@
                   {% render 'icon-plus' %}
                 </summary>
                 <div class="content" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                  {{ block.settings.content }}
-                  {{ block.settings.page.content }}
+                  {%- if block.settings.content contains product.metafields.custom.product_sizing_table.value -%}
+                    <p>{{ product.metafields.custom.product_sizing }}</p>
+                    <p class="sizing_chart_link">Sizing chart</p>
+                  {%- else -%}
+                    <p>{{ block.settings.content }}</p>
+                  {%- endif -%}
                 </div>
             </details>
           </div>

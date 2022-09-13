@@ -74,7 +74,15 @@ details {
 .accordion summary .title:hover {
     padding-left: 6px;
 }
-
+/* 
+ * Product
+ */
+ h1.product__title {
+    font-size: 2rem;
+ }
+ span.price-item {
+    font-size: 1.5rem;
+ }
 /* 
  * Product Image Zoom
  */
@@ -175,4 +183,12 @@ details {
 .single-page__content-wrapper a,
 .single-page__content-wrapper span {
     font-family: 'Basic Commercial', sans-serif;
+}
+@media screen and (max-width: 767px) {
+    .product-info {
+        margin-top: 30px;
+    }
+    .summary .title h2 {
+        font-size: 1.3rem;
+    }
 }
