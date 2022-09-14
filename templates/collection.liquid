@@ -7,162 +7,106 @@
 
 <div class="collection container-fluid">
   <div class="row">
-    <div class="hide-less-than-lg col-lg-2 display-flex-justify-space-between padding-bottom-2rem">
 
-      {%comment%}
-      *
-      * Sidebar: Top
-      *
-      {%endcomment%}
-      <div class="list-unstyled sidebar sidebar-top">
-        <ul>
-          {% for link in linklists.main-menu.links %}
-            {% if link.links != blank %}
-              <li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
-                <a href="{{ link.url }}">
-                  {{ link.title }} 
-                </a>
-                <ul>
-                  {% for childlink in link.links %}
-                    <li class="sidebar-link--sub {% if link.active %}current{% endif %}">
-                      <a href="{{ childlink.url }}">
-                        {{ childlink.title }}
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </li>
-            {% else %}
-              <li class="sidebar-link {% if link.active %}current{% endif %}">
-                <a href="{{ link.url }}">
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ul> 
-      </div>
-
-      {%comment%}
-      *
-      * Sidebar: Bottom
-      *
-      {%endcomment%}
-      <div class="list-unstyled sidebar sidebar-bottom">
-        <ul>
-          {% for link in linklists['footer'].links -%}
-            {% if link.links != blank %}
-              <li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
-                <a href="{{ link.url }}">
-                  {{ link.title }} 
-                </a>
-                <ul>
-                  {% for childlink in link.links %}
-                    <li class="sidebar-link--sub {% if link.active %}current{% endif %}">
-                      <a href="{{ childlink.url }}">
-                        {{ childlink.title }}
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </li>
-            {% else %}
-              <li class="sidebar-link {% if link.active %}current{% endif %}">
-                <a href="{{ link.url }}">
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ul> 
-      </div>
+    {%comment%}
+    *
+    * Sidebar
+    *
+    {%endcomment%}
+    <div class="sidebar-container hidden-md-down hide-less-than-md col-lg-2">
+      {%- include 'sidebar' -%}
     </div>
+
+
+    <div class="hide-less-than-md col-lg-2 display-flex-justify-space-between">
+      <!-- SPACER -->
+    </div>
+    
 
     {%comment%}
     *
     * Product Archive
     *
     {%endcomment%}
-    <div class="contents-less-than-lg col-lg-10">
+    <div class="contents-less-than-md col-lg-10">
       <div class="row">
-      {% for product in collection.products %}
+        {% for product in collection.products %}
 
-
-        <div class="card col-xs-12 col-sm-6 col-md-4">
-          {%comment%} 
-          * Image
-          {%endcomment%}
-          <div class="media image-container">
-            <a href="{{ product.url | within: collection }}">
-              {% assign img_url = product.featured_image %}
+          <div class="card border-0 col-xs-12 col-sm-6 col-md-4 col-lg-4">
+            {%comment%} 
+            * Image
+            {%endcomment%}
+            <div class="media image-container">
+              <a href="{{ product.url | within: collection }}">
+                {% assign img_url = product.featured_image %}
+                
+                <div class="reveal">
+                  <img class="image-one archive-image {{ aspect }}" src="{{ img_url | product_img_url: 'large' }}" alt="{{ variant.image.alt | escape }}">
+                  <img class="hidden image-two archive-image" src="{{ product.images.last | product_img_url: 'large' }}" alt="{{ product.images.last.alt | escape }}" />
+                </div>
               
-              <div class="reveal">
-                <img class="image-one archive-image {{ aspect }}" src="{{ img_url | product_img_url: 'large' }}" alt="{{ variant.image.alt | escape }}">
-                <img class="hidden image-two archive-image" src="{{ product.images.last | product_img_url: 'large' }}" alt="{{ product.images.last.alt | escape }}" />
-              </div>
-            
-            </a>
-          </div>
-
-          {%comment%} 
-          * Info
-          {%endcomment%}
-          <div class="content">
-
-            <div class="info">
-
-              {%comment%} 
-              * Title
-              {%endcomment%}
-              <div class="title">
-                <h2 class="hide">{{ product.vendor }}</h2>
-                <h3>
-                  <a href="{{ product.url }}">
-                    {{ product.title | escape }}
-                  </a>
-                </h3>
-              </div>
-
-              {%comment%} 
-              * Variants
-              {%endcomment%}
-              {% unless product.has_only_default_variant %}
-                {% for option in product.options_with_values %}
-
-                  {% assign downcased_option = option.name | downcase %}
-                    {% if downcased_option contains 'size' %}
-                      <div class="size">
-                        <p>Sizes:</p>
-                        <ul>
-                        {% for value in option.values %}
-                          {% assign variant_available = false %}
-                          {% if product.variants[forloop.index0].available %}
-                            {% assign variant_available = true %}
-                          {% endif %}
-                          <li>
-                            {%- if variant_available -%}
-                              <a href="{{ product.variants[forloop.index0].url }}">{{- value | escape -}}</a>
-                            {%- else -%}
-                              <strike>&nbsp;{{ value | escape }}&nbsp;</strike>
-                            {%- endif -%}
-                          </li>
-                        {% endfor %}
-                        </ul>
-                      </div>
-                  {% endif %}
-                {% endfor %}
-              {% endunless %}
-
+              </a>
             </div>
 
             {%comment%} 
-            * Price
+            * Info
             {%endcomment%}
-            {% render 'price', product: product %}
-          </div>
-        </div>
+            <div class="content">
 
-      {% endfor %}
+              <div class="info">
+
+                {%comment%} 
+                * Title
+                {%endcomment%}
+                <div class="title">
+                  <h2 class="hide">{{ product.vendor }}</h2>
+                  <h3>
+                    <a href="{{ product.url }}">
+                      {{ product.title | escape }}
+                    </a>
+                  </h3>
+                </div>
+
+                {%comment%} 
+                * Variants
+                {%endcomment%}
+                {% unless product.has_only_default_variant %}
+                  {% for option in product.options_with_values %}
+
+                    {% assign downcased_option = option.name | downcase %}
+                      {% if downcased_option contains 'size' %}
+                        <div class="size">
+                          <p>Sizes:</p>
+                          <ul>
+                          {% for value in option.values %}
+                            {% assign variant_available = false %}
+                            {% if product.variants[forloop.index0].available %}
+                              {% assign variant_available = true %}
+                            {% endif %}
+                            <li>
+                              {%- if variant_available -%}
+                                <a href="{{ product.variants[forloop.index0].url }}">{{- value | escape -}}</a>
+                              {%- else -%}
+                                <strike>&nbsp;{{ value | escape }}&nbsp;</strike>
+                              {%- endif -%}
+                            </li>
+                          {% endfor %}
+                          </ul>
+                        </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endunless %}
+
+              </div>
+
+              {%comment%} 
+              * Price
+              {%endcomment%}
+              {% render 'price', product: product %}
+            </div>
+          </div>
+
+        {% endfor %}
       </div>
     </div>
   </div>

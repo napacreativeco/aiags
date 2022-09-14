@@ -6,6 +6,7 @@
 {%endcomment%}
 
 {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+{{ 'bootstrap--accordion.css' | asset_url | stylesheet_tag }}
 {{ 'sizing-chart.css' | asset_url | stylesheet_tag }}
 
 
@@ -13,75 +14,18 @@
 <div class="product container-fluid">
   <div class="row">
 
+    {%comment%}
+    *
+    * Sidebar
+    *
+    {%endcomment%}
+    <div class="sidebar-container hidden-md-down hide-less-than-md col-lg-2">
+      {%- include 'sidebar' -%}
+    </div>
+    
+
     <div class="hide-less-than-lg col-lg-2 display-flex-justify-space-between">
-
-      {%comment%}
-      *
-      * Sidebar: Top
-      *
-      {%endcomment%}
-      <div class="list-unstyled sidebar sidebar-top">
-        <ul>
-          {% for link in linklists.main-menu.links %}
-            {% if link.links != blank %}
-              <li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
-                <a href="{{ link.url }}">
-                  {{ link.title }} 
-                </a>
-                <ul>
-                  {% for childlink in link.links %}
-                    <li class="sidebar-link sidebar-link--sub {% if link.active %}current{% endif %}">
-                      <a href="{{ childlink.url }}">
-                        {{ childlink.title }}
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </li>
-            {% else %}
-              <li class="sidebar-link {% if link.active %}current{% endif %}">
-                <a href="{{ link.url }}">
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ul> 
-      </div>
-
-      {%comment%}
-      *
-      * Sidebar: Bottom
-      *
-      {%endcomment%}
-      <div class="list-unstyled sidebar sidebar-bottom">
-        <ul>
-          {% for link in linklists['footer'].links -%}
-            {% if link.links != blank %}
-              <li class="slidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
-                <a href="{{ link.url }}">
-                  {{ link.title }} 
-                </a>
-                <ul>
-                  {% for childlink in link.links %}
-                    <li class="sidebar-link--sub {% if link.active %}current{% endif %}">
-                      <a href="{{ childlink.url }}">
-                        {{ childlink.title }}
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </li>
-            {% else %}
-              <li class="sidebar-link {% if link.active %}current{% endif %}">
-                <a href="{{ link.url }}">
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ul> 
-      </div>
+      <!-- SPACER -->
     </div>
 
     {%comment%}
@@ -274,94 +218,61 @@
 
       </div>
 
+
+
+
       {%comment%}
       *
       * Accordion
       *
       {%endcomment%}
       {%- if product.description != blank -%}
-        <div class="accordion">
-          <details>
-            <summary class="summary">
-              <div class="title">
-                <h2>About</h2>
+
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item about-accordion">
+            <h2 class="accordion-header" id="heading--About">
+              <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--About" aria-expanded="true" aria-controls="collapse--About">
+                About
+              </span>
+            </h2>
+            <div id="collapse--About" class="accordion-collapse collapse" aria-labelledby="heading--About" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <p>{{ product.description }}</p>  
               </div>
-              {% render 'icon-plus' %}
-            </summary>
-            <div class="content">
-              <p>{{ product.description }}</p>
             </div>
-          </details>
+          </div>
         </div>
+
       {%- endif -%}
 
       {%comment%}
       * Section Blocks
       {%endcomment%} 
+      {% assign i = 0 %}
       {%- for block in section.blocks -%}
-        {%- case block.type -%}
-        {%- when 'text' -%}
-
-          <p class="product__text" {{ block.shopify_attributes }}>
-            {{- block.settings.text -}}
-          </p>
-
-        {%- when 'collapsible_tab' -%}
-
-          <div class="accordion collapsible-tab" {{ block.shopify_attributes }}>
-            <details>
-                <summary class="summary">
-                  <div class="title">
-                    <h2>
-                      {{ block.settings.heading | default: block.settings.page.title }}
-                    </h2>
-                  </div>
-                  {% render 'icon-plus' %}
-                </summary>
-                <div class="content" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+        {% assign i = i | plus:1 %}
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="heading--{{ i }}">
+                <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--{{ i }}" aria-expanded="false" aria-controls="collapse--{{ i }}">
+                  {{ block.settings.heading | default: block.settings.page.title }}
+                </span>
+              </h2>
+              <div id="collapse--{{ i }}" class="accordion-collapse collapse" aria-labelledby="heading--{{ i }}">
+                <div class="accordion-body">
                   {%- if block.settings.content contains product.metafields.custom.product_sizing_table.value -%}
                     <p>{{ product.metafields.custom.product_sizing }}</p>
                     <p class="sizing_chart_link">Sizing chart</p>
                   {%- else -%}
                     <p>{{ block.settings.content }}</p>
-                  {%- endif -%}
+                  {%- endif -%}    
                 </div>
-            </details>
+              </div>
+            </div>
           </div>
-
-        {%- endcase -%}
       {%- endfor -%}
-
       
       {% include 'product-sizing-chart' %}
-   
-      
-
-      {%comment%}
-      * Serving Suggestion within Accordion
-      {%endcomment%} 
-      {% assign serving_suggestions = product.metafields.custom.serving_suggestions.value %}
-
-      {% if serving_suggestions %}
-        <div class="accordion hide-more-than-md">
-          <details>
-            <summary class="summary">
-              <div class="title">
-                <h2>Serving Suggestions</h2>
-              </div>
-              {% render 'icon-plus' %}
-            </summary>
-            <div class="content list-unstyled">
-              <ul class="">
-                  {% for serving_suggestion in serving_suggestions %}
-                    <li><img src="{{ serving_suggestion | image_url }}"></li>
-                  {% endfor %}
-
-              </ul>
-            </div>
-          </details>
-        </div>
-      {% endif %}
 
       {%comment%}
       * Settings
@@ -383,75 +294,32 @@
     *
     {%endcomment%}
     <div class="hide-less-than-md product-serving col-md-2">
-        <div class="accordion">
-          <details>
-            <summary class="summary">
-              <div class="title">
-                <h2>Related Products</h2>
-              </div>
-              {% render 'icon-plus' %}
-            </summary>
-            <div class="product-recommendations content list-unstyled">
+
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item related-accordion">
+          <h2 class="accordion-header" id="headingOne">
+            <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--Related" aria-expanded="false" aria-controls="collapse--Related">
+              Related Products
+            </span>
+          </h2>
+          <div id="collapse--Related" class="accordion-collapse collapse" aria-labelledby="headingOne">
+            <div class="accordion-body">
               {% include 'product-recommendations' %}
             </div>
-          </details>
+          </div>
         </div>
+      </div>
+
     </div>
+
   </div>
 </div>
-
-{%comment%}
-*
-* Product Image Modal
-* TO DO: change to Image Hover Zoom effect
-*
-
-<product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
-  <div class="product-media-modal__dialog" role="dialog" aria-label="{{ 'products.modal.label' | t }}" aria-modal="true" tabindex="-1">
-    <button id="ModalClose-{{ section.id }}" type="button" class="product-media-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
-
-    <div class="product-media-modal__content" role="document" aria-label="{{ 'products.modal.label' | t }}" tabindex="0">
-          {%- for media in product.media -%}
-            {%- if media.media_type == 'image' -%}
-            {%- assign image = media.preview_image -%}
-
-                <div class="image-container" data-media-id="{{ section.id }}-{{ media.id }}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="{{ image.width }}" height="{{ image.height }}" viewBox="0 0 {{ image.width }} {{ image.height }}">
-                    <rect width="{{ image.width }}" height="{{ image.height }}"/>
-                  </svg>
-                  <img src="{{ image | img_url: '2048x' }}" alt="{{ image.alt | escape }}">
-                </div>
-
-            {%- endif-%}
-          {%- endfor -%}
-    </div>
-  </div>
-</product-modal>
-{%endcomment%}
 
 {%comment%}
 *
 * Scripts
 *
 {%endcomment%}
-
-<script>
-  const container = document.getElementById("img-container");
-  const img = document.querySelector("img");
-  container.addEventListener("mousemove", onZoom);
-  container.addEventListener("mouseover", onZoom);
-  container.addEventListener("mouseleave", offZoom);
-  function onZoom(e) {
-      const x = e.clientX - e.target.offsetLeft;
-      const y = e.clientY - e.target.offsetTop;
-      img.style.transformOrigin = `${x}px ${y}px`;
-      img.style.transform = "scale(1.5)";
-  }
-  function offZoom(e) {
-      img.style.transformOrigin = `center center`;
-      img.style.transform = "scale(1)";
-  }
-</script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     function isIE() {
