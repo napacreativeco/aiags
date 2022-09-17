@@ -1,5 +1,9 @@
 
     <div class="list-unstyled sidebar sidebar-top hidden-md-down ">
+      <a href="{{ shop.url }}" class="logo nav-toggle">
+        <img src={{ 'AIAGSemblem.svg' | asset_url }} alt="" />
+      </a>
+      
       <ul>
         {% for link in linklists.main-menu.links %}
           {% if link.links != blank %}
