@@ -5,7 +5,7 @@
       "header": {
         "type": "header",
         "settings": {
-          "hide_header_on_landing": true
+          "hide_header_on_landing": false
         }
       }
     },
