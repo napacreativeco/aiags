@@ -16,14 +16,6 @@
             "page": ""
           }
         },
-        "collapsible-row-1": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Shipping & Returns",
-            "content": "<p>{{ product.metafields.custom.shipping_and_returns | metafield_tag }}<\/p>",
-            "page": ""
-          }
-        },
         "collapsible-row-2": {
           "type": "collapsible_tab",
           "settings": {
@@ -44,7 +36,6 @@
       "block_order": [
         "description",
         "collapsible-row-0",
-        "collapsible-row-1",
         "collapsible-row-2",
         "collapsible-row-3"
       ],
