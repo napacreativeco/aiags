@@ -8,20 +8,20 @@
 <div class="collection container-fluid">
     <div class="row">
   
-      {%comment%}
-      *
-      * Sidebar
-      *
-      {%endcomment%}
-      <div class="sidebar-container hidden-md-down hide-less-than-md col-lg-2">
-        {%- include 'sidebar' -%}
+    {%comment%} /\/\/ Sidebar /\/\/ {%endcomment%}
+    <div class="col-lg-2">
+      <div class="sidebar-container">
+        <div class="h-10">
+          <a href="{{ shop.url }}/collections/frontpage/" class="logo sidebar-logo">
+            <img src={{ 'AIAGSemblem.svg' | asset_url }} alt="All Is A Gentle Spring" />
+          </a>
+        </div>
+
+        <div class="col h-80 d-flex flex-column justify-content-between">
+          {%- include 'sidebar' -%}
+        </div>
       </div>
-  
-  
-      <div class="hide-less-than-md col-lg-2 display-flex-justify-space-between">
-        <!-- SPACER -->
-      </div>
-      
+    </div>
   
       {%comment%}
       *
