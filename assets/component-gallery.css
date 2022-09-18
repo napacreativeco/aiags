@@ -9,7 +9,7 @@
 }
 
 .gallery .image-container {
-	aspect-ratio: var(--aspect-69);
+	/* aspect-ratio: var(--aspect-69); */
 }
 
 .gallery .image-container svg {

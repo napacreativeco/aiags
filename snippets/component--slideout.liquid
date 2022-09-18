@@ -1,0 +1,32 @@
+<div class="slideout-menu__container">
+    <div class="row">
+
+        <div class="h-20">
+            <ul class="list-unstyled">
+                <li>
+                    <a href="{{ shop.url }}/collections/frontpage/" class="logo nav-toggle">
+                        <img src={{ 'AIAGSemblem.svg' | asset_url }} alt="All Is A Gentle Spring" />
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ routes.cart_url }}" id="cart-link">{{ 'layout.cart.title' | t }}
+                    {%- if cart != empty -%}
+                        (<span id="cart-count">{{ cart.item_count }}</span>)
+                    {%- endif -%}
+                    </a>
+                </li>
+                <li>
+                    {%- form 'currency' -%}
+                    {{ form | currency_selector }}
+                    {%- endform -%}
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="h-80 d-flex flex-column justify-content-between">
+            {%- include 'sidebar' -%}
+        </div>
+        
+    </div>
+</div>

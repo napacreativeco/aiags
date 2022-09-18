@@ -4,20 +4,36 @@
     --bs-accordion-active-color: #666;
     --bs-accordion-active-bg: #fff;
     --bs-accordion-border-color: rgba(0,0,0,0);
+    --bs-accordion-body-padding-y: 0px;
+    --bs-accordion-body-padding-x: 0px;
     border-radius: 0px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
 }
 .product .accordion .accordion-body {
     font-family: 'Basic Commercial', sans-serif;
 }
-.accordion h2 {
+
+/* Item */
+.accordion-item {
+    border-bottom: 1px solid #000;
+}
+
+/* Body */
+.accordion-body {
+    padding: 10px;
+}
+
+/* Button */
+.accordion-button {
+    padding: 8px 8px;
     -webkit-transition: padding-left 0.5s;
     -o-transition: padding-left 0.5s;
     transition: padding-left 0.5s;
 }
-.accordion-item:hover h2 {
-    padding-left: 6px;
+.accordion-button:hover  {
+    padding-left: 16px;
 }
-
 .accordion-button::after {
     background-image: url("data:image/svg+xml,%3Csvg id='Layer_2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23.08 23.08'%3E%3Cg id='Layer_1-2'%3E%3Cg%3E%3Cpath d='M11.54,22.08c-5.81,0-10.54-4.73-10.54-10.54S5.73,1,11.54,1s10.54,4.73,10.54,10.54-4.73,10.54-10.54,10.54Z'/%3E%3Cpath d='M11.54,2c5.26,0,9.54,4.28,9.54,9.54s-4.28,9.54-9.54,9.54S2,16.8,2,11.54,6.28,2,11.54,2m0-2C5.17,0,0,5.17,0,11.54s5.17,11.54,11.54,11.54,11.54-5.17,11.54-11.54S17.91,0,11.54,0h0Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     transform: scale(.6) !important;
@@ -25,10 +41,51 @@
 .accordion-button:not(.collapsed)::after {
     background-image: url("data:image/svg+xml,%3Csvg id='Layer_2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23.08 23.08'%3E%3Cg id='Layer_1-2'%3E%3Cpath d='M11.54,2c5.26,0,9.54,4.28,9.54,9.54s-4.28,9.54-9.54,9.54S2,16.8,2,11.54,6.28,2,11.54,2m0-2C5.17,0,0,5.17,0,11.54s5.17,11.54,11.54,11.54,11.54-5.17,11.54-11.54S17.91,0,11.54,0h0Z'/%3E%3C/g%3E%3C/svg%3E");
 }
-.about-accordion,
-.related-accordion {
-    border-top: 2px solid #000;
+.accordion h2 span {
+    font-size: 14pt;
 }
-.accordion-item {
-    border-bottom: 2px solid #000;
+button.product-form__submit span {
+    font-size: 14pt;
+}
+
+/* About */
+.about-accordion {
+    border-top: 1px solid #000;
+}
+
+.accordion-body:has(p.sizing_chart_link) {
+    padding-bottom: 30px;
+}
+
+/* Related Products */
+.related-accordion {
+    border-top: 1px solid #000;
+}
+.related-accordion .accordion-body {
+    padding: 0;
+}
+.related-accordion .accordion-button.collapsed {
+    border-bottom: 0px solid #000;
+}
+.related-accordion .accordion-button {
+    border-bottom: 1px solid #000;
+}
+.related-accordion .accordion-body h3 {
+    border-bottom: 1px solid #000;
+    padding: 1rem;
+    margin: 0;
+}
+.related-accordion .accordion-body .variants {
+    border-top: 1px solid #000;
+    padding: 1rem;
+    margin: 0;
+}
+.related-accordion span.price-item{
+    font-size: 1.4rem;
+}
+.collapse--Related .accordion-body {
+    padding: 0;
+}
+.product .accordion .accordion-body img {
+    width: 100%;
 }

@@ -1,67 +1,81 @@
-{%- if section.settings.hide_header_on_landing == true -%}
-  {%- if template.name == "index" -%}
-    <style>
-        header {
-            display: none;
-        }
-    </style>
-  {%- endif -%}
-{%- endif -%}
-
 <header>
-  {%comment%}
-  *
-  * Navbar: Left
-  *
-  {%endcomment%}
-  <div>
-    &nbsp;
-  </div>
-  <div class="tools">
-    {% if shop.customer_accounts_enabled %}
-      <ul class="hide">
-        {% if customer %}
-        <li>
-          <a href="/account">account</a>
-        </li>
-        <li>
-          {{ 'log out'  | customer_logout_link }}
-        </li>
-        {% else %}
-        <li>
-          {{ 'log in ' | customer_login_link }}
-        </li>
-        <li>
-          {{ 'register' | customer_register_link }}
-        <li>
-        {% endif %}
-      </ul>
-    {% endif %}
+  <div class="nav--desktop">
+    {%comment%} ---- Navbar: Left {%endcomment%}
+    <div>
+      &nbsp;
+    </div>
 
-    {%comment%}
-    *
-    * Navbar: Right
-    *
-    {%endcomment%}
-    <ul class="list-unstyled">
-      <li>
-        <a href="{{ routes.cart_url }}" id="cart-link">{{ 'layout.cart.title' | t }}
-          {%- if cart != empty -%}
-            (<span id="cart-count">{{ cart.item_count }}</span>)
-          {%- endif -%}
-        </a>
-      </li>
-      <li>
-        {%- form 'currency' -%}
-          {{ form | currency_selector }}
-        {%- endform -%}
-      </li>
-    </ul>
+    {%comment%} ---- Navbar: Right {%endcomment%}
+    <div class="tools">
+      {% if shop.customer_accounts_enabled %}
+        <ul class="hide">
+          {% if customer %}
+          <li>
+            <a href="/account">account</a>
+          </li>
+          <li>
+            {{ 'log out'  | customer_logout_link }}
+          </li>
+          {% else %}
+          <li>
+            {{ 'log in ' | customer_login_link }}
+          </li>
+          <li>
+            {{ 'register' | customer_register_link }}
+          <li>
+          {% endif %}
+        </ul>
+      {% endif %}
+
+      <ul class="list-unstyled">
+        <li>
+          <a href="{{ routes.cart_url }}" id="cart-link">{{ 'layout.cart.title' | t }}
+            {%- if cart != empty -%}
+              (<span id="cart-count">{{ cart.item_count }}</span>)
+            {%- endif -%}
+          </a>
+        </li>
+        <li>
+          {%- form 'currency' -%}
+            {{ form | currency_selector }}
+          {%- endform -%}
+        </li>
+      </ul>
+    </div>
+
   </div>
+
+  <nav class="nav--mobile">
+    <div class="d-flex flex-row align-items-stretch">
+
+      <div class="">
+        <a href="{{ shop.url }}/collections/frontpage/" class="logo">
+          <img src={{ 'AIAGSemblem.svg' | asset_url }} alt="All Is A Gentle Spring" />
+        </a>
+      </div>
+
+      <div class="hamburger d-flex flex-column justify-content-center align-items-center">
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+      </div>
+
+    </div>
+
+    <div>
+      <a href="{{ routes.cart_url }}" id="cart-link">{{ 'layout.cart.title' | t }}
+        {%- if cart != empty -%}
+          (<span id="cart-count">{{ cart.item_count }}</span>)
+        {%- endif -%}
+      </a>
+    </div>
+  </nav>
+
 </header>
 
 {% render 'cart-notification' %}
 
+{%comment%}
 <div id="nav-container" class="nav-container">
   <div class="nav-inner">
     <div class="nav-inner-inner">
@@ -106,7 +120,7 @@
     </div>
   </div>
 </div>
-
+{%endcomment%}
 
 {% schema %}
 {

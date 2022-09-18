@@ -1,5 +1,3 @@
-@import url('./jamesrogers.css');
-
 :root {
 	--font-body-family: 'Panama', sans-serif;
 	--font-body-scale: 12px;
@@ -39,8 +37,6 @@
 
 html,
 body {
-	margin: 0 !important;
-	padding: 0 !important;
 	font-family: var(--font-body-family);
 	font-size: var(--font-body-scale);
 	font-style: var(--font-body-style);
@@ -87,18 +83,6 @@ a {
 	h5  {
 		font-size: var(--font-body-scale-large);
 	}
-}
-
-/* .icon {
-	height: 1rem;
-	width: 1rem;
-} */
-
-.icon.icon-close-small,
-.icon.icon-plus-small,
-.icon.icon-minus-small {
-	height: 0.5rem;
-	width: 0.5rem;
 }
 
 
@@ -155,17 +139,8 @@ table {
 
 /* --------------------------------------- layout */
 
-main {
-	margin-bottom: 4rem;
-}
 
-@media screen and (min-width: 48em) {
-	main {
-		margin-bottom: 2rem;
-	}
-}
-
-.container-fluid {
+/* .container-fluid {
 	margin: 0 auto;
 	padding-left: 2rem;
 	padding-right: 2rem;
@@ -179,7 +154,7 @@ main {
 .container-fluid .row [class*=col-] {
 	padding-right: 1rem;
 	padding-left: 1rem;
-}
+} */
 
 .shopify-section {
 	display: contents;
@@ -504,83 +479,6 @@ header .logo img {
 }
 
 
-/* --------------------------------------- collection card */
-
-/* .card {
-	text-align: left;
-	margin-bottom: 2rem;
-}
-
-.card .media {
-	margin-bottom: 1rem;
-	aspect-ratio: 3/4;
-}
-
-.card .media a {
-	text-decoration: none;
-	display: block;
-	width: 100%;
-	height: 100%;
-}
-
-.card .media svg {
-	display: none;
-}
-
-.card .media img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center;
-}
-
-.card .content {
-	padding-left: 1rem;
-	border-left: 1px solid var(--color-foreground);
-}
-
-.card .content a {
-	text-decoration: none;
-}
-
-.card .content .info {
-	display: flex;
-	flex-direction: row;
-}
-
-.card .content .info .title {
-	flex: 1;
-	padding-right: 1rem;
-}
-
-.card .content h3,
-.card .content p {
-	margin: 0;
-}
-
-.card .content .info .size {
-	padding-left: 1rem;
-	border-left: 1px solid var(--color-foreground);
-}
-
-.card .content .info .size > * {
-	display: inline-block;
-}
-
-.card .content .info .size ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.card .content .info .size ul li {
-	line-height: initial;
-	display: inline-block;
-	padding: 0;
-	margin: 0;
-	margin-left: 0.5rem;
-} */
-
 /* --------------------------------------- stuff */
 
 .button {
@@ -706,11 +604,6 @@ header .logo img {
 	}
 }
 
-/* --------------------------------------- footer */
-
-footer {
-
-}
 
 /* --------------------------------------- password page */
 
@@ -799,15 +692,7 @@ body.template-password main .container-fluid .row [class*=col-]:first-child svg 
 	body.template-password main .container-fluid .row [class*=col-]:first-child .inner {
 		padding-right: 20%;
 	}
-/*
-	body.template-password main .container-fluid .row [class*=col-]:first-child svg {
-		display: block;
-	}
 
-	body.template-password main .container-fluid .row [class*=col-]:first-child h1 {
-		display: none;
-	}
-*/
 	body.template-password main .container-fluid .row [class*=col-]:last-child .inner {
 		padding-left: 20%;
 	}
@@ -820,3 +705,6 @@ body.template-password main .container-fluid .row [class*=col-]:first-child svg 
 }
 
 #qab_container {	display:none !important;}
+
+
+@import url('./jamesrogers.css');

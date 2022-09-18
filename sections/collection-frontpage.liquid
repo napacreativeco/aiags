@@ -1,0 +1,119 @@
+{%comment%}
+*
+* Template: Shop All
+* url: /collections/frontpage
+*
+{%endcomment%}
+
+<div class="collection container-fluid">
+    <div class="row">
+  
+      {%comment%}
+      *
+      * Sidebar
+      *
+      {%endcomment%}
+      <div class="sidebar-container hidden-md-down hide-less-than-md col-lg-2">
+        {%- include 'sidebar' -%}
+      </div>
+  
+  
+      <div class="hide-less-than-md col-lg-2 display-flex-justify-space-between">
+        <!-- SPACER -->
+      </div>
+      
+  
+      {%comment%}
+      *
+      * Product Archive
+      *
+      {%endcomment%}
+      <div class="archive-container contents-less-than-md col-lg-10">
+  
+        <div class="row">
+          {% for product in collections.all.products %}
+  
+            <div class="card border-0 col-xs-12 col-sm-6 col-md-4 col-lg-4">
+              {%comment%} 
+              * Image
+              {%endcomment%}
+              <div class="media image-container">
+                <a href="{{ product.url | within: collection }}">
+                  {% assign img_url = product.featured_image %}
+                  
+                  <div class="reveal">
+                    <img class="image-one archive-image {{ aspect }}" src="{{ img_url | product_img_url: 'large' }}" alt="{{ variant.image.alt | escape }}">
+                    <img class="hidden image-two archive-image" src="{{ product.images.last | product_img_url: 'large' }}" alt="{{ product.images.last.alt | escape }}" />
+                  </div>
+                
+                </a>
+              </div>
+  
+              {%comment%} 
+              * Info
+              {%endcomment%}
+              <div class="content">
+  
+                <div class="info">
+  
+                  {%comment%} 
+                  * Title
+                  {%endcomment%}
+                  <div class="title">
+                    <h2 class="hide">{{ product.vendor }}</h2>
+                    <h3>
+                      <a href="{{ product.url }}">
+                        {{ product.title | escape }}
+                      </a>
+                    </h3>
+                  </div>
+  
+                  {%comment%} 
+                  * Variants
+                  {%endcomment%}
+                  {% unless product.has_only_default_variant %}
+                    {% for option in product.options_with_values %}
+  
+                      {% assign downcased_option = option.name | downcase %}
+                        {% if downcased_option contains 'size' %}
+                          <div class="size">
+                            <p>Sizes:</p>
+                            <ul>
+                            {% for value in option.values %}
+                              {% assign variant_available = false %}
+                              {% if product.variants[forloop.index0].available %}
+                                {% assign variant_available = true %}
+                              {% endif %}
+                              <li>
+                                {%- if variant_available -%}
+                                  <a href="{{ product.variants[forloop.index0].url }}">{{- value | escape -}}</a>
+                                {%- else -%}
+                                  <strike>&nbsp;{{ value | escape }}&nbsp;</strike>
+                                {%- endif -%}
+                              </li>
+                            {% endfor %}
+                            </ul>
+                          </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endunless %}
+  
+                </div>
+  
+                {%comment%} 
+                * Price
+                {%endcomment%}
+                {% render 'price', product: product %}
+              </div>
+            </div>
+  
+          {% endfor %}
+          <div style="height: 14px">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  

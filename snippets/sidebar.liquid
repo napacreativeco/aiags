@@ -1,65 +1,59 @@
+ {%comment%} ---- Sidebar: Top {%endcomment%}
+<div class="list-unstyled sidebar sidebar-top hidden-md-down">
+  <ul>
+    {% for link in linklists.main-menu.links %}
+      {% if link.links != blank %}
+        <li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+          <a href="{{ link.url }}">
+            {{ link.title }} 
+          </a>
+          <ul>
+            {% for childlink in link.links %}
+              <li class="sidebar-link sidebar-link--sub {% if link.active %}current{% endif %}">
+                <a href="{{ childlink.url }}">
+                  {{ childlink.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% else %}
+        <li class="sidebar-link {% if link.active %}current{% endif %}">
+          <a href="{{ link.url }}">
+            {{ link.title }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul> 
+</div>
 
-    <div class="list-unstyled sidebar sidebar-top hidden-md-down ">
-      <a href="{{ shop.url }}" class="logo nav-toggle">
-        <img src={{ 'AIAGSemblem.svg' | asset_url }} alt="" />
-      </a>
-      
-      <ul>
-        {% for link in linklists.main-menu.links %}
-          {% if link.links != blank %}
-            <li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
-              <a href="{{ link.url }}">
-                {{ link.title }} 
-              </a>
-              <ul>
-                {% for childlink in link.links %}
-                  <li class="sidebar-link sidebar-link--sub {% if link.active %}current{% endif %}">
-                    <a href="{{ childlink.url }}">
-                      {{ childlink.title }}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </li>
-          {% else %}
-            <li class="sidebar-link {% if link.active %}current{% endif %}">
-              <a href="{{ link.url }}">
-                {{ link.title }}
-              </a>
-            </li>
-          {% endif %}
-        {% endfor %}
-      </ul> 
-    </div>
-
-    {%comment%}
-    * Sidebar: Bottom
-    {%endcomment%}
-    <div class="list-unstyled sidebar sidebar-bottom">
-      <ul>
-        {% for link in linklists['footer'].links -%}
-          {% if link.links != blank %}
-            <li class="slidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
-              <a href="{{ link.url }}">
-                {{ link.title }} 
-              </a>
-              <ul>
-                {% for childlink in link.links %}
-                  <li class="sidebar-link--sub {% if link.active %}current{% endif %}">
-                    <a href="{{ childlink.url }}">
-                      {{ childlink.title }}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </li>
-          {% else %}
-            <li class="sidebar-link {% if link.active %}current{% endif %}">
-              <a href="{{ link.url }}">
-                {{ link.title }}
-              </a>
-            </li>
-          {% endif %}
-        {% endfor %}
-      </ul> 
-    </div>
+{%comment%} ---- Sidebar: Bottom {%endcomment%}
+<div class="list-unstyled sidebar sidebar-bottom">
+  <ul>
+    {% for link in linklists['footer'].links -%}
+      {% if link.links != blank %}
+        <li class="slidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
+          <a href="{{ link.url }}">
+            {{ link.title }} 
+          </a>
+          <ul>
+            {% for childlink in link.links %}
+              <li class="sidebar-link--sub {% if link.active %}current{% endif %}">
+                <a href="{{ childlink.url }}">
+                  {{ childlink.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% else %}
+        <li class="sidebar-link {% if link.active %}current{% endif %}">
+          <a href="{{ link.url }}">
+            {{ link.title }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul> 
+</div>

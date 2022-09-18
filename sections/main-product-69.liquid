@@ -7,52 +7,34 @@
 
 {{ 'bootstrap--accordion.css' | asset_url | stylesheet_tag }}
 {{ 'sizing-chart.css' | asset_url | stylesheet_tag }}
+{{ 'product-gallery-zoom.css' | asset_url | stylesheet_tag }}
 
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
+
+{%comment%} /\/\/ Product Container /\/\/ {%endcomment%}
 <div class="product container-fluid">
   <div class="row">
 
-    {%comment%}
-    *
-    * Sidebar
-    *
-    {%endcomment%}
-    <div class="sidebar-container hidden-md-down hide-less-than-md col-lg-2">
-      {%- include 'sidebar' -%}
-    </div>
-    
+    {%comment%} /\/\/ Sidebar /\/\/ {%endcomment%}
+    <div class="col-lg-2">
+      <div class="sidebar-container">
+        <div class="h-10">
+          <a href="{{ shop.url }}/collections/frontpage/" class="logo sidebar-logo">
+            <img src={{ 'AIAGSemblem.svg' | asset_url }} alt="All Is A Gentle Spring" />
+          </a>
+        </div>
 
-    <div class="hide-less-than-lg col-lg-2 display-flex-justify-space-between">
-      <!-- SPACER -->
+        <div class="col h-80 d-flex flex-column justify-content-between">
+          {%- include 'sidebar' -%}
+        </div>
+      </div>
     </div>
 
-    {%comment%}
-    *
-    * Slideshow
-    *
-    {%endcomment%}
-    <style>
-      figure.zoom {
-        background-position: 50% 50%;
-        position: relative;
-        /* margin: 150px auto; */
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        cursor: zoom-in;
-      }
-      figure.zoom img:hover {
-        opacity: 0;
-      }
-      figure.zoom img {
-        transition: opacity 0.5s;
-        display: block;
-        width: 100%;
-      }
-    </style>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5 product-images">
+    {%comment%} /\/\/ Slideshow /\/\/ {%endcomment%}
+    <div class="col-lg-5 col-md-12 product-images">
       <div class="gallery swiper">
+        {%comment%} ---- Slides {%endcomment%} 
         <div class="swiper-wrapper">
         {%- for media in product.media -%}
           {%- if media.media_type == 'image' -%}
@@ -72,281 +54,241 @@
           {%- endif-%}
         {%- endfor -%}
         </div>
-        <script type="text/javascript">
-          function zoom(e){
-            var zoomer = e.currentTarget;
-            e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
-            e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
-            x = offsetX/zoomer.offsetWidth*100
-            y = offsetY/zoomer.offsetHeight*100
-            zoomer.style.backgroundPosition = x + '% ' + y + '%';
-          }
-        </script>
 
-        {%comment%}
-        * Pagination
-        {%endcomment%}       
+        {%comment%} ---- Pagination {%endcomment%}       
         <div class="swiper-pagination"></div>
 
-        {%comment%}
-        * Hover Controls
-        {%endcomment%} 
+        {%comment%} ---- Hover Controls {%endcomment%} 
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       </div>
     </div>
 
-    {%comment%}
-    *
-    * Product Info
-    *
-    {%endcomment%}   
-    <div id="ProductInfo-{{ section.id }}" class="col-xs-12 col-sm-4 col-md-3 product-info">
+    {%comment%} /\/\/ Product Info /\/\/ {%endcomment%}   
+    <div id="ProductInfo-{{ section.id }}" class="col-lg-5 col-md-12 product-info">
+      <div class="row d-flex ">
 
-      {%comment%}
-      * Vendor
-      {%endcomment%} 
-      <p class="hide">{{ product.vendor | escape }}</p>
+        {%comment%} ---- Product Title, Price, Vendor {%endcomment%}
+        <div class="col-sm-12 col-md-8 product-info-top order-0">
+          {%comment%} ---- ---- Vendor {%endcomment%} 
+          <p class="hide">{{ product.vendor | escape }}</p>
 
-      {%comment%}
-      * Title
-      {%endcomment%}       
-      <h1 class="product__title">
-        {{ product.title | escape }}
-      </h1>
-  
-      {%comment%}
-      * Price
-      {%endcomment%} 
-      {% render 'price', product: product %}
-
-      {%comment%}
-      *
-      * Quantity
-      *
-      {%endcomment%}  
-      <div class="info-container-inner-inner">
-        <div class="product-form__input product-form__input-quantity">
-          <label class="form__label" for="Quantity-{{ section.id }}">
-            {{ 'products.product.quantity.label' | t }}
-          </label>
-
-          <quantity-input class="quantity">
-            <button class="quantity__button no-js-hidden" name="minus" type="button">
-              <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-              {% render 'icon-minus' %}
-            </button>
-            <input class="quantity__input"
-                type="number"
-                name="quantity"
-                id="Quantity-{{ section.id }}"
-                min="1"
-                value="1"
-                form="{{ product_form_id }}"
-              >
-            <button class="quantity__button no-js-hidden" name="plus" type="button">
-              <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-              {% render 'icon-plus' %}
-            </button>
-          </quantity-input>
+          {%comment%} ---- ---- Title {%endcomment%}       
+          <h1 class="product__title">
+            {{ product.title | escape }}
+          </h1>
+      
+          {%comment%} ---- ---- Price {%endcomment%} 
+          {% render 'price', product: product %}
         </div>
 
-        {%comment%}
-        * Variant Radio Buttons
-        {%endcomment%} 
-        <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}">
-          {%- for option in product.options_with_values -%}
-              <fieldset class="js product-form__input{% if option.values.size <= 1 %} hide{% endif %}">
-                <legend class="form__label">{{ option.name }}</legend>
-                {%- for value in option.values -%}
-                  <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                        name="{{ option.name }}"
-                        value="{{ value | escape }}"
-                        form="{{ product_form_id }}"
-                        {% if option.selected_value == value %}checked{% endif %}
-                  >
-                  <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-                    {{ value }}
-                  </label>
-                {%- endfor -%}
-              </fieldset>
-          {%- endfor -%}
-          <script type="application/json">
-            {{ product.variants | json }}
-          </script>
-        </variant-radios>
 
-        {%comment%}
-        * Scriptless Quantity Input
-        {%endcomment%} 
-        <noscript class="product-form__noscript-wrapper-{{ section.id }}">
-          <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
-            <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
-            <div class="select">
-              <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
-                {%- for variant in product.variants -%}
-                  <option
-                    {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-                    {% if variant.available == false %}disabled{% endif %}
-                    value="{{ variant.id }}"
-                  >
-                    {{ variant.title }}
-                    {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
-                    - {{ variant.price | money | strip_html }}
-                  </option>
-                {%- endfor -%}
-              </select>
-              {% render 'icon-plus' %}
-            </div>
-          </div>
-        </noscript>
+        {%comment%} ---- Product Accordion {%endcomment%}
+        <div class="col-s-12 col-md-8 order-1">
 
-        {%comment%}
-        *
-        * Add To Cart
-        *
-        {%endcomment%}  
-        <product-form class="product-form">
+          {%comment%} * Accordion: About {%endcomment%}
+          {%- if product.description != blank -%}
 
-          {%- assign product_form_id = 'product-form-' | append: section.id -%}
-
-          {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-            <div class="product-form__buttons">
-              <button
-                type="submit"
-                name="add"
-                class="product-form__submit button"
-              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-              >
-                  <span>
-                    {%- if product.selected_or_first_available_variant.available -%}
-                      {{ 'products.product.add_to_cart' | t }}
-                    {%- else -%}
-                      <span>Coming soon</span>
-                    {%- endif -%}
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item about-accordion">
+                <h2 class="accordion-header" id="heading--About">
+                  <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--About" aria-expanded="true" aria-controls="collapse--About">
+                    About
                   </span>
-                  <div class="loading-overlay__spinner hidden">
-                    <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-                    </svg>
+                </h2>
+                <div id="collapse--About" class="accordion-collapse collapse" aria-labelledby="heading--About" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <p>{{ product.description }}</p>  
                   </div>
-              </button>
-              {%- comment-%}
-                {{ form | payment_button }}
-              {%- endcomment -%}
-            </div>
-          {%- endform -%}
-
-          {%comment%}
-          * Errors
-          {%endcomment%} 
-          <div class="product-form__error-message-wrapper" role="alert" hidden>
-            <span class="product-form__error-message"></span>
-          </div>
-        </product-form>
-
-      </div>
-
-
-
-
-      {%comment%}
-      *
-      * Accordion
-      *
-      {%endcomment%}
-      {%- if product.description != blank -%}
-
-        <div class="accordion" id="accordionExample">
-          <div class="accordion-item about-accordion">
-            <h2 class="accordion-header" id="heading--About">
-              <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--About" aria-expanded="true" aria-controls="collapse--About">
-                About
-              </span>
-            </h2>
-            <div id="collapse--About" class="accordion-collapse collapse" aria-labelledby="heading--About" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <p>{{ product.description }}</p>  
+                </div>
               </div>
             </div>
-          </div>
+
+          {%- endif -%}
+
+          {%comment%} * Accordion: Section Blocks {%endcomment%} 
+          {% assign i = 0 %}
+          {%- for block in section.blocks -%}
+            {% assign i = i | plus:1 %}
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="heading--{{ i }}">
+                  <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--{{ i }}" aria-expanded="false" aria-controls="collapse--{{ i }}">
+                    {{ block.settings.heading | default: block.settings.page.title }}
+                  </span>
+                </h2>
+                <div id="collapse--{{ i }}" class="accordion-collapse collapse" aria-labelledby="heading--{{ i }}">
+                  <div class="accordion-body">
+                    {%- if block.settings.content contains product.metafields.custom.product_sizing_table.value -%}
+                      <p>{{ product.metafields.custom.product_sizing }}</p>
+                      <p class="sizing_chart_link">Sizing chart</p>
+                    {%- else -%}
+                      <p>{{ block.settings.content }}</p>
+                    {%- endif -%}    
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+
+          
         </div>
 
-      {%- endif -%}
 
-      {%comment%}
-      * Section Blocks
-      {%endcomment%} 
-      {% assign i = 0 %}
-      {%- for block in section.blocks -%}
-        {% assign i = i | plus:1 %}
-          <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="heading--{{ i }}">
-                <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--{{ i }}" aria-expanded="false" aria-controls="collapse--{{ i }}">
-                  {{ block.settings.heading | default: block.settings.page.title }}
+        {%comment%} ----------- Add To Cart {%endcomment%}
+        <div class="col-sm-12 col-md-8 order-3">
+
+          {%comment%} ----------- Quantity ----------- {%endcomment%}  
+          <div class="info-container-inner-inner">
+            <div class="product-form__input product-form__input-quantity">
+              <label class="form__label" for="Quantity-{{ section.id }}">
+                {{ 'products.product.quantity.label' | t }}
+              </label>
+
+              <quantity-input class="quantity">
+                <button class="quantity__button no-js-hidden" name="minus" type="button">
+                  <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+                  {% render 'icon-minus' %}
+                </button>
+                <input class="quantity__input"
+                    type="number"
+                    name="quantity"
+                    id="Quantity-{{ section.id }}"
+                    min="1"
+                    value="1"
+                    form="{{ product_form_id }}"
+                  >
+                <button class="quantity__button no-js-hidden" name="plus" type="button">
+                  <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+                  {% render 'icon-plus' %}
+                </button>
+              </quantity-input>
+            </div>
+          </div>
+
+          {%comment%} ----------- Variant Radio Buttons ----------- {%endcomment%} 
+          <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}">
+            {%- for option in product.options_with_values -%}
+                <fieldset class="js product-form__input{% if option.values.size <= 1 %} hide{% endif %}">
+                  <legend class="form__label">{{ option.name }}</legend>
+                  {%- for value in option.values -%}
+                    <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                          name="{{ option.name }}"
+                          value="{{ value | escape }}"
+                          form="{{ product_form_id }}"
+                          {% if option.selected_value == value %}checked{% endif %}
+                    >
+                    <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                      {{ value }}
+                    </label>
+                  {%- endfor -%}
+                </fieldset>
+            {%- endfor -%}
+            <script type="application/json">
+              {{ product.variants | json }}
+            </script>
+          </variant-radios>
+
+          {%comment%} ----------- Scriptless Quantity Input ----------- {%endcomment%} 
+          <noscript class="product-form__noscript-wrapper-{{ section.id }}">
+            <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+              <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+              <div class="select">
+                <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
+                  {%- for variant in product.variants -%}
+                    <option
+                      {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                      {% if variant.available == false %}disabled{% endif %}
+                      value="{{ variant.id }}"
+                    >
+                      {{ variant.title }}
+                      {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                      - {{ variant.price | money | strip_html }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+                {% render 'icon-plus' %}
+              </div>
+            </div>
+          </noscript>
+
+          {%comment%} ----------- Add To Cart ----------- {%endcomment%}  
+          <product-form class="product-form">
+
+            {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+            {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+              <div class="product-form__buttons">
+                <button
+                  type="submit"
+                  name="add"
+                  class="product-form__submit button"
+                {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                >
+                    <span>
+                      {%- if product.selected_or_first_available_variant.available -%}
+                        {{ 'products.product.add_to_cart' | t }}
+                      {%- else -%}
+                        <span>Coming soon</span>
+                      {%- endif -%}
+                    </span>
+                    <div class="loading-overlay__spinner hidden">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                      </svg>
+                    </div>
+                </button>
+                {%- comment-%}
+                  {{ form | payment_button }}
+                {%- endcomment -%}
+              </div>
+            {%- endform -%}
+
+            {%comment%}
+            * Errors
+            {%endcomment%} 
+            <div class="product-form__error-message-wrapper" role="alert" hidden>
+              <span class="product-form__error-message"></span>
+            </div>
+          </product-form>
+        </div>
+
+        {%comment%} ---- Related Accordion {%endcomment%}
+        <div class="col-md-4 no-left-gutter order-2">
+          <div class="accordion">
+            <div class="accordion-item related-accordion">
+              <h2 class="accordion-header" id="headingOne">
+                <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--Related" aria-expanded="false" aria-controls="collapse--Related">
+                  Related Products
                 </span>
               </h2>
-              <div id="collapse--{{ i }}" class="accordion-collapse collapse" aria-labelledby="heading--{{ i }}">
+              <div id="collapse--Related" class="accordion-collapse collapse" aria-labelledby="headingOne">
                 <div class="accordion-body">
-                  {%- if block.settings.content contains product.metafields.custom.product_sizing_table.value -%}
-                    <p>{{ product.metafields.custom.product_sizing }}</p>
-                    <p class="sizing_chart_link">Sizing chart</p>
-                  {%- else -%}
-                    <p>{{ block.settings.content }}</p>
-                  {%- endif -%}    
+                  {% include 'product-recommendations' %}
                 </div>
               </div>
             </div>
           </div>
-      {%- endfor -%}
-      
-      {% include 'product-sizing-chart' %}
-
-      {%comment%}
-      * Settings
-      {%endcomment%} 
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-        {%- when 'custom_liquid' -%}
-          {{ block.settings.custom_liquid }}
-        {%- when '@app' -%}
-          {% render block %}
-        {%- endcase -%}
-      {%- endfor -%}
-    </div>
-
-    {%comment%}
-    *
-    * Related Products
-    * TO DO: currently listed as Serving Suggestions, needs to be Related Products
-    *
-    {%endcomment%}
-    <div class="hide-less-than-md product-serving col-md-2">
-
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item related-accordion">
-          <h2 class="accordion-header" id="headingOne">
-            <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--Related" aria-expanded="false" aria-controls="collapse--Related">
-              Related Products
-            </span>
-          </h2>
-          <div id="collapse--Related" class="accordion-collapse collapse" aria-labelledby="headingOne">
-            <div class="accordion-body">
-              {% include 'product-recommendations' %}
-            </div>
-          </div>
         </div>
-      </div>
 
+      </div>
     </div>
 
-    <div style="height: 14px">&nbsp;</div>
   </div>
-
-  
 </div>
+
+{% include 'product-sizing-chart' %}
+
+{%comment%}
+* Settings
+{%endcomment%} 
+{%- for block in section.blocks -%}
+  {%- case block.type -%}
+    {%- when '@app' -%}
+      {% render block %}
+  {%- endcase -%}
+{%- endfor -%}
 
 {%comment%}
 *
@@ -375,6 +317,18 @@
     });
   });
 </script>
+
+<script type="text/javascript">
+  function zoom(e){
+    var zoomer = e.currentTarget;
+    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+    x = offsetX/zoomer.offsetWidth*100
+    y = offsetY/zoomer.offsetHeight*100
+    zoomer.style.backgroundPosition = x + '% ' + y + '%';
+  }
+</script>
+
 
 {%comment%}
 *
@@ -423,18 +377,6 @@
           "type": "page",
           "id": "page",
           "label": "Row content from page"
-        }
-      ]
-    },
-    {
-      "type": "custom_liquid",
-      "name": "Custom Liquid",
-      "settings": [
-        {
-          "type": "liquid",
-          "id": "custom_liquid",
-          "label": "Custom Liquid",
-          "info": "Add app snippets or other Liquid code to create advanced customizations."
         }
       ]
     },
