@@ -3,11 +3,6 @@
     "main": {
       "type": "main-product-69",
       "blocks": {
-        "description": {
-          "type": "description",
-          "settings": {
-          }
-        },
         "collapsible-row-0": {
           "type": "collapsible_tab",
           "settings": {
@@ -31,13 +26,21 @@
             "content": "<p>{{ product.metafields.descriptors.care_guide | metafield_tag }}<\/p>",
             "page": ""
           }
+        },
+        "a907db2a-3640-4f72-9235-9fccc883a9c0": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Collapsible Row",
+            "content": "",
+            "page": ""
+          }
         }
       },
       "block_order": [
-        "description",
         "collapsible-row-0",
         "collapsible-row-2",
-        "collapsible-row-3"
+        "collapsible-row-3",
+        "a907db2a-3640-4f72-9235-9fccc883a9c0"
       ],
       "settings": {
       }

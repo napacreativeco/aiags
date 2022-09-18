@@ -2,7 +2,8 @@
   "sections": {
     "landing": {
       "type": "collection-frontpage",
-      "settings": {}
+      "settings": {
+      }
     }
   },
   "order": [
