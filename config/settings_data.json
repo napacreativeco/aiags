@@ -1,5 +1,11 @@
 {
   "current": {
+    "checkout_logo_position": "left",
+    "checkout_sidebar_background_image": "shopify:\/\/shop_images\/Checkout-Gradient.png",
+    "checkout_heading_font": "Helvetica Neue",
+    "checkout_body_font": "Helvetica Neue",
+    "checkout_accent_color": "#c2d4c1",
+    "checkout_button_color": "#c2d4c1",
     "header_on_landing_page": false,
     "sections": {
       "header": {
