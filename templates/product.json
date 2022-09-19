@@ -30,8 +30,8 @@
         "a907db2a-3640-4f72-9235-9fccc883a9c0": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Collapsible Row",
-            "content": "",
+            "heading": "Details",
+            "content": "<p>{{ product.metafields.custom.product_details | metafield_tag }}<\/p>",
             "page": ""
           }
         }
