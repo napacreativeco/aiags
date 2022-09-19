@@ -65,10 +65,10 @@ button.product-form__submit span {
     padding: 0;
 }
 .related-accordion .accordion-button.collapsed {
-    border-bottom: 1px solid #000;
+    border-bottom: 0px solid #000;
 }
 .related-accordion .accordion-button {
-    border-bottom: 0px solid #000;
+    border-bottom: 1px solid #000;
 }
 .related-accordion .accordion-body h3 {
     border-bottom: 1px solid #000;
