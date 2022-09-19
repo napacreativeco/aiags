@@ -508,7 +508,7 @@ header .logo img {
 
 .button:hover {
 	background-color: var(--color-foreground);
-	color: var(--color-background);
+	color: #000;
 	border: 1px solid var(--color-foreground);
 }
 
