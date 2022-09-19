@@ -34,7 +34,7 @@ body {
     overflow: hidden;
 }
 a:hover {
-    color: inherit;
+    color: #000000;
 }
 .spacer {
     height: 80px;
