@@ -36,15 +36,9 @@
           </a>
         </li>
         <li>
-       <div class="currency-selector">
-        <label for="CurrencySelector" class="hidden">{{ 'general.navigation.currency' | t }}</label>
-        <select name="currency" id="CurrencySelector" class="currency-selector__dropdown" data-currency-selector>
-          {% for currency in shop.enabled_currencies %}
-            <option value="{{currency.iso_code}}"{% if currency == cart.currency %} selected="true"{% endif %}>{{currency.iso_code}}</option>
-          {% endfor %}
-        </select>
-        <input type="hidden" id="currency_code" name="currency_code" value="{{ form.current_currency.iso_code }}" />
-      </div>
+          {%- form 'currency' -%}
+            {{ form | currency_selector }}
+          {%- endform -%}
         </li>
       </ul>
     </div>
