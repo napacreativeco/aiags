@@ -3,73 +3,17 @@
 
 		<div class="page-col__left hide-less-than-lg col-lg-2 display-flex-justify-space-between padding-bottom-2rem">
 
-			{%comment%}
-			*
-			* Sidebar: Top
-			*
-			{%endcomment%}
-			<div class="list-unstyled sidebar sidebar-top">
-				<ul>
-				{% for link in linklists.main-menu.links %}
-					{% if link.links != blank %}
-					<li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
-						<a href="{{ link.url }}">
-						{{ link.title }} 
-						</a>
-						<ul>
-						{% for childlink in link.links %}
-							<li class="sidebar-link--sub {% if link.active %}current{% endif %}">
-							<a href="{{ childlink.url }}">
-								{{ childlink.title }}
-							</a>
-							</li>
-						{% endfor %}
-						</ul>
-					</li>
-					{% else %}
-					<li class="sidebar-link {% if link.active %}current{% endif %}">
-						<a href="{{ link.url }}">
-						{{ link.title }}
-						</a>
-					</li>
-					{% endif %}
-				{% endfor %}
-				</ul> 
-			</div>
-
-			{%comment%}
-			*
-			* Sidebar: Bottom
-			*
-			{%endcomment%}
-			<div class="list-unstyled sidebar sidebar-bottom">
-				<ul>
-				{% for link in linklists['footer'].links -%}
-					{% if link.links != blank %}
-					<li class="sidebar-link {% if link.current or link.child_current %}current{% endif %} nav-item-has-children">
-						<a href="{{ link.url }}">
-						{{ link.title }} 
-						</a>
-						<ul>
-						{% for childlink in link.links %}
-							<li class="sidebar-link--sub {% if link.active %}current{% endif %}">
-							<a href="{{ childlink.url }}">
-								{{ childlink.title }}
-							</a>
-							</li>
-						{% endfor %}
-						</ul>
-					</li>
-					{% else %}
-					<li class="sidebar-link {% if link.active %}current{% endif %}">
-						<a href="{{ link.url }}">
-						{{ link.title }}
-						</a>
-					</li>
-					{% endif %}
-				{% endfor %}
-				</ul> 
-			</div>
+			<div class="sidebar-container">
+				<div class="h-10">
+				  <a href="{{ shop.url }}/collections/frontpage/" class="logo sidebar-logo">
+					<img src={{ 'AIAGSemblem.svg' | asset_url }} alt="All Is A Gentle Spring" />
+				  </a>
+				</div>
+		
+				<div class="col h-80 d-flex flex-column justify-content-between">
+				  {%- include 'sidebar' -%}
+				</div>
+			  </div>
 		</div>
   
 		<div class="page-col__center padding-bottom-2rem col-xs-12 col-sm-6 col-lg-5">

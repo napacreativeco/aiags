@@ -33,8 +33,11 @@ body {
     padding: 0;
     overflow: hidden;
 }
+a {
+    color: inherit;
+}
 a:hover {
-    color: #000000;
+    color: inherit;
 }
 .spacer {
     height: 80px;
@@ -173,6 +176,10 @@ a.sidebar-logo img {
     -o-transition: font-family, font-weight, font-style, padding 0.3s;
     transition: font-family, font-weight, font-style, padding 0.3s;
     font-size: 1.2rem;
+    color: #000;
+}
+.sidebar-link a:hover {
+    color: #000;
 }
 li.current a {
     font-family: 'Panama Italic' !important;
@@ -401,6 +408,10 @@ variant-radios .product-form__input {
 
 
 /* Single Page */
+.page-container .page-row {
+    height: calc(100vh - 40px);
+    margin: 20px 0;
+}
 .page-col__left {
     border-right: 1px solid #000;
 }

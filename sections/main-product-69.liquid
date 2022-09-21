@@ -39,6 +39,7 @@
         {%- for media in product.media -%}
           {%- if media.media_type == 'image' -%}
           {%- assign image = media.preview_image -%}
+          {%- assign bigimage = media.preview_image -%}
 
             {%comment%}
             * Slide
@@ -46,7 +47,7 @@
             <div class="swiper-slide" data-media-id="{{ media.id }}">
               <div id="img-container" class="image-container">
                 <figure class="zoom" onmousemove="zoom(event)" style="background-image: url({{ image | img_url: '2048x' }})">
-                  <img src="{{ image | img_url: '2048x' }}" alt="{{ image.alt | escape }}">
+                  <img src="{{ image | img_url: '1080x' }}" alt="{{ image.alt | escape }}">
                 </figure>
               </div>
             </div>
