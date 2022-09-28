@@ -481,6 +481,8 @@ header .logo img {
 
 /* --------------------------------------- stuff */
 
+.afterpay-logo{filter: grayscale(1);}
+
 .button {
 	font-family: var(--font-body-family);
 	font-size: var(--font-body-scale);
