@@ -502,9 +502,3 @@ variant-radios .product-form__input {
 /* -- code to change payment icons to black and white -- */
 svg.payment-icon { filter: grayscale(1);}
 /* - end - */
-
-.afterpay-paragraph {
-    text-transform: uppercase;
-    letter-spacing: .2em;
-}
-.afterpay-logo{filter: grayscale(1);}
