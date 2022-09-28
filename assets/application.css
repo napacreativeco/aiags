@@ -603,11 +603,11 @@ header .logo img {
 		margin-bottom: 2rem;
 	}
 }
-.afterpay-paragraph {
+.afterpay_paragraph {
     text-transform: uppercase;
     letter-spacing: .2em;
 }
-.afterpay-logo{filter: grayscale(1);}
+.afterpay_logo{filter: grayscale(1);}
 
 /* --------------------------------------- password page */
 
