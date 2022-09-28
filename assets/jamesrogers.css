@@ -498,4 +498,8 @@ variant-radios .product-form__input {
         font-size: 1.3rem;
     }
 }
+.afterpay-paragraph {
+    text-transform: uppercase;
+    letter-spacing: .2em;
+}
 .afterpay-logo{filter: grayscale(1);}
