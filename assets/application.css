@@ -481,8 +481,6 @@ header .logo img {
 
 /* --------------------------------------- stuff */
 
-.afterpay-logo{filter: grayscale(1);}
-
 .button {
 	font-family: var(--font-body-family);
 	font-size: var(--font-body-scale);
@@ -605,7 +603,11 @@ header .logo img {
 		margin-bottom: 2rem;
 	}
 }
-
+.afterpay-paragraph {
+    text-transform: uppercase;
+    letter-spacing: .2em;
+}
+.afterpay-logo{filter: grayscale(1);}
 
 /* --------------------------------------- password page */
 
