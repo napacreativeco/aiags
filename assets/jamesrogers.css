@@ -498,7 +498,3 @@ variant-radios .product-form__input {
         font-size: 1.3rem;
     }
 }
-
-/* -- code to change payment icons to black and white -- */
-svg.payment-icon { filter: grayscale(1);}
-/* - end - */
