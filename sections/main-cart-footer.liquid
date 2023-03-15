@@ -1,6 +1,29 @@
-<div class="container-fluid cart__footer{% if cart == empty %} is-empty{% endif %}" id="main-cart-footer" data-id="{{ section.id }}">
-  <div class="row center-xs end-sm">
-    <div class="cart__note_container col-xs-12 col-sm-6 hide">
+<style>
+  .main-cart {
+    display: flex; flex-direction: row; padding: 10px 20px;
+  }
+
+  path {
+    fill: #000000;
+  }
+
+  @media screen and (max-width: 767px) {
+    .main-cart {
+      display: flex; flex-direction: column; padding: 10px 20px;
+    }
+  }
+</style>
+
+
+<div class="main-cart container-fluid cart__footer{% if cart == empty %} is-empty{% endif %}" id="main-cart-footer" data-id="{{ section.id }}">
+
+  <div class="col-lg-2 col-sm-0">
+    &nbsp;
+  </div>
+
+  <div class="col-lg-10 col-sm-12">
+
+    <div class="cart__note_container col-xs-12 col-sm-12 hide">
       {%- if section.settings.show_cart_note -%}
         <cart-note class="cart__note field">
           <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
@@ -8,7 +31,8 @@
         </cart-note>
       {%- endif -%}
     </div>
-    <div class="cart__blocks col-xs-12 col-sm-6">
+
+    <div class="cart__blocks col-xs-12 col-sm-12">
         {% for block in section.blocks %}
           {%- case block.type -%}
             {%- when '@app' -%}
@@ -69,7 +93,9 @@
 
         <div id="cart-errors"></div>
     </div>
+
   </div>
+
 </div>
 
 {% javascript %}

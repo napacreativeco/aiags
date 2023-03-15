@@ -35,20 +35,26 @@
             {%- endif -%}
           </a>
         </li>
+        {% comment %}
         <li>
           {%- form 'currency' -%}
             {{ form | currency_selector }}
           {%- endform -%}
         </li>
+        {% endcomment %}
       </ul>
     </div>
 
   </div>
 
-  <nav class="nav--mobile">
-    <div class="d-flex flex-row align-items-stretch">
 
-      <div class="">
+  {% comment %}
+  Mobile
+  {% endcomment %}
+  <nav class="nav--mobile">
+    <div class="d-flex flex-row align-items-stretch" style="">
+
+      <div class="hide-on-desktop">
         <a href="{{ shop.url }}/collections/frontpage/" class="logo">
           <img src={{ 'AIAGSemblem.svg' | asset_url }} alt="All Is A Gentle Spring" />
         </a>
@@ -60,6 +66,14 @@
         <span>&nbsp;</span>
       </div>
 
+    </div>
+
+    <div class="burger">
+      <div class="hide-on-mobile">
+        <a href="{{ shop.url }}/collections/frontpage/" class="logo">
+          <img src={{ 'AIAGSemblem.svg' | asset_url }} alt="All Is A Gentle Spring" />
+        </a>
+      </div>
     </div>
 
     <div>

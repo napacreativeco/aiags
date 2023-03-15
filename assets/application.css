@@ -55,6 +55,46 @@ p {
 	margin: 0 0 1rem;
 }
 
+#your-shopping-cart {
+	overflow-x: hidden;
+}
+
+a:hover,
+button:hover {
+	color: #93C572;
+}
+
+/* .shopify-cleanslate div[role="button"] {
+	background: #000 !important;
+}
+
+.shopify-cleanslate svg {
+	fill: #000000;
+} */
+
+.hide-on-desktop {
+	display: block;
+}
+.hide-on-mobile {
+	display: none;
+}
+@media screen and (max-width: 767px) {
+	.hide-on-desktop {
+		display: none;
+	}
+	.hide-on-mobile {
+		display: block;
+	}
+
+	.hamburger > span {
+		width: 30px;
+		height: 2px;
+		background: #000;
+		margin: 0 0 3px 0;
+	}
+}
+
+
 h1,
 h2,
 h3,

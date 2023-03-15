@@ -37,8 +37,8 @@
                 {% assign img_url = product.featured_image %}
                 
                 <div class="reveal">
-                  <img class="image-one archive-image {{ aspect }}" src="{{ img_url | product_img_url: 'large' }}" alt="{{ variant.image.alt | escape }}">
-                  <img class="hidden image-two archive-image" src="{{ product.images.last | product_img_url: 'large' }}" alt="{{ product.images.last.alt | escape }}" />
+                  <img class="image-one archive-image {{ aspect }}" src="{{ img_url | product_img_url: '1024x' }}" alt="{{ variant.image.alt | escape }}">
+                  <img class="hidden image-two archive-image" src="{{ product.images.last | img_url: '1024x' }}" alt="{{ product.images.last.alt | escape }}" />
                 </div>
               
               </a>
