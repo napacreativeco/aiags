@@ -178,5 +178,9 @@
 {{ 'application.js' | asset_url | script_tag }}
 {{ 'cart-notification.js' | asset_url | script_tag }}
 {{ 'product-form.js' | asset_url | script_tag }}
+
+<!-- **BEGIN** Hextom QAB Integration // Main Include - DO NOT MODIFY -->
+    {% render 'hextom_qab_main', product: product, customer: customer %}
+    <!-- **END** Hextom QAB Integration // Main Include - DO NOT MODIFY -->
 </body>
 </html>
