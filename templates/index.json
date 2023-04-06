@@ -2,16 +2,6 @@
   "sections": {
     "16717597896a343918": {
       "type": "apps",
-      "blocks": {
-        "71c68a73-a367-44fd-87a1-50caeb89187e": {
-          "type": "shopify:\/\/apps\/hextom-quick-announcement-bar\/blocks\/qab-custom-placement\/9ac2a261-3b8b-42c8-9613-d34eb2e079d3",
-          "settings": {
-          }
-        }
-      },
-      "block_order": [
-        "71c68a73-a367-44fd-87a1-50caeb89187e"
-      ],
       "settings": {
       }
     },
