@@ -170,3 +170,12 @@ variant-radios .product-form__input input:checked + label:hover  {
     text-decoration: underline;
 }
 
+.related-accordion {
+  position: absolute; 
+}
+
+@media screen and (max-width: 767px;) { 
+  .related-accordion {
+    position: relative; 
+  }
+}
