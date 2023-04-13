@@ -164,7 +164,7 @@ variant-radios .product-form__input input:checked + label:hover  {
 .klaviyo-bis-trigger {
     text-align: center;
     margin: 0px;
-    width: 100%;
+    width: 100% !important;
     font-size: 19px;
     padding: 14px 0;
     text-decoration: underline;
