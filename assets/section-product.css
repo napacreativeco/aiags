@@ -179,4 +179,7 @@ variant-radios .product-form__input input:checked + label:hover  {
     position: relative; 
     border-top: 0px !important;
   }
+  .related-column {
+    position: relative;
+  }
 }
