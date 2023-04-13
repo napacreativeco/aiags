@@ -159,3 +159,14 @@ variant-radios .product-form__input input:checked + label:hover  {
 	transform: rotate(180deg);
 }
 
+
+/* Throne */
+.klaviyo-bis-trigger {
+    text-align: center;
+    margin: 0px;
+    width: 100%;
+    font-size: 19px;
+    padding: 14px 0;
+    text-decoration: underline;
+}
+
