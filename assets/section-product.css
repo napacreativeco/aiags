@@ -178,6 +178,7 @@ variant-radios .product-form__input input:checked + label:hover  {
   .related-accordion {
     position: relative; 
     border-top: 0px !important;
+    width: 100%;
   }
   .related-column {
     position: relative;
