@@ -178,6 +178,8 @@ variant-radios .product-form__input input:checked + label:hover  {
       width: 100%;
       left: 0;
       right: 0;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
 }
 
 @media screen and (max-width: 767px) { 
