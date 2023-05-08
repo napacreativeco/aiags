@@ -223,6 +223,7 @@
 
               {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
+<<<<<<< HEAD
               {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
 
                 {% if product.selected_or_first_available_variant.available == false %}
@@ -257,14 +258,41 @@
               {%endcomment%} 
               <div class="product-form__error-message-wrapper" role="alert" hidden>
                 <span class="product-form__error-message"></span>
+=======
+            {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+              <div class="product-form__buttons">
+                <button
+                  type="submit"
+                  name="add"
+                  class="product-form__submit button"
+                {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                >
+                    <span>
+                      {%- if product.selected_or_first_available_variant.available -%}
+                        {{ 'products.product.add_to_cart' | t }}
+                      {%- else -%}
+                        <span>Sold Out</span>
+                      {%- endif -%}
+                    </span>
+                    <div class="loading-overlay__spinner hidden">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                      </svg>
+                    </div>
+                </button>
+                {%- comment-%}
+                  {{ form | payment_button }}
+                {%- endcomment -%}
+>>>>>>> 96cf652b21f78a3ce837f8a3eae2f5f878d2ad10
               </div>
             </product-form>
           
         </div>
 
         {%comment%} ---- Related Accordion {%endcomment%}
-        <div class="col-md-4 no-left-gutter order-2">
-          <div class="accordion">
+        <div class="col-md-4 no-left-gutter order-2 related-column">
+          <div class="accordion related-accordion-wrapper">
             <div class="accordion-item related-accordion">
               <h2 class="accordion-header" id="headingOne">
                 <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse--Related" aria-expanded="false" aria-controls="collapse--Related">
