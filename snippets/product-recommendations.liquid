@@ -6,23 +6,39 @@
     {%endcomment%} 
     <h3 class="title">
       <a href={{ product.url }} title={{ product.title }}>
-        {{ product.title }}
+        {{ product.title }}img
       </a>
     </h3>
 
     {%comment%}
     * Image
     {%endcomment%} 
+
+    {%- for media in product.media limit:1 -%}
+      {%- if media.media_type == 'image' -%}
+      {%- assign image = media.preview_image -%}
+      
+      
+        <a href={{ product.url }} title={{ product.title }}>
+          <img src="{{ image | img_url: '1080x' }}" alt="{{ image.alt | escape }}">
+        </a>
+      
+      {%- endif-%}
+    {%- endfor -%}
+    {% comment %} 
+   
     {%- for media in product.media limit:1 -%}
       {%- if media.media_type == 'image' -%}
       {%- assign image = media.preview_image -%}
       
         <a href={{ product.url }} title={{ product.title }}>
-          <img src="{{ image | product_img_url: 'medium' }}" alt="{{ image.alt | escape }}">
+          <img src="{{ image | img_url: '1080x' }}" alt="{{ image.alt | escape }}">
         </a>
       
       {%- endif-%}
     {%- endfor -%}
+
+    {% endcomment %}
 
     {%comment%}
     * Variants

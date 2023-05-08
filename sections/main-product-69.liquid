@@ -213,46 +213,53 @@
             </div>
           </noscript>
 
+          {% comment %} Inventory Testing {% endcomment %}
+          {% if current_variant.inventory_quantity > 0 and current_variant.inventory_management == 'shopify' %}
+            <p>Stock: {{ current_variant.inventory_quantity }}</p>
+          {% endif %}
+
           {%comment%} ----------- Add To Cart ----------- {%endcomment%}  
-          <product-form class="product-form">
+            <product-form class="product-form">
 
-            {%- assign product_form_id = 'product-form-' | append: section.id -%}
+              {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-            {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-              <div class="product-form__buttons">
-                <button
-                  type="submit"
-                  name="add"
-                  class="product-form__submit button"
-                {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                >
-                    <span>
-                      {%- if product.selected_or_first_available_variant.available -%}
-                        {{ 'products.product.add_to_cart' | t }}
-                      {%- else -%}
-                        <span>Coming soon</span>
-                      {%- endif -%}
-                    </span>
-                    <div class="loading-overlay__spinner hidden">
-                      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-                      </svg>
-                    </div>
-                </button>
-                {%- comment-%}
-                  {{ form | payment_button }}
-                {%- endcomment -%}
+              {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+
+                {% if product.selected_or_first_available_variant.available == false %}
+              
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+                  <div class="product-form__buttons">
+                    <button type="submit" name="add" class="product-form__submit button">
+                        <span>
+                          {%- if product.selected_or_first_available_variant.available -%}
+                            {{ 'products.product.add_to_cart' | t }}
+                          {%- else -%}
+                            <span>Coming soon</span>
+                          {%- endif -%}
+                        </span>
+                        <div class="loading-overlay__spinner hidden">
+                          <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                          </svg>
+                        </div>
+                    </button>
+                    {%- comment-%}
+                      {{ form | payment_button }}
+                    {%- endcomment -%}
+                  </div>     
+              
+                {% endif %}
+
+              {%- endform -%}
+
+              {%comment%}
+              * Errors
+              {%endcomment%} 
+              <div class="product-form__error-message-wrapper" role="alert" hidden>
+                <span class="product-form__error-message"></span>
               </div>
-            {%- endform -%}
-
-            {%comment%}
-            * Errors
-            {%endcomment%} 
-            <div class="product-form__error-message-wrapper" role="alert" hidden>
-              <span class="product-form__error-message"></span>
-            </div>
-          </product-form>
+            </product-form>
+          
         </div>
 
         {%comment%} ---- Related Accordion {%endcomment%}
@@ -396,7 +403,7 @@
 <script>
     var klaviyo = klaviyo || [];
     klaviyo.init({
-      account: "PUBLIC_API_KEY",
+      account: "WEqrUM",
       platform: "shopify"
     });
     klaviyo.enable("backinstock",{ 
