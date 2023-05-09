@@ -1,6 +1,17 @@
 <!doctype html>
 <html>
-<head>
+<head> 
+{%- if shop.metafields.bis.email_custom_info -%}
+    <script>{{shop.metafields.bis.email_custom_info}}</script>
+{%- endif -%}
+    <script src='{{ 'sealapps_email_config.js' | asset_url }}' defer='defer' ></script> 
+    <script src='{{ 'product_restore_email.js' | asset_url }}' defer='defer' ></script> 
+    <script id='em_product_variants' type='application/json'>
+        {{ product.variants | json }}
+    </script>
+    <script id='em_product_selected_or_first_available_variant' type='application/json'>
+        {{ product.selected_or_first_available_variant | json }}
+    </script>
   {% if template == 'index' %}
 <script>
 window.location.href = "https://gentlespring.co/collections/frontpage";
