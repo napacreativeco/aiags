@@ -498,3 +498,10 @@ variant-radios .product-form__input {
         font-size: 1.3rem;
     }
 }
+
+/* HIDE KLAVIYO BUTTON */
+
+.klaviyo-bis-trigger {
+  display: none !important;
+}
+}
