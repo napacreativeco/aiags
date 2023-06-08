@@ -24,6 +24,31 @@
         "disabled": false,
         "settings": {
         }
+      },
+      "16275430657926763838": {
+        "type": "shopify:\/\/apps\/flash-cart\/blocks\/upsell-cart\/ae66766b-0b4d-4801-a38e-5692b1140cb1",
+        "disabled": false,
+        "settings": {
+          "upsell_enable_cart_notification": true,
+          "upsell_floating_cart_button": "off",
+          "upsell_use_styles_from_theme": "true",
+          "upsell_color_drawer": "#fff",
+          "upsell_color_text": "#333",
+          "upsell_color_dividers": "#cfcfcf",
+          "upsell_color_button": "#333",
+          "upsell_color_button_text": "#fff",
+          "upsell_color_accent": "#FFD2CC",
+          "upsell_color_accent_contrasting": "#5F4B49",
+          "upsell_color_shipping_bar": "#478947",
+          "upsell_color_discount_price": "#C31718",
+          "upsell_heading_font": "helvetica_n4",
+          "upsell_heading_size": 20,
+          "upsell_body_font": "helvetica_n4",
+          "upsell_body_size": 16,
+          "upsell_button_text_style": "body,uppercase",
+          "upsell_cart_density": "20",
+          "upsell_custom_css": ""
+        }
       }
     }
   },
