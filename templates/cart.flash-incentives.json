@@ -28,7 +28,7 @@
         "upsells": {
           "type": "upsells",
           "settings": {
-            "use_slideshow": true,
+            "use_slideshow": false,
             "autoplay": true,
             "auto_rotate_speed": "4000",
             "upsell_action_type": "add_to_cart",

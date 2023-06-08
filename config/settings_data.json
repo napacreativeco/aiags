@@ -1,11 +1,14 @@
 {
   "current": {
-    "checkout_logo_position": "left",
-    "checkout_sidebar_background_image": "shopify:\/\/shop_images\/Checkout-Gradient.png",
+    "checkout_logo_image": "shopify:\/\/shop_images\/Logo-Horiztonal_1f91b3dd-4a5d-4060-8cf2-5d687a0b9a95.png",
+    "checkout_logo_position": "center",
+    "checkout_logo_size": "medium",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_color": "#333333",
     "checkout_heading_font": "Helvetica Neue",
     "checkout_body_font": "Helvetica Neue",
-    "checkout_accent_color": "#c2d4c1",
-    "checkout_button_color": "#c2d4c1",
+    "checkout_accent_color": "#333333",
+    "checkout_button_color": "#333333",
     "header_on_landing_page": false,
     "sections": {
       "header": {
