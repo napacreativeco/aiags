@@ -505,3 +505,8 @@ variant-radios .product-form__input {
   display: none !important;
 }
 }
+.btn--add-to-cart {
+    background: #000 !important;
+    border: none !important;
+    color: white !important;
+}
