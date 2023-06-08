@@ -128,7 +128,7 @@ header {
             align-items: center;
 }
 .currency-selector--desktop {
-    display: inline-block;
+    display: hide;
 }
 
 /* SIDEBAR */
