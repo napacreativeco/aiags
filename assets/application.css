@@ -26,6 +26,11 @@
 	--duration-short: 0.25s;
 
 }
+.btn--add-to-cart {
+    background: #000 !important;
+    border: none !important;
+    color: #fff !important;
+}
 
 *:focus {
 	outline: none !important;
