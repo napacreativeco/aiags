@@ -260,11 +260,6 @@ variant-radios .product-form__input {
 .product .image-container figure {
     height: 100%;
 }
-.btn--add-to-cart {
-    background: #000 !important;
-    border: none !important;
-    color: #fff !important;
-}
 /* Swiper */
 .product .swiper {
     width: 100%;
