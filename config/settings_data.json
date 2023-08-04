@@ -28,6 +28,12 @@
         "settings": {
         }
       },
+      "17135229265405203036": {
+        "type": "shopify:\/\/apps\/quick-banner-announcement-bars\/blocks\/quickBanner\/3421d53e-fb02-449c-a9ef-daf28f28450a",
+        "disabled": false,
+        "settings": {
+        }
+      },
       "16275430657926763838": {
         "type": "shopify:\/\/apps\/flash-cart\/blocks\/upsell-cart\/ae66766b-0b4d-4801-a38e-5692b1140cb1",
         "disabled": false,
@@ -35,15 +41,15 @@
           "upsell_enable_cart_notification": true,
           "upsell_floating_cart_button": "off",
           "upsell_use_styles_from_theme": "true",
-          "upsell_color_drawer": "#fff",
-          "upsell_color_text": "#333",
+          "upsell_color_drawer": "#ffffff",
+          "upsell_color_text": "#333333",
           "upsell_color_dividers": "#cfcfcf",
-          "upsell_color_button": "#333",
-          "upsell_color_button_text": "#fff",
-          "upsell_color_accent": "#FFD2CC",
-          "upsell_color_accent_contrasting": "#5F4B49",
+          "upsell_color_button": "#333333",
+          "upsell_color_button_text": "#333333",
+          "upsell_color_accent": "#ffd2cc",
+          "upsell_color_accent_contrasting": "#5f4b49",
           "upsell_color_shipping_bar": "#478947",
-          "upsell_color_discount_price": "#C31718",
+          "upsell_color_discount_price": "#c31718",
           "upsell_heading_font": "helvetica_n4",
           "upsell_heading_size": 20,
           "upsell_body_font": "helvetica_n4",
