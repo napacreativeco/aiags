@@ -89,7 +89,7 @@
             {% assign variantAvailable = variant.available %}
             {% if preorder == 'true' %}
                 {% if variant.inventory_quantity > 0 %}
-                    {% assign variantAvailable = false %}
+                    {% assign variantAvailable = true %}
                 {% else %}
                     {% assign variantAvailable = false %}
                 {%endif %}
