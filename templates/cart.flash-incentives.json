@@ -47,7 +47,7 @@
         "upsells"
       ],
       "settings": {
-        "title": "Your Cart",
+        "title": "shopping basket",
         "upsell_continue_collections": [
 
         ],
@@ -67,12 +67,12 @@
     "notification": {
       "type": "flash-incentives-notification",
       "settings": {
-        "notification_style": "small",
+        "notification_style": "medium",
         "small_show_subtotal": true,
         "small_mobile_position": "below_header",
         "medium_show_subtotal": true,
-        "medium_show_incentives_bar": true,
-        "medium_mobile_position": "below_header",
+        "medium_show_incentives_bar": false,
+        "medium_mobile_position": "bottom_of_screen",
         "modal_show_recommendations": true,
         "upsell_action_type": "add_to_cart",
         "savings_type": "dollar"
