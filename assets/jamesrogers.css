@@ -276,18 +276,12 @@ variant-radios .product-form__input {
     height: 100vh;
 }
 
-@media screen and (max-width: 767px) {
-.product .image-container figure {
-    height: 100%;
-    width:100% ;
-}
-}
-
 /* Swiper */
 .product .swiper {
     width: 100%;
     height: calc(100vh - 40px);
 }
+
 .swiper-pagination-bullet {
     border-radius: 0px !important;
   border: 1px solid black !important;
@@ -296,6 +290,12 @@ variant-radios .product-form__input {
 :root {
     --swiper-theme-color: #000 !important;
 }
+
+/* Swiper: Media Queries */
+@media screen and (max-width: 767px) {
+.product .swiper {
+    width: 100vw !important;
+}}
 
 /* Product Recommendations */
 .product-recommendations a:hover,
