@@ -37,7 +37,7 @@ a {
     color: inherit;
 }
 a:hover {
-    color: inherit;
+    color: #989898 !important;
 }
 .spacer {
     height: 80px;
@@ -50,6 +50,20 @@ button {
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     transition: all 0.4s;
+}
+
+/* BUTTON */
+
+.button {
+	background-color: black !important;
+	color: white !important;
+	border: 1px solid black;
+}
+
+.button:hover {
+	background-color: #DEDEDE !important;
+	color: black !important;
+	border: 1px solid black !important;
 }
 
 /* HELPERS */
@@ -236,6 +250,7 @@ variant-radios .product-form__input {
         -ms-flex-pack: start;
             justify-content: flex-start;
     width: 100%;
+  margin-top: -40px;
 }
 .product .size ul {
     list-style: none;
@@ -258,8 +273,16 @@ variant-radios .product-form__input {
     position: relative;
 }
 .product .image-container figure {
-    height: 100%;
+    height: 100vh;
 }
+
+@media screen and (max-width: 767px) {
+.product .image-container figure {
+    height: 100%;
+    width:100% ;
+}
+}
+
 /* Swiper */
 .product .swiper {
     width: 100%;
@@ -267,6 +290,11 @@ variant-radios .product-form__input {
 }
 .swiper-pagination-bullet {
     border-radius: 0px !important;
+  border: 1px solid black !important;
+}
+
+:root {
+    --swiper-theme-color: #000 !important;
 }
 
 /* Product Recommendations */
@@ -502,4 +530,9 @@ variant-radios .product-form__input {
 
 .klaviyo-bis-trigger {
   display: none !important;
+}
+
+.shopify-currency-form select {
+  display: none! important;
+}
 }
