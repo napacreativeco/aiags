@@ -119,16 +119,20 @@ header {
     justify-content: space-between;
     background: #fff;
 }
+
 .hamburger {
     margin-top: 8px;
     margin-left: 10px;
 }
+
+@media screen and (max-width: 767px) {
 .hamburger span {
     width: 20px;
     height: 1px;
     background: #000;
     margin: 0 0 2px 0;
-}
+}}
+
 .nav--desktop {
     padding: 10px 2rem 10px 1rem;
     display: -webkit-box;
