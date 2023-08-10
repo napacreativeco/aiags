@@ -125,7 +125,7 @@ header {
 }
 .hamburger > span {
     width: 20px;
-    height: 1px;
+    height: 2px;
     background: #000;
     margin: 0 0 5px 0;
 }
