@@ -307,9 +307,10 @@ variant-radios .product-form__input {
 }}
 
 @media screen and (max-width: 767px) {
-.product .swiper img {
- object-position: center;
-}}
+.product .image-container figure {
+    height: 75vh;
+}
+}
 
 /* Product Recommendations */
 .product-recommendations a:hover,
