@@ -179,7 +179,6 @@ variant-radios .product-form__input input:checked + label:hover  {
   display: flex;
   order: 10 !important;
   margin-top: 2rem;
-  border-top: solid 1px black;
   width: 100%;
 }}
 
