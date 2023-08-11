@@ -48,15 +48,15 @@
           "upsell_color_button_text": "#333333",
           "upsell_color_accent": "#ffd2cc",
           "upsell_color_accent_contrasting": "#5f4b49",
-          "upsell_color_shipping_bar": "#8fc78f",
-          "upsell_color_discount_price": "#fa7d7e",
+          "upsell_color_shipping_bar": "#505050",
+          "upsell_color_discount_price": "#b01212",
           "upsell_heading_font": "helvetica_n4",
           "upsell_heading_size": 20,
           "upsell_body_font": "helvetica_n4",
           "upsell_body_size": 16,
           "upsell_button_text_style": "body,uppercase",
           "upsell_cart_density": "20",
-          "upsell_custom_css": ".upsell-cart__add-btn {\ncolor: #000 !important;\n}\n\n:root { --upsellColorSuccess: #8FC78F !important;\n--upsellColorTextSavings: #FA7D7E !important; }"
+          "upsell_custom_css": ".upsell-cart__add-btn {\ncolor: #000 !important;\n}\n\n:root { --upsellColorSuccess: #505050 !important;\n--upsellColorTextSavings: #B01212 !important; }"
         }
       }
     }
