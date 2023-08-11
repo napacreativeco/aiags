@@ -308,7 +308,7 @@ variant-radios .product-form__input {
 
 @media screen and (max-width: 767px) {
 .product .image-container figure {
-    height: 75vh;
+    height: 75vh !important;
 }
 }
 
