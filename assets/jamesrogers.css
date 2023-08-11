@@ -283,8 +283,8 @@ variant-radios .product-form__input {
 }
 
 @media screen and (max-width: 767px) {
-  .product .size {
-    order: 1;
+variant-radios .product-form__input {
+    order: 1 !important;
   }
 }
 /* Swiper */
