@@ -341,10 +341,6 @@ variant-radios .product-form__input {
         flex-wrap: nowrap;
 }
 
-@media screen and (max-width: 767px) {
-.product-recommendations {
-order: 10 !important;}
-}
 
 /* Collection: Card  */
 .card {
