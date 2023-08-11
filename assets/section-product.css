@@ -175,6 +175,7 @@ variant-radios .product-form__input input:checked + label:hover  {
   display: flex;
   order: 10 !important;
   padding-top: 4rem;
+  border-top: solid 1px black;
 }
 
 .related-accordion {
