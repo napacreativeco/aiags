@@ -225,6 +225,7 @@ li.current a {
 }
 
 /* PRODUCT */
+
 .product.container-fluid {
     width: 100%;
     height: calc(100vh - 40px);
@@ -272,6 +273,7 @@ variant-radios .product-form__input {
             align-items: center;
     grid-gap: 12px;
 }
+
 .product-images {
     height: 100%;
     position: relative;
@@ -280,6 +282,11 @@ variant-radios .product-form__input {
     height: 100vh;
 }
 
+@media screen and (max-width: 767px) {
+  .product .size {
+    order: 1;
+  }
+}
 /* Swiper */
 .product .swiper {
     width: 100%;
