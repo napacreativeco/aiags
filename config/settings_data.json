@@ -56,7 +56,7 @@
           "upsell_body_size": 16,
           "upsell_button_text_style": "body,uppercase",
           "upsell_cart_density": "20",
-          "upsell_custom_css": ".upsell-cart__add-btn {\ncolor: #000 !important;\n}\n\n:root { --upsellColorSuccess: #505050 !important;\n--upsellColorTextSavings: #B01212 !important; }"
+          "upsell_custom_css": ".upsell-cart__add-btn {\ncolor: #000 !important;\n}\n\n:root { --upsellColorSuccess: #505050 !important;\n--upsellColorTextSavings: #B01212 !important; }\n\n.upsell-cart__item-price {\ndisplay: none !important;\n}"
         }
       }
     }
