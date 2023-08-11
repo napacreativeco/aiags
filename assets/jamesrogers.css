@@ -303,6 +303,7 @@ variant-radios .product-form__input {
 .product .swiper {
     width: 100vw !important;
   margin-left: -10px !important;
+  height: 60vh !important;
 }}
 
 /* Product Recommendations */
