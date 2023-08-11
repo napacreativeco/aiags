@@ -303,7 +303,12 @@ variant-radios .product-form__input {
 .product .swiper {
     width: 100vw !important;
   margin-left: -10px !important;
-  height: 60vh !important;
+  height: 75vh;
+}}
+
+@media screen and (max-width: 767px) {
+.product .swiper img {
+ object-position: center;
 }}
 
 /* Product Recommendations */
