@@ -559,5 +559,5 @@ variant-radios .product-form__input {
 
 @media (max-width: 400px) {
 .qb-announcement-bar-item {
-    font-size: 10px;
+    font-size: 10px !important;
 }}
