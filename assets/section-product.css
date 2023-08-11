@@ -172,12 +172,16 @@ variant-radios .product-form__input input:checked + label:hover  {
 
 .related-column {
   position: relative;
+ }
+
+@media screen and (max-width: 767px) {
+ .related-column {
   display: flex;
   order: 10 !important;
   margin-top: 2rem;
   border-top: solid 1px black;
   width: 100%;
-}
+}}
 
 .related-accordion {
       position: absolute; 
