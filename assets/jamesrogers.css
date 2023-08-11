@@ -535,7 +535,7 @@ variant-radios .product-form__input {
 }
 
 @media screen and (max-width: 767px) {
-.product-form__submit button {
+.product-form__buttons {
     order: 1 !important;
   }
 }
