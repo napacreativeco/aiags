@@ -255,7 +255,6 @@
         "count": {{ cart.item_count }},
         "ids": {{ cart.items | map: 'product_id' | json }},
         "cents": {{ cart.total_price }},
-        "subtotal": {{ total_price_without_currency | replace: ',', '' }},
         "currency": {{ cart.currency.iso_code | json }}
       }
     </script>
@@ -311,7 +310,7 @@
                   data-id="{{ item.product.id }}"
                 >
                   <div class="upsell-cart__image">
-                    <a href="{{ item.url }}" aria-label="{{ item.product.title }}">
+                    <a href="{{ item.url }}" aria-label="{{ item.product.title | escape }}">
                       {% if item.image != blank %}
                         {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy' }}
                       {% else %}
