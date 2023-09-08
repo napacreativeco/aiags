@@ -84,145 +84,206 @@
   {% endunless %}
   {% assign cart_share_items = cart_share_items | append: item.variant_id | append: ',' | append: item.quantity %}
 {% endfor %}
+
 {% if request.design_mode %}
   {% comment %} How to guide {% endcomment %}
   <style>
-    .upsell-onboarding {
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 40px 16px;
-      text-align: center;
-    }
+	.upsell-onboarding {
+		--_upsell-onboarding-primary: #98C6CD;
+		--_upsell-onboarding-primary--light: #EBF9FC;
+		--_upsell-onboarding-primary--dark: #00A0AC;
 
-    @media (min-width: 769px) {
-      .upsell-onboarding {
-        padding: 60px 16px;
-      }
-    }
+		margin: 0 auto;
+		padding:
+			var(--_upsell-onboarding-padding-block, 40px)
+			var(--_upsell-onboarding-padding-inline, 16px);
+		max-width: 1400px;
 
-    .upsell-onboarding__title {
-      margin-bottom: 16px;
-      font-weight: bold;
-      font-size: 20px;
-    }
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
 
-    .upsell-onboarding__embed-notice {
-      display: inline-flex;
-      align-items: center;
-      margin: 0 auto;
-      padding: 10px 20px;
-      background: #EEF9FC;
-      border: 1px solid #3B929E;
-      border-radius: 6px;
-      color: #3B929E;
-      font-size: 14px;
-      text-align: left;
-    }
+		font-size: 16px;
+		font-weight: 300;
+		line-height: 1.4;
+	}
 
-    .upsell-onboarding--embed-active .upsell-onboarding__embed-notice {
-      display: none;
-    }
+	@media (min-width: 769px) {
+		.upsell-onboarding {
+			--_upsell-onboarding-padding-block: 60px;
+		}
+	}
 
-    .upsell-onboarding__embed-notice svg {
-      flex: 0 0 15px;
-      width: 15px;
-      height: 15px;
-      margin-right: 5px;
-    }
+	.upsell-onboarding__title {
+		font-weight: 600;
+		font-size: 20px;
+		text-align: center;
+	}
 
-    .upsell-onboarding__steps {
-      margin-top: 24px;
-    }
+	.upsell-onboarding__embed-notice {
+		display: flex;
+		align-items: center;
+		padding: 0.5rem 1.5rem;
+		background: var(--_upsell-onboarding-primary--light);
+		border: 0.0625rem solid var(--_upsell-onboarding-primary);
+		border-radius: 0.5rem;
+		font-weight: 300;
+		gap: 1rem;
+	}
 
-    .upsell-onboarding__step {
-      margin-bottom: 16px;
-    }
+	.upsell-onboarding__embed-notice svg {
+		flex: 0 0 16px;
+    width: 16px;
+		color: var(--_upsell-onboarding-primary--dark);
+	}
 
-    .upsell-onboarding__step-inner {
-      width: 100%;
-      padding: 18px;
-      background: #fff;
-    }
+	.upsell-onboarding__steps {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		justify-content: space-between;
+	}
 
-    @media (min-width: 769px) {
-      .upsell-onboarding__steps {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 40px;
-      }
+	.upsell-onboarding__step {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		flex: 0 0 calc(100% / 3 - var(--_upsell-onboarding-step-gap, 1rem));
+	}
 
-      .upsell-onboarding__step {
-        flex: 0 0 33.3333%;
-        display: flex;
-        margin-bottom: 0;
-        padding: 8px;
-      }
+	@media (min-width: 769px) {
+		.upsell-onboarding__steps {
+			flex-direction: row;
+		}
+	}
 
-      .upsell-onboarding__step-inner {
-        padding: 20px 30px;
-      }
-    }
+	@media (min-width: 1024px) {
+		.upsell-onboarding__steps {
+			--_upsell-onboarding-step-gap: 3rem;
+		}
+	}
 
-    .upsell-onboarding__step h3 {
-      margin-bottom: 20px;
-      color: #000;
-      font-size: 18px;
-    }
+	.upsell-onboarding__step h3 {
+		font-weight: 600;
+		color: #000;
+		font-size: 16px;
+		margin-block-end: 0;
+	}
 
-    .upsell-onboarding__step img {
-      width: 100%;
-      max-width: 300px;
-      height: auto;
-      margin: 0 auto;
-      border: 1px solid #DDDDDD;
-    }
+	.upsell-onboarding__step img {
+		width: 100%;
+		height: auto;
+	}
 
-    .upsell-onboarding__step p {
-      margin-top: 20px;
-    }
+	.upsell-onboarding__step p {
+		font-size: 14px;
+		margin-block: 0;
+	}
 
-    .upsell-onboarding--embed-active .upsell-onboarding__step--embed {
-      display: none;
-    }
+	.upsell-onboarding__step p.with-icon {
+		display: flex;
+		gap: 1rem;
+	}
 
-    .upsell-onboarding:not(.upsell-onboarding--embed-active) .upsell-onboarding__step--customize > * {
-      opacity: 0.2;
-    }
-  </style>
-  <div class="upsell-onboarding">
-    <h2 class="upsell-onboarding__title">How to guide</h2>
-    <div class="upsell-onboarding__embed-notice">
-      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" fill="none"><path fill="#3B929E" fill-rule="evenodd" d="M7.5 15.5a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Zm.303-11.1a.9.9 0 1 0-1.8 0 .9.9 0 0 0 1.8 0Zm-2.4 2.7a.6.6 0 0 1 .6-.6h1.2a1.2 1.2 0 0 1 1.2 1.2v3.603H9a.6.6 0 1 1 0 1.2H6.5a.6.6 0 1 1 0-1.2h.703V7.7h-1.2a.6.6 0 0 1-.6-.6Z" clip-rule="evenodd"/></svg>
-      <p>The flash incentives cart drawer will only appear once you've enabled the app embed</p>
-    </div>
+	.upsell-onboarding__step svg {
+		width: 50px;
+		height: auto;
+		align-self: start;
+	}
 
-    <div class="upsell-onboarding__steps">
-      <div class="upsell-onboarding__step upsell-onboarding__step--embed">
-        <div class="upsell-onboarding__step-inner">
-          <h3>To enable the App embed:</h3>
-          <img src="https://upsell.obsidianapps.co/onboarding/enable-app-embed.png" alt="Screenshot showing how to enable app embed">
-          <p>Toggle on “Flash Cart” in the App embeds panel. <br>If your theme already has a pop-out cart embedded, you may also need to disable it.</p>
-        </div>
-      </div>
-      <div class="upsell-onboarding__step upsell-onboarding__step--customize">
-        <div class="upsell-onboarding__step-inner">
-          <h3>To customize the cart:</h3>
-          <img src="https://upsell.obsidianapps.co/onboarding/customize-cart.png" alt="Screenshot showing how to customize cart settings">
-          <p>Open “Flash Cart” in the sections tab. <br>In order to see the blocks, make sure to have at least 1 product in your cart.</p>
-        </div>
-      </div>
-      <div class="upsell-onboarding__step upsell-onboarding__step--customize">
-        <div class="upsell-onboarding__step-inner">
-          <h3>To customize the ATC notification:</h3>
-          <img src="https://upsell.obsidianapps.co/onboarding/customize-atc-notification.png" alt="Screenshot showing how to customize ATC notification">
-          <p>Open “Flash ATC Notification” in the sections tab. <br>To properly view the notification, make sure to have at least 1 product in your cart.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+	.upsell-onboarding__step p strong {
+		font-weight: 600;
+	}
+
+	.upsell-onboarding__button {
+		-webkit-appearance: none;
+		appearance: none;
+		border: none;
+		color: #fff;
+		background-color: #008060;
+		padding-block: 1rem;
+		width: 100%;
+		border-radius: 3px;
+		cursor: pointer;
+
+		/* shopify element is base of form 10px */
+		font-size: 1.6rem;
+	}
+
+	.upsell-onboarding__button:hover {
+		background-color: #007054;
+	}
+
+	.upsell-onboarding__step ul {
+		margin: 0;
+		margin-inline-start: 3rem;
+		padding: 0;
+	}
+
+	.upsell-onboarding--embed-active .upsell-onboarding__embed-notice {
+		display: none;
+	}
+
+	.upsell-onboarding--embed-active .upsell-onboarding__step--embed {
+		opacity: 0.2;
+	}
+
+	.upsell-onboarding:not(.upsell-onboarding--embed-active) .upsell-onboarding__step--customize > * {
+		opacity: 0.2;
+	}
+</style>
+<div class="upsell-onboarding" data-upsell-onboarding>
+	<h2 class="upsell-onboarding__title">How To: Setting up your Flash Cart in the Theme Editor</h2>
+
+	<div class="upsell-onboarding__embed-notice">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M7.5 15.5a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Zm.303-11.1a.9.9 0 1 0-1.8 0 .9.9 0 0 0 1.8 0Zm-2.4 2.7a.6.6 0 0 1 .6-.6h1.2a1.2 1.2 0 0 1 1.2 1.2v3.603H9a.6.6 0 1 1 0 1.2H6.5a.6.6 0 1 1 0-1.2h.703V7.7h-1.2a.6.6 0 0 1-.6-.6Z" clip-rule="evenodd"/></svg>
+		<p>The Flash Cart drawer will only appear once you've enabled the app embed.</p>
+	</div>
+
+	<div class="upsell-onboarding__steps">
+		<div class="upsell-onboarding__step upsell-onboarding__step--embed">
+			<h3>Step 1 : Enabling Cart</h3>
+			<img src="https://greg-dev-incentivize.ngrok.io/onboarding/step-1-enabling-cart.png" alt="Screenshot showing how to enable app embed">
+			<p><strong>Enable Flash Cart with toggle in left panel.</strong></p>
+			<p>Toggle on "Flash Cart" in the App embeds panel</p>
+			<p>If your theme already has a pop-out cart embedded, you may also need to disable it.</p>
+			<p><a href="https://flash-cart.super.site/enable-flash-cart">Need help? Find out how</a></p>
+		</div>
+
+		<div class="upsell-onboarding__step upsell-onboarding__step--customize">
+			<h3>Step 2 : Add a test product</h3>
+			<img src="https://greg-dev-incentivize.ngrok.io/onboarding/step-2-add-product.png" alt="Screenshot showing how to customize cart settings">
+			<p><strong>Add a product from your store below.</strong></p>
+			<p>In order to see and edit how your cart will look real-time, you need to have at least 1 product in your cart.</p>
+
+			{% assign collection = collections.first %}
+			{% assign product = collection.products.first %}
+			{% if product.variants.first %}
+				<form method="post" action="/cart/add"  onSubmit="document.dispatchEvent(new Event('obsidian:upsell:update')); document.dispatchEvent(new Event('obsidian:upsell:refresh'))">
+					<input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+					<input min="1" type="hidden" id="quantity" name="quantity" value="1"/>
+					<button type="submit" class="upsell-onboarding__button">Add a product to my cart</button>
+				</form>
+			{% else %}
+				<a href="{{ "/admin/products" | prefix: request.origin }}">Your store currently has no products. Add one now</a>
+			{% endif %}
+		</div>
+
+		<div class="upsell-onboarding__step upsell-onboarding__step--customize">
+			<h3>Step 3 : Customize your cart</h3>
+			<img src="https://greg-dev-incentivize.ngrok.io/onboarding/step-3-customize-your-cart.png" alt="Screenshot showing how to customize ATC notification">
+			<p class="with-icon">
+				<svg viewBox="0 0 20 20" width="20px" height="20px" class="Polaris-Icon__Svg_375hu" focusable="false" aria-hidden="true"><path d="M3.5 5.25c0-.966.784-1.75 1.75-1.75h1a.75.75 0 0 1 0 1.5h-1a.25.25 0 0 0-.25.25v1a.75.75 0 0 1-1.5 0v-1Z"></path><path fill-rule="evenodd" d="M3.5 9.25c0-.966.784-1.75 1.75-1.75h9.5c.966 0 1.75.784 1.75 1.75v1.5a1.75 1.75 0 0 1-1.75 1.75h-9.5a1.75 1.75 0 0 1-1.75-1.75v-1.5Zm1.75-.25a.25.25 0 0 0-.25.25v1.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25v-1.5a.25.25 0 0 0-.25-.25h-9.5Z"></path><path d="M3.5 14.75c0 .966.784 1.75 1.75 1.75h1a.75.75 0 0 0 0-1.5h-1a.25.25 0 0 1-.25-.25v-1a.75.75 0 0 0-1.5 0v1Z"></path><path d="M14.75 3.5c.966 0 1.75.784 1.75 1.75v1a.75.75 0 0 1-1.5 0v-1a.25.25 0 0 0-.25-.25h-1a.75.75 0 0 1 0-1.5h1Z"></path><path d="M14.75 16.5a1.75 1.75 0 0 0 1.75-1.75v-1a.75.75 0 0 0-1.5 0v1a.25.25 0 0 1-.25.25h-1a.75.75 0 0 0 0 1.5h1Z"></path><path d="M11.75 4.25a.75.75 0 0 1-.75.75h-2a.75.75 0 0 1 0-1.5h2a.75.75 0 0 1 .75.75Z"></path><path d="M11 16.5a.75.75 0 0 0 0-1.5h-2a.75.75 0 0 0 0 1.5h2Z"></path></svg>
+				<strong>Head to sections in your sidebar to customize cart blocks and the added-to-cart popup.</strong>
+			</p>
+			<ul>
+				<li>Head to sections tab. Add new cart blocks, edit them and customize their locations within your cart.</li>
+				<li>Select the Added-to-cart popup and customize it for your store.</li>
+		</div>
+	</div>
+</div>
 {% endif %}
+
 <template
   data-upsell-section="cart"
   data-upsell-section-id="{{ section.id }}"
@@ -236,17 +297,19 @@
   %}
     {% if request.design_mode %}
       <upsell-customize-link>
-        <a
-          href="{{ routes.cart_url }}?view=flash-incentives"
-          class="upsell-customize-button"
-        >
-          <div class="upsell-customize-button__content">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7.29983 17.2L1 19L2.79995 12.7002L13.5682 1.93196C14.1649 1.33524 14.9742 1 15.8181 1C16.662 1 17.4713 1.33524 18.068 1.93196C18.6648 2.52868 19 3.338 19 4.1819C19 5.02579 18.6648 5.83511 18.068 6.43184L7.29983 17.2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12.2178 3.28174L16.7177 7.78162" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2.7998 12.7002L7.29968 17.2001" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+        <div class="upsell-customize-link__content">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 600 600">
+            <g fill="none" fill-rule="evenodd">
+              <path class="flash-cart-icon-bg" fill="#4801D8" d="M0 0h600v600H0z"/>
+              <path class="flash-cart-icon-lines" fill="#FFF" fill-rule="nonzero" d="M168.9 98.9a106 106 0 0 1 29.4 38.4c2.4 5 4.7 14 6.8 27h216.4c56 0 101 49.1 101 109.5 0 60.3-45 109.5-101 109.5h-171c-15.7 0-30.1-6-42.9-17.6a130 130 0 0 1-8-8l2.2 10.8v.4a83.5 83.5 0 0 0 15.3 28.2l.4.4a64.3 64.3 0 0 0 40.5 18.2l179 .6a51 51 0 1 1-34.5 13.4h-110a50.9 50.9 0 0 1-34.5 88.6 51 51 0 0 1-26.3-94.7 75.4 75.4 0 0 1-24.4-16.5 95.2 95.2 0 0 1-18.6-33.5l-.5-1.3-8.9-44.2-.5-1 .3-.2L147.8 172a82.3 82.3 0 0 0-6.6-18.4 32 32 0 0 0-17.5-15c-3-.8-8.6-1.3-16.7-1.4-16.4 0-30-12.4-30-28a28 28 0 0 1 27-28 105.2 105.2 0 0 1 64.9 17.6ZM258 430.3a37 37 0 1 0 0 74 37 37 0 0 0 0-74Zm179 0a37 37 0 1 0 0 74 37 37 0 0 0 0-74Zm-179 20a17 17 0 1 1 0 34 17 17 0 0 1 0-34Zm179 0a17 17 0 1 1 0 34 17 17 0 0 1 0-34Zm-225-248h207.5c34.5 0 62 31.5 62 70 0 37.7-26.5 68.7-60 70H262.7c-10.6-.6-20-3.5-28.3-9a43.7 43.7 0 0 1-17.6-25.5l-27.3-150.9a82.6 82.6 0 0 0-30.7-47.6c-20.8-14.5-46.7-14-51-14-9.7 0-16.8 6.1-16.8 14 0 7.8 7.7 14 16.3 14 3.3 0 20-1.3 33 7.7 12.6 8.8 19.5 27.6 22 40.3a46688 46688 0 0 1 30.4 152.2 111 111 0 0 0 24.3 31.8 48.6 48.6 0 0 0 33.5 14h171c48 0 87-42.7 87-95.5 0-53-39-95.5-87-95.5H207.6l4.3 24Zm7.2 40.3h200.3c13.6 0 24 13.4 24 28.7 0 15.1-10.4 28-24 28H229.4l.8 4.4v.3a30 30 0 0 0 11.5 17.4l.4.3c5.9 3.9 12.7 6 20.6 6.5h157.6c26-.4 47.2-25.1 47.2-56 0-31-21.7-56-48-56h-205l4.7 26.4Zm7.7 42.7h192.6c5.2 0 10-6 10-14 0-8.2-5-14.7-10-14.7H221.7l5.2 28.7Z"/>
+            </g>
+          </svg>
+
+          <span>Customize and edit Flash Cart</span>
+        </div>
+
+        <a href="{{ routes.cart_url }}?view=flash-incentives" class="upsell-customize-button">
+          Edit your cart
         </a>
       </upsell-customize-link>
     {% endif %}
@@ -259,7 +322,12 @@
       }
     </script>
     <h2 class="upsell-cart__title">
-      {{ section.settings.title }}
+      {% if shop.metafields.obsidian_upsell[locale].cart_title %}
+        {{ shop.metafields.obsidian_upsell[locale].cart_title }}
+      {% else %}
+        {{ section.settings.title }}
+      {% endif %}
+
       <button type="button" class="upsell-cart__close" aria-label="Close cart">
         {{ close }}
       </button>
