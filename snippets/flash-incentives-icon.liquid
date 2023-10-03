@@ -10,7 +10,7 @@
   https://text-compare.com/ is a great tool to see the differences.
 {% endcomment %}
 
-<span class="icon icon-new icon-{{ icon }} {{ class }}">
+<span class="icon icon-new icon-{{ icon }} {{ class }}" {% if slot %}slot="{{ slot }}"{% endif %}>
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       {%- case icon -%}
         {%- when 'bank' -%}

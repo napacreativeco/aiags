@@ -205,9 +205,6 @@
 		width: 100%;
 		border-radius: 3px;
 		cursor: pointer;
-
-		/* shopify element is base of form 10px */
-		font-size: 1.6rem;
 	}
 
 	.upsell-onboarding__button:hover {
@@ -580,6 +577,18 @@
                 show-bar-prices
               {% endif %}
             >
+              {%
+                render 'flash-incentives-icon',
+                icon: block.settings.shipping_icon,
+                class: 'upsell-shipping__icon',
+                slot: 'shipping-icon-inactive'
+              %}
+              {%
+                render 'flash-incentives-icon',
+                icon: block.settings.shipping_icon,
+                class: 'upsell-shipping__icon',
+                slot: 'shipping-icon-full'
+              %}
             </upsell-incentives-bar>
           {% when 'text_bar' %}
             <div
@@ -950,11 +959,19 @@
           {% endif %}
           {% if section.settings.checkout_action == 'cart' %}
             <a href="{{ routes.cart_url }}" class="btn button upsell-cart__cta upsell-cart__checkout" data-btn-action="cart">
-              {{ lock }}{{ shop.metafields.obsidian_upsell[locale].go_to_cart_title }}
+              {%
+                render 'flash-incentives-icon',
+                icon: section.settings.checkout_icon
+              %}
+              {{ shop.metafields.obsidian_upsell[locale].go_to_cart_title }}
             </a>
           {% else %}
             <button type="submit" name="checkout" class="btn button upsell-cart__cta upsell-cart__checkout" data-btn-action="checkout">
-              {{ lock }}{{ shop.metafields.obsidian_upsell[locale].checkout_title }}
+              {%
+                render 'flash-incentives-icon',
+                icon: section.settings.checkout_icon
+              %}
+              {{ shop.metafields.obsidian_upsell[locale].checkout_title }}
             </button>
           {% endif %}
         </div>
@@ -1260,6 +1277,174 @@
           }
         ],
         "default": "small_text"
+      },
+      {
+        "type": "select",
+        "id": "checkout_icon",
+        "label": "Checkout Icon",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "bank",
+            "label": "Bank"
+          },
+          {
+            "value": "bill",
+            "label": "Bill"
+          },
+          {
+            "value": "bottle",
+            "label": "Bottle"
+          },
+          {
+            "value": "chat",
+            "label": "Chat"
+          },
+          {
+            "value": "chat-empty",
+            "label": "Chat empty"
+          },
+          {
+            "value": "checked-box",
+            "label": "Checked box"
+          },
+          {
+            "value": "clothes-button",
+            "label": "Clothes button"
+          },
+          {
+            "value": "clothes-hanger",
+            "label": "Clothes hanger"
+          },
+          {
+            "value": "cotton",
+            "label": "Cotton"
+          },
+          {
+            "value": "envelope",
+            "label": "Envelope"
+          },
+          {
+            "value": "globe",
+            "label": "Globe"
+          },
+          {
+            "value": "hand-washing",
+            "label": "Hand washing"
+          },
+          {
+            "value": "heart",
+            "label": "Heart"
+          },
+          {
+            "value": "laundry-dryer",
+            "label": "Laundry dryer"
+          },
+          {
+            "value": "laundry-washer",
+            "label": "Laundry washer"
+          },
+          {
+            "value": "leaf",
+            "label": "Leaf"
+          },
+          {
+            "value": "lipstick",
+            "label": "Lipstick"
+          },
+          {
+            "value": "measuring-tape",
+            "label": "Measuring tape"
+          },
+          {
+            "value": "model-silhouette",
+            "label": "Silhouette"
+          },
+          {
+            "value": "money-bills",
+            "label": "Money bills"
+          },
+          {
+            "value": "moving-truck",
+            "label": "Moving truck"
+          },
+          {
+            "value": "package-open",
+            "label": "Package open"
+          },
+          {
+            "value": "package-closed",
+            "label": "Package closed"
+          },
+          {
+            "value": "padlock",
+            "label": "Padlock"
+          },
+          {
+            "value": "paper-airplane",
+            "label": "Paper airplane"
+          },
+          {
+            "value": "paw-print",
+            "label": "Paw print"
+          },
+          {
+            "value": "plant",
+            "label": "Plant"
+          },
+          {
+            "value": "price-tag",
+            "label": "Price tag"
+          },
+          {
+            "value": "question-mark",
+            "label": "Question mark"
+          },
+          {
+            "value": "recycle-symbol",
+            "label": "Recycle symbol"
+          },
+          {
+            "value": "ruler",
+            "label": "Ruler"
+          },
+          {
+            "value": "scissors",
+            "label": "Scissors"
+          },
+          {
+            "value": "security-badge",
+            "label": "Security badge"
+          },
+          {
+            "value": "stiletto",
+            "label": "Stiletto"
+          },
+          {
+            "value": "stopwatch",
+            "label": "Stopwatch"
+          },
+          {
+            "value": "sunflower",
+            "label": "Sunflower"
+          },
+          {
+            "value": "t-shirt",
+            "label": "Tshirt"
+          },
+          {
+            "value": "washing-symbol",
+            "label": "Washing symbol"
+          },
+          {
+            "value": "water-bottle",
+            "label": "Water bottle"
+          }
+        ],
+        "default": "padlock"
       }
     ],
     "blocks": [
@@ -2108,6 +2293,174 @@
               }
             ],
             "default": "default"
+          },
+          {
+            "type": "select",
+            "id": "shipping_icon",
+            "label": "Shipping Icon",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "bank",
+                "label": "Bank"
+              },
+              {
+                "value": "bill",
+                "label": "Bill"
+              },
+              {
+                "value": "bottle",
+                "label": "Bottle"
+              },
+              {
+                "value": "chat",
+                "label": "Chat"
+              },
+              {
+                "value": "chat-empty",
+                "label": "Chat empty"
+              },
+              {
+                "value": "checked-box",
+                "label": "Checked box"
+              },
+              {
+                "value": "clothes-button",
+                "label": "Clothes button"
+              },
+              {
+                "value": "clothes-hanger",
+                "label": "Clothes hanger"
+              },
+              {
+                "value": "cotton",
+                "label": "Cotton"
+              },
+              {
+                "value": "envelope",
+                "label": "Envelope"
+              },
+              {
+                "value": "globe",
+                "label": "Globe"
+              },
+              {
+                "value": "hand-washing",
+                "label": "Hand washing"
+              },
+              {
+                "value": "heart",
+                "label": "Heart"
+              },
+              {
+                "value": "laundry-dryer",
+                "label": "Laundry dryer"
+              },
+              {
+                "value": "laundry-washer",
+                "label": "Laundry washer"
+              },
+              {
+                "value": "leaf",
+                "label": "Leaf"
+              },
+              {
+                "value": "lipstick",
+                "label": "Lipstick"
+              },
+              {
+                "value": "measuring-tape",
+                "label": "Measuring tape"
+              },
+              {
+                "value": "model-silhouette",
+                "label": "Silhouette"
+              },
+              {
+                "value": "money-bills",
+                "label": "Money bills"
+              },
+              {
+                "value": "moving-truck",
+                "label": "Moving truck"
+              },
+              {
+                "value": "package-open",
+                "label": "Package open"
+              },
+              {
+                "value": "package-closed",
+                "label": "Package closed"
+              },
+              {
+                "value": "padlock",
+                "label": "Padlock"
+              },
+              {
+                "value": "paper-airplane",
+                "label": "Paper airplane"
+              },
+              {
+                "value": "paw-print",
+                "label": "Paw print"
+              },
+              {
+                "value": "plant",
+                "label": "Plant"
+              },
+              {
+                "value": "price-tag",
+                "label": "Price tag"
+              },
+              {
+                "value": "question-mark",
+                "label": "Question mark"
+              },
+              {
+                "value": "recycle-symbol",
+                "label": "Recycle symbol"
+              },
+              {
+                "value": "ruler",
+                "label": "Ruler"
+              },
+              {
+                "value": "scissors",
+                "label": "Scissors"
+              },
+              {
+                "value": "security-badge",
+                "label": "Security badge"
+              },
+              {
+                "value": "stiletto",
+                "label": "Stiletto"
+              },
+              {
+                "value": "stopwatch",
+                "label": "Stopwatch"
+              },
+              {
+                "value": "sunflower",
+                "label": "Sunflower"
+              },
+              {
+                "value": "t-shirt",
+                "label": "Tshirt"
+              },
+              {
+                "value": "washing-symbol",
+                "label": "Washing symbol"
+              },
+              {
+                "value": "water-bottle",
+                "label": "Water bottle"
+              }
+            ],
+            "default": "moving-truck"
           },
           {
             "type": "header",
