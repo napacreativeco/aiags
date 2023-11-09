@@ -160,7 +160,9 @@
           {%- unless product.has_only_default_variant -%}
             <div class="upsell-cart__riser"
                  data-riser="quick-add-{{ item.id }}"
-                 data-riser-product-id="{{ item.id }}">
+                 data-riser-product-id="{{ item.id }}"
+                 data-save-type="{{ block.settings.savings_type }}"
+                >
               <textarea style="display: none" aria-hidden="true" aria-label="Product JSON" data-prod-json="{{ item.id }}" data-variant-json>
                 {{ product.variants | json }}
               </textarea>

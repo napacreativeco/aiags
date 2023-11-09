@@ -436,7 +436,9 @@
                             (-{{ discount_allocation.amount | money }})
                           {% endunless %}
                         {% endcapture %}
-                        <div class="upsell-cart__line-item-discount upsell-cart__discount-name">{{ discount_allocation.discount_application.title }}{{ discount_value }}</div>
+                        {% unless discount_value == blank  %}
+                          <div class="upsell-cart__line-item-discount upsell-cart__discount-name">{{ discount_allocation.discount_application.title }}{{ discount_value }}</div>
+                        {% endunless %}
                       {%- endfor -%}
                     {%- endif -%}
                     {% if block.settings.enable_low_inventory_warning %}
@@ -967,10 +969,12 @@
             </a>
           {% else %}
             <button type="submit" name="checkout" class="btn button upsell-cart__cta upsell-cart__checkout" data-btn-action="checkout">
+              {% unless section.settings.checkout_icon == 'none' %}
               {%
                 render 'flash-incentives-icon',
                 icon: section.settings.checkout_icon
               %}
+              {% endunless %}
               {{ shop.metafields.obsidian_upsell[locale].checkout_title }}
             </button>
           {% endif %}
