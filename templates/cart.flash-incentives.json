@@ -9,6 +9,7 @@
             "show_start_end_prices": true,
             "show_when_cart_empty": false,
             "color_scheme": "default",
+            "shipping_icon": "envelope",
             "column": "main",
             "sticky": false,
             "sticky_position": "bottom"
@@ -28,7 +29,7 @@
         "upsells": {
           "type": "upsells",
           "settings": {
-            "use_slideshow": false,
+            "use_slideshow": true,
             "autoplay": true,
             "auto_rotate_speed": "4000",
             "upsell_action_type": "add_to_cart",
@@ -61,7 +62,8 @@
         "terms_enable": false,
         "terms_page": "",
         "show_cart_savings": true,
-        "cart_savings_style": "small_text"
+        "cart_savings_style": "small_text",
+        "checkout_icon": "padlock"
       }
     },
     "notification": {

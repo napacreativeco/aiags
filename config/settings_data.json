@@ -59,12 +59,6 @@
           "upsell_cart_density": "20",
           "upsell_custom_css": ".upsell-cart__add-btn {\ncolor: #000 !important;\n}\n\n:root { --upsellColorSuccess: #505050 !important;\n--upsellColorTextSavings: #B01212 !important; }\n\n.upsell-cart__item-price {\ndisplay: none !important;\n}\n\n.upsell-cart__item-option {\ndisplay: none !important;\n}"
         }
-      },
-      "5043070786800498925": {
-        "type": "shopify:\/\/apps\/cw-back-in-stock-restock-alert\/blocks\/bis-switch\/b190bced-3b7b-47da-a05f-6ea4821c3a77",
-        "disabled": false,
-        "settings": {
-        }
       }
     }
   },
