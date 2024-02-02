@@ -230,7 +230,7 @@
 	}
 </style>
 <div class="upsell-onboarding" data-upsell-onboarding>
-	<h2 class="upsell-onboarding__title">How To: Setting up your Flash Cart in the Theme Editor</h2>
+	<h2 class="upsell-onboarding__title">How To: Setting up your Flash Cart in the theme editor</h2>
 
 	<div class="upsell-onboarding__embed-notice">
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M7.5 15.5a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Zm.303-11.1a.9.9 0 1 0-1.8 0 .9.9 0 0 0 1.8 0Zm-2.4 2.7a.6.6 0 0 1 .6-.6h1.2a1.2 1.2 0 0 1 1.2 1.2v3.603H9a.6.6 0 1 1 0 1.2H6.5a.6.6 0 1 1 0-1.2h.703V7.7h-1.2a.6.6 0 0 1-.6-.6Z" clip-rule="evenodd"/></svg>
@@ -315,7 +315,8 @@
         "count": {{ cart.item_count }},
         "ids": {{ cart.items | map: 'product_id' | json }},
         "cents": {{ cart.total_price }},
-        "currency": {{ cart.currency.iso_code | json }}
+        "currency": {{ cart.currency.iso_code | json }},
+        "variant_ids": {{ cart.items | map: 'variant_id' | json }}
       }
     </script>
     <h2 class="upsell-cart__title">
@@ -359,8 +360,13 @@
                 {% if block.settings.show_single_qty_price %}
                   {% capture price_each %}
                     {%- if item.original_price != item.final_price -%}
-                      <span class="upsell-cart__price upsell-cart__price--strikethrough">{{ item.original_price | money }}</span>
-                      <span class="upsell-cart__price upsell-cart__discount">{{ item.final_price | money }}</span>
+                      {%- if block.settings.show_combined_compare_discount_price -%}
+                        <span class="upsell-cart__price upsell-cart__price--strikethrough">{{ item.variant.compare_at_price | money }}</span>
+                        <span class="upsell-cart__price upsell-cart__discount">{{ item.final_price | money }}</span>
+                      {%- else -%}
+                        <span class="upsell-cart__price upsell-cart__price--strikethrough">{{ item.original_price | money }}</span>
+                        <span class="upsell-cart__price upsell-cart__discount">{{ item.final_price | money }}</span>
+                      {%- endif -%}
                     {%- elsif item.variant.compare_at_price and item.variant.compare_at_price != 0 and item.variant.compare_at_price != item.final_price -%}
                       <span class="upsell-cart__price upsell-cart__price--strikethrough">{{ item.variant.compare_at_price | money }}</span>
                       <span class="upsell-cart__price upsell-cart__discount">{{ item.final_price | money }}</span>
@@ -433,7 +439,15 @@
                       {%- for discount_allocation in item.line_level_discount_allocations -%}
                         {% capture discount_value %}
                           {% unless discount_allocation.amount == 0 %}
-                            (-{{ discount_allocation.amount | money }})
+                            {%- if block.settings.show_combined_compare_discount_price -%}
+                              {% assign total_compare_at_price = item.variant.compare_at_price | times: item.quantity  %}
+                              {% assign line_item_price = item.original_price | times: item.quantity  %}
+                              {% assign compare_at_diff_value = total_compare_at_price | minus: line_item_price  %}
+
+                              (-{{ discount_allocation.amount | plus: compare_at_diff_value | money }})
+                            {%- else -%}
+                              (-{{ discount_allocation.amount | money }})
+                            {%- endif -%}
                           {% endunless %}
                         {% endcapture %}
                         {% unless discount_value == blank  %}
@@ -441,13 +455,47 @@
                         {% endunless %}
                       {%- endfor -%}
                     {%- endif -%}
+                    <div class="upsell-cart__warning-labels {% if block.settings.place_warning_labels_inline %}upsell-cart__warning-labels--inline{% endif %}">
                     {% if block.settings.enable_low_inventory_warning %}
                       {% if item.variant.inventory_management and item.variant.inventory_policy == 'deny' and item.variant.inventory_quantity <= block.settings.low_inventory_threshold %}
-                        <div class="upsell-cart__item-inventory-warning">
-                          {{ shop.metafields.obsidian_upsell[locale].low_inventory_warning | replace: '[quantity]', item.variant.inventory_quantity }}
+                        <div class="upsell-cart__item-inventory-warning {% if block.settings.animate_low_inventory_warning %}upsell-cart__warning-icon--animated{% endif %}">
+                          {%
+                            render 'flash-incentives-icon',
+                            icon: block.settings.low_inventory_icon,
+                            class: 'upsell-cart__item-inventory-warning-icon',
+                          %}
+
+                          <span>{{ shop.metafields.obsidian_upsell[locale].low_inventory_warning | replace: '[quantity]', item.variant.inventory_quantity }}</span>
                         </div>
                       {% endif %}
                     {% endif %}
+
+                    {% if block.settings.enable_live_traffic_label %}
+                      {% style %}
+                        {% if block.settings.live_traffic_custom_color_scheme %}
+                          :root {
+                          --upsellLiveTrafficIconColor: {{ block.settings.live_traffic_custom_color }};
+                          }
+                        {% endif %}
+                      {% endstyle %}
+
+                      <upsell-urgency-indicator
+                        class="upsell-urgency-label--hidden upsell-urgency-label {% unless block.settings.live_traffic_custom_color_scheme %}{{ block.settings.live_traffic_icon_color }}{% endunless %} {% if block.settings.animate_live_traffic_label %}upsell-cart__warning-icon--animated{% endif %}"
+                        data-variant-id="{{ item.variant_id }}"
+                      >
+                        {%
+                          render 'flash-incentives-icon',
+                          icon: block.settings.live_traffic_icon,
+                          class: 'upsell-live-traffic__icon',
+                        %}
+                        <span
+                          data-message-singular="{{ shop.metafields.obsidian_upsell[locale].live_urgency_label_singular }}"
+                          data-message="{{ shop.metafields.obsidian_upsell[locale].live_urgency_label }}"
+                        ></span>
+                      </upsell-urgency-indicator>
+                    {% endif %}
+                    </div>
+
                     <button class="upsell-cart__item-remove" type="button" data-remove="{{ item.key }}">
                       <span class="upsell-visually-hidden">{{ shop.metafields.obsidian_upsell[locale].line_item_remove }}</span>
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -484,8 +532,13 @@
                       {% assign original_price = nil %}
                       {% assign final_price = nil %}
                       {%- if item.original_line_price != item.final_line_price -%}
-                        {% assign original_price = item.original_line_price %}
-                        {% assign final_price = item.final_line_price %}
+                        {%- if block.settings.show_combined_compare_discount_price -%}
+                          {% assign original_price =  item.variant.compare_at_price | times: item.quantity %}
+                          {% assign final_price = item.final_line_price %}
+                        {%- else -%}
+                          {% assign original_price = item.original_line_price %}
+                          {% assign final_price = item.final_line_price %}
+                        {%- endif -%}
                       {%- elsif item.variant.compare_at_price and item.variant.compare_at_price != 0 and item.variant.compare_at_price != item.final_price -%}
                         {% assign original_price = item.variant.compare_at_price | times: item.quantity %}
                         {% assign final_price = item.final_line_price %}
@@ -494,8 +547,8 @@
                       {%- endif -%}
                       <div class="upsell-cart__item-price">
                         {% if original_price %}
-                          <span class="upsell-cart__price upsell-cart__price--strikethrough">{{ original_price | money }}</span>
-                          <span class="upsell-cart__price upsell-cart__discount">{{ final_price | money }}</span>
+													<span class="upsell-cart__price upsell-cart__price--strikethrough">{{ original_price | money }}</span>
+													<span class="upsell-cart__price upsell-cart__discount">{{ final_price | money }}</span>
                         {% else %}
                           <span class="upsell-cart__price">{{ final_price | money }}</span>
                         {% endif %}
@@ -1446,6 +1499,54 @@
           {
             "value": "water-bottle",
             "label": "Water bottle"
+          },
+          {
+            "value": "bell-playful",
+            "label": "Bell [Playful]"
+          },
+          {
+            "value": "celebrate-playful",
+            "label": "Celebrate [Playful]"
+          },
+          {
+            "value": "dollar-playful",
+            "label": "Dollar [Playful]"
+          },
+          {
+            "value": "fire-playful",
+            "label": "Fire [Playful]"
+          },
+          {
+            "value": "gift-playful",
+            "label": "Gift [Playful]"
+          },
+          {
+            "value": "hourglass-playful",
+            "label": "Hourglass [Playful]"
+          },
+          {
+            "value": "lock-playful",
+            "label": "Lock [Playful]"
+          },
+          {
+            "value": "percentage-playful",
+            "label": "Percentage [Playful]"
+          },
+          {
+            "value": "shipping-playful",
+            "label": "Shipping [Playful]"
+          },
+          {
+            "value": "tag-playful",
+            "label": "Tag [Playful]"
+          },
+          {
+            "value": "timer-playful",
+            "label": "Timer [Playful]"
+          },
+          {
+            "value": "unlock-playful",
+            "label": "Unlock [Playful]"
           }
         ],
         "default": "padlock"
@@ -1833,6 +1934,54 @@
               {
                 "value": "water-bottle",
                 "label": "Water bottle"
+              },
+              {
+                "value": "bell-playful",
+                "label": "Bell [Playful]"
+              },
+              {
+                "value": "celebrate-playful",
+                "label": "Celebrate [Playful]"
+              },
+              {
+                "value": "dollar-playful",
+                "label": "Dollar [Playful]"
+              },
+              {
+                "value": "fire-playful",
+                "label": "Fire [Playful]"
+              },
+              {
+                "value": "gift-playful",
+                "label": "Gift [Playful]"
+              },
+              {
+                "value": "hourglass-playful",
+                "label": "Hourglass [Playful]"
+              },
+              {
+                "value": "lock-playful",
+                "label": "Lock [Playful]"
+              },
+              {
+                "value": "percentage-playful",
+                "label": "Percentage [Playful]"
+              },
+              {
+                "value": "shipping-playful",
+                "label": "Shipping [Playful]"
+              },
+              {
+                "value": "tag-playful",
+                "label": "Tag [Playful]"
+              },
+              {
+                "value": "timer-playful",
+                "label": "Timer [Playful]"
+              },
+              {
+                "value": "unlock-playful",
+                "label": "Unlock [Playful]"
               }
             ],
             "default": "none"
@@ -2181,6 +2330,54 @@
               {
                 "value": "water-bottle",
                 "label": "Water bottle"
+              },
+              {
+                "value": "bell-playful",
+                "label": "Bell [Playful]"
+              },
+              {
+                "value": "celebrate-playful",
+                "label": "Celebrate [Playful]"
+              },
+              {
+                "value": "dollar-playful",
+                "label": "Dollar [Playful]"
+              },
+              {
+                "value": "fire-playful",
+                "label": "Fire [Playful]"
+              },
+              {
+                "value": "gift-playful",
+                "label": "Gift [Playful]"
+              },
+              {
+                "value": "hourglass-playful",
+                "label": "Hourglass [Playful]"
+              },
+              {
+                "value": "lock-playful",
+                "label": "Lock [Playful]"
+              },
+              {
+                "value": "percentage-playful",
+                "label": "Percentage [Playful]"
+              },
+              {
+                "value": "shipping-playful",
+                "label": "Shipping [Playful]"
+              },
+              {
+                "value": "tag-playful",
+                "label": "Tag [Playful]"
+              },
+              {
+                "value": "timer-playful",
+                "label": "Timer [Playful]"
+              },
+              {
+                "value": "unlock-playful",
+                "label": "Unlock [Playful]"
               }
             ],
             "default": "none"
@@ -2462,6 +2659,54 @@
               {
                 "value": "water-bottle",
                 "label": "Water bottle"
+              },
+              {
+                "value": "bell-playful",
+                "label": "Bell [Playful]"
+              },
+              {
+                "value": "celebrate-playful",
+                "label": "Celebrate [Playful]"
+              },
+              {
+                "value": "dollar-playful",
+                "label": "Dollar [Playful]"
+              },
+              {
+                "value": "fire-playful",
+                "label": "Fire [Playful]"
+              },
+              {
+                "value": "gift-playful",
+                "label": "Gift [Playful]"
+              },
+              {
+                "value": "hourglass-playful",
+                "label": "Hourglass [Playful]"
+              },
+              {
+                "value": "lock-playful",
+                "label": "Lock [Playful]"
+              },
+              {
+                "value": "percentage-playful",
+                "label": "Percentage [Playful]"
+              },
+              {
+                "value": "shipping-playful",
+                "label": "Shipping [Playful]"
+              },
+              {
+                "value": "tag-playful",
+                "label": "Tag [Playful]"
+              },
+              {
+                "value": "timer-playful",
+                "label": "Timer [Playful]"
+              },
+              {
+                "value": "unlock-playful",
+                "label": "Unlock [Playful]"
               }
             ],
             "default": "moving-truck"
@@ -2511,7 +2756,7 @@
         ]
       },
       {
-        "name": "Cross-Sells",
+        "name": "Cross-sells",
         "type": "upsells",
         "limit": 1,
         "settings": [
@@ -2826,6 +3071,13 @@
           },
           {
             "type": "checkbox",
+            "id": "show_combined_compare_discount_price",
+            "label": "Display compare at price when paired with discount",
+            "info": "When both compare at price and discount are applied, display the original (compare at) price instead of the current price, and show the combined savings.",
+            "default": false
+          },
+          {
+            "type": "checkbox",
             "id": "show_savings",
             "label": "Show item savings",
             "default": true
@@ -2837,6 +3089,232 @@
             "default": true
           },
           {
+            "type": "checkbox",
+            "id": "animate_low_inventory_warning",
+            "label": "Animate low inventory warning",
+            "default": true
+          },
+          {
+            "type": "select",
+            "id": "low_inventory_icon",
+            "label": "Low inventory icon",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "bank",
+                "label": "Bank"
+              },
+              {
+                "value": "bill",
+                "label": "Bill"
+              },
+              {
+                "value": "bottle",
+                "label": "Bottle"
+              },
+              {
+                "value": "chat",
+                "label": "Chat"
+              },
+              {
+                "value": "chat-empty",
+                "label": "Chat empty"
+              },
+              {
+                "value": "checked-box",
+                "label": "Checked box"
+              },
+              {
+                "value": "clothes-button",
+                "label": "Clothes button"
+              },
+              {
+                "value": "clothes-hanger",
+                "label": "Clothes hanger"
+              },
+              {
+                "value": "cotton",
+                "label": "Cotton"
+              },
+              {
+                "value": "dot",
+                "label": "Dot"
+              },
+              {
+                "value": "envelope",
+                "label": "Envelope"
+              },
+              {
+                "value": "globe",
+                "label": "Globe"
+              },
+              {
+                "value": "hand-washing",
+                "label": "Hand washing"
+              },
+              {
+                "value": "heart",
+                "label": "Heart"
+              },
+              {
+                "value": "laundry-dryer",
+                "label": "Laundry dryer"
+              },
+              {
+                "value": "laundry-washer",
+                "label": "Laundry washer"
+              },
+              {
+                "value": "leaf",
+                "label": "Leaf"
+              },
+              {
+                "value": "lipstick",
+                "label": "Lipstick"
+              },
+              {
+                "value": "measuring-tape",
+                "label": "Measuring tape"
+              },
+              {
+                "value": "model-silhouette",
+                "label": "Silhouette"
+              },
+              {
+                "value": "money-bills",
+                "label": "Money bills"
+              },
+              {
+                "value": "moving-truck",
+                "label": "Moving truck"
+              },
+              {
+                "value": "package-open",
+                "label": "Package open"
+              },
+              {
+                "value": "package-closed",
+                "label": "Package closed"
+              },
+              {
+                "value": "padlock",
+                "label": "Padlock"
+              },
+              {
+                "value": "paper-airplane",
+                "label": "Paper airplane"
+              },
+              {
+                "value": "paw-print",
+                "label": "Paw print"
+              },
+              {
+                "value": "plant",
+                "label": "Plant"
+              },
+              {
+                "value": "price-tag",
+                "label": "Price tag"
+              },
+              {
+                "value": "question-mark",
+                "label": "Question mark"
+              },
+              {
+                "value": "recycle-symbol",
+                "label": "Recycle symbol"
+              },
+              {
+                "value": "ruler",
+                "label": "Ruler"
+              },
+              {
+                "value": "scissors",
+                "label": "Scissors"
+              },
+              {
+                "value": "security-badge",
+                "label": "Security badge"
+              },
+              {
+                "value": "stiletto",
+                "label": "Stiletto"
+              },
+              {
+                "value": "stopwatch",
+                "label": "Stopwatch"
+              },
+              {
+                "value": "sunflower",
+                "label": "Sunflower"
+              },
+              {
+                "value": "t-shirt",
+                "label": "Tshirt"
+              },
+              {
+                "value": "washing-symbol",
+                "label": "Washing symbol"
+              },
+              {
+                "value": "water-bottle",
+                "label": "Water bottle"
+              },
+              {
+                "value": "bell-playful",
+                "label": "Bell [Playful]"
+              },
+              {
+                "value": "celebrate-playful",
+                "label": "Celebrate [Playful]"
+              },
+              {
+                "value": "dollar-playful",
+                "label": "Dollar [Playful]"
+              },
+              {
+                "value": "fire-playful",
+                "label": "Fire [Playful]"
+              },
+              {
+                "value": "gift-playful",
+                "label": "Gift [Playful]"
+              },
+              {
+                "value": "hourglass-playful",
+                "label": "Hourglass [Playful]"
+              },
+              {
+                "value": "lock-playful",
+                "label": "Lock [Playful]"
+              },
+              {
+                "value": "percentage-playful",
+                "label": "Percentage [Playful]"
+              },
+              {
+                "value": "shipping-playful",
+                "label": "Shipping [Playful]"
+              },
+              {
+                "value": "tag-playful",
+                "label": "Tag [Playful]"
+              },
+              {
+                "value": "timer-playful",
+                "label": "Timer [Playful]"
+              },
+              {
+                "value": "unlock-playful",
+                "label": "Unlock [Playful]"
+              }
+            ],
+            "default": "dot"
+          },
+          {
             "type": "range",
             "id": "low_inventory_threshold",
             "min": 5,
@@ -2844,6 +3322,276 @@
             "step": 5,
             "label": "Low inventory threshold",
             "default": 5
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_live_traffic_label",
+            "label": "Enable live traffic label",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "animate_live_traffic_label",
+            "label": "Animate live traffic label",
+            "default": true
+          },
+          {
+            "type": "select",
+            "id": "live_traffic_icon_color",
+            "label": "Live traffic icon color",
+            "options": [
+              {
+                "value": "default",
+                "label": "Default"
+              },
+              {
+                "value": "accent",
+                "label": "Accent"
+              },
+              {
+                "value": "accent-inverse",
+                "label": "Accent inverse"
+              }
+            ],
+            "default": "default"
+          },
+          {
+            "type": "checkbox",
+            "id": "live_traffic_custom_color_scheme",
+            "label": "Override with custom colors",
+            "default": false
+          },
+          {
+            "type": "color",
+            "id": "live_traffic_custom_color",
+            "label": "Icon color",
+            "default": "#ffffff"
+          },
+          {
+            "type": "select",
+            "id": "live_traffic_icon",
+            "label": "Live Traffic Icon",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "bank",
+                "label": "Bank"
+              },
+              {
+                "value": "bill",
+                "label": "Bill"
+              },
+              {
+                "value": "bottle",
+                "label": "Bottle"
+              },
+              {
+                "value": "chat",
+                "label": "Chat"
+              },
+              {
+                "value": "chat-empty",
+                "label": "Chat empty"
+              },
+              {
+                "value": "checked-box",
+                "label": "Checked box"
+              },
+              {
+                "value": "clothes-button",
+                "label": "Clothes button"
+              },
+              {
+                "value": "clothes-hanger",
+                "label": "Clothes hanger"
+              },
+              {
+                "value": "cotton",
+                "label": "Cotton"
+              },
+              {
+                "value": "dot",
+                "label": "Dot"
+              },
+              {
+                "value": "envelope",
+                "label": "Envelope"
+              },
+              {
+                "value": "globe",
+                "label": "Globe"
+              },
+              {
+                "value": "hand-washing",
+                "label": "Hand washing"
+              },
+              {
+                "value": "heart",
+                "label": "Heart"
+              },
+              {
+                "value": "laundry-dryer",
+                "label": "Laundry dryer"
+              },
+              {
+                "value": "laundry-washer",
+                "label": "Laundry washer"
+              },
+              {
+                "value": "leaf",
+                "label": "Leaf"
+              },
+              {
+                "value": "lipstick",
+                "label": "Lipstick"
+              },
+              {
+                "value": "measuring-tape",
+                "label": "Measuring tape"
+              },
+              {
+                "value": "model-silhouette",
+                "label": "Silhouette"
+              },
+              {
+                "value": "money-bills",
+                "label": "Money bills"
+              },
+              {
+                "value": "moving-truck",
+                "label": "Moving truck"
+              },
+              {
+                "value": "package-open",
+                "label": "Package open"
+              },
+              {
+                "value": "package-closed",
+                "label": "Package closed"
+              },
+              {
+                "value": "padlock",
+                "label": "Padlock"
+              },
+              {
+                "value": "paper-airplane",
+                "label": "Paper airplane"
+              },
+              {
+                "value": "paw-print",
+                "label": "Paw print"
+              },
+              {
+                "value": "plant",
+                "label": "Plant"
+              },
+              {
+                "value": "price-tag",
+                "label": "Price tag"
+              },
+              {
+                "value": "question-mark",
+                "label": "Question mark"
+              },
+              {
+                "value": "recycle-symbol",
+                "label": "Recycle symbol"
+              },
+              {
+                "value": "ruler",
+                "label": "Ruler"
+              },
+              {
+                "value": "scissors",
+                "label": "Scissors"
+              },
+              {
+                "value": "security-badge",
+                "label": "Security badge"
+              },
+              {
+                "value": "stiletto",
+                "label": "Stiletto"
+              },
+              {
+                "value": "stopwatch",
+                "label": "Stopwatch"
+              },
+              {
+                "value": "sunflower",
+                "label": "Sunflower"
+              },
+              {
+                "value": "t-shirt",
+                "label": "Tshirt"
+              },
+              {
+                "value": "washing-symbol",
+                "label": "Washing symbol"
+              },
+              {
+                "value": "water-bottle",
+                "label": "Water bottle"
+              },
+              {
+                "value": "bell-playful",
+                "label": "Bell [Playful]"
+              },
+              {
+                "value": "celebrate-playful",
+                "label": "Celebrate [Playful]"
+              },
+              {
+                "value": "dollar-playful",
+                "label": "Dollar [Playful]"
+              },
+              {
+                "value": "fire-playful",
+                "label": "Fire [Playful]"
+              },
+              {
+                "value": "gift-playful",
+                "label": "Gift [Playful]"
+              },
+              {
+                "value": "hourglass-playful",
+                "label": "Hourglass [Playful]"
+              },
+              {
+                "value": "lock-playful",
+                "label": "Lock [Playful]"
+              },
+              {
+                "value": "percentage-playful",
+                "label": "Percentage [Playful]"
+              },
+              {
+                "value": "shipping-playful",
+                "label": "Shipping [Playful]"
+              },
+              {
+                "value": "tag-playful",
+                "label": "Tag [Playful]"
+              },
+              {
+                "value": "timer-playful",
+                "label": "Timer [Playful]"
+              },
+              {
+                "value": "unlock-playful",
+                "label": "Unlock [Playful]"
+              }
+            ],
+            "default": "dot"
+          },
+          {
+            "type": "checkbox",
+            "id": "place_warning_labels_inline",
+            "label": "Place warning labels inline",
+            "default": false
           }
         ]
       }
