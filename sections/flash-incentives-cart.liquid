@@ -320,11 +320,7 @@
       }
     </script>
     <h2 class="upsell-cart__title">
-      {% if shop.metafields.obsidian_upsell[locale].cart_title %}
-        {{ shop.metafields.obsidian_upsell[locale].cart_title }}
-      {% else %}
-        {{ section.settings.title }}
-      {% endif %}
+      {{ shop.metafields.obsidian_upsell[locale].cart_title }}
 
       <button type="button" class="upsell-cart__close" aria-label="Close cart">
         {{ close }}
@@ -1173,12 +1169,6 @@
       {
         "type": "paragraph",
         "content": "In order to see the blocks, make sure to have at least 1 product in your cart."
-      },
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Title",
-        "default": "Your cart"
       },
       {
         "type": "header",
