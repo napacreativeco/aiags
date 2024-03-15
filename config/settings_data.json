@@ -39,8 +39,8 @@
         "type": "shopify:\/\/apps\/flash-cart\/blocks\/upsell-cart\/ae66766b-0b4d-4801-a38e-5692b1140cb1",
         "disabled": false,
         "settings": {
-          "upsell_enable_cart_notification": true,
-          "upsell_floating_cart_button": "bottom-right",
+          "upsell_enable_cart_notification": false,
+          "upsell_floating_cart_button": "off",
           "upsell_use_styles_from_theme": "true",
           "upsell_color_drawer": "#ffffff",
           "upsell_color_text": "#333333",
