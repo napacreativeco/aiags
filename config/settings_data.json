@@ -40,7 +40,7 @@
         "disabled": false,
         "settings": {
           "upsell_enable_cart_notification": true,
-          "upsell_floating_cart_button": "top-left",
+          "upsell_floating_cart_button": "bottom-right",
           "upsell_use_styles_from_theme": "true",
           "upsell_color_drawer": "#ffffff",
           "upsell_color_text": "#333333",
