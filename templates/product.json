@@ -39,30 +39,13 @@
             "content": "<p>{{ product.metafields.descriptors.care_guide | metafield_tag }}<\/p>",
             "page": ""
           }
-        },
-        "downpay_downpay_form_RbJzDU": {
-          "type": "shopify:\/\/apps\/downpay\/blocks\/downpay-form\/da700d84-7ed1-410a-a8b5-5cb99a33758a",
-          "settings": {
-            "show_border": true,
-            "section_header": "",
-            "deposit_option_label": "",
-            "full_pay_option_label": "",
-            "show_payment_methods": false,
-            "show_help_text2": "deposit",
-            "deposit_help_text": "",
-            "show_release_date2": "never",
-            "release_date_text": "",
-            "add_to_cart_button_label": "",
-            "custom_css": ""
-          }
         }
       },
       "block_order": [
         "collapsible-row-0",
         "collapsible-row-2",
         "collapsible-row-3",
-        "a907db2a-3640-4f72-9235-9fccc883a9c0",
-        "downpay_downpay_form_RbJzDU"
+        "a907db2a-3640-4f72-9235-9fccc883a9c0"
       ],
       "settings": {
       }
