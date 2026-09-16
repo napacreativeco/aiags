@@ -6,7 +6,7 @@
     {%endcomment%} 
     <h3 class="title">
       <a href={{ product.url }} title={{ product.title }}>
-        {{ product.title }}img
+        {{ product.title }}
       </a>
     </h3>
 
@@ -47,7 +47,7 @@
 
       <div class="price">
         <a href={{ product.url }} title={{ product.title }}>
-          {% render 'price', product: product | money_without_trailing_zeros %}
+          {% render 'price', product: product %}
         </a>
       </div>
 
@@ -84,4 +84,13 @@
 {% if product.metafields.custom.related_products.value == blank %}
   <div>No related products.</div> 
 
-{% endif %}
+{% endif %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'price', product: product | money_without_trailing_zeros %}"
+  to: "{% render 'price', product: product %}"
+  position: 1301..1339
+{%- endcomment -%}
